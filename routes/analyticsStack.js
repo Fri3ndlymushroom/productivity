@@ -1,16 +1,16 @@
 import { createStackNavigator } from "react-navigation-stack";
 
-import Timeline from "../screens/timeline"
+import Analytics from "../screens/analytics"
 
 import {headerStyle} from "../styles/global"
 
 const screens = {
-    Timeline: {
-        screen: Timeline,
+    Analytics: {
+        screen: Analytics,
         navigationOptions: {headerStyle: headerStyle}
     }
 }
 
-const TimelineStack = createStackNavigator(screens);
+const AnalyticsStack = createStackNavigator(screens);
 
-export default TimelineStack
+export default AnalyticsStack

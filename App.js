@@ -1,11 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Navigator from './routes/homeStack'
+import RootNavigator from './routes/draw'
 
 export default function App() {
   return (
-      <Navigator/>
+      <RootNavigator/>
   );
 }
 
