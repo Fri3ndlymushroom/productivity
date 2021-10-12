@@ -7,20 +7,10 @@ import ProjectSelection from "../components/projectSelection"
 
 export default function Home({ navigation }) {
 
-  const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
-
-
-  const startProject = (projectIndex) => {
-    console.log(projectIndex)
-  }
-
 
   return (
     <View style={gs.container}>
-      <Button title="Go" onPress={() => setProjectSelectionOpen(true)} />
-      {
-        projectSelectionOpen && <ProjectSelection {...{navigation, setProjectSelectionOpen, startProject}} />
-      }
+        <Text>Hello</Text>
     </View>
   );
 }
