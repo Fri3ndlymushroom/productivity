@@ -1,9 +1,11 @@
 import React from 'react';
 import RootNavigator from './routes/draw'
+import getUserData from "./data"
 
 export default function App() {
+  let data = getUserData()
   return (
-      <RootNavigator/>
+      <RootNavigator screenProps={{data: data}}/>
   );
 }
 

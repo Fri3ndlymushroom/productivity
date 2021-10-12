@@ -15,5 +15,9 @@ let defaultData = {
     ]
 }
 
+const getUserData = () =>{
+    return defaultData
+}
 
-export default defaultData
+
+export default getUserData

@@ -1,9 +1,9 @@
 import React from 'react'
 import {TouchableOpacity, Button, StyleSheet, Text, View } from 'react-native'
 import { p } from "../styles/global"
-import data from "../data"
 
-export default function projectSelection({navigation, setProjectSelectionOpen, startProject}) {
+
+export default function projectSelection({data, navigation, setProjectSelectionOpen, startProject}) {
     return (
         <TouchableOpacity style={s.projectSelectionWrapper} onPress={()=>setProjectSelectionOpen(false)}>
             <View style={s.projectSelectionWindow}>

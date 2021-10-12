@@ -5,7 +5,13 @@ import gs from '../styles/global'
 import { DefaultText } from '../components/components'
 import ProjectSelection from "../components/projectSelection"
 
-export default function Home({ navigation }) {
+
+export default function Home({ navigation, screenProps }) {
+
+
+  let data = screenProps.data
+  console.log(data)
+
 
   const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
 
@@ -19,7 +25,7 @@ export default function Home({ navigation }) {
     <View style={gs.container}>
       <Button title="Go" onPress={() => setProjectSelectionOpen(true)} />
       {
-        projectSelectionOpen && <ProjectSelection {...{navigation, setProjectSelectionOpen, startProject}} />
+        projectSelectionOpen && <ProjectSelection {...{data, navigation, setProjectSelectionOpen, startProject}} />
       }
     </View>
   );
