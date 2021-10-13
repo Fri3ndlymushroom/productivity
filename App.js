@@ -1,11 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import RootNavigator from './routes/draw'
-import getUserData from "./data"
+
 
 export default function App() {
-  let data = getUserData()
+
+  const [data, setData] = useState({
+    projects: [
+      {
+        name: "MMonitor",
+        trackings: [
+        ]
+      },
+      {
+        name: "HyperTyper",
+        trackings: [
+        ]
+      }
+    ]
+  })
+
+
   return (
-      <RootNavigator screenProps={{data: data}}/>
+    <RootNavigator screenProps={{ ...{data, setData} }} />
   );
 }
 

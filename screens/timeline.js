@@ -7,7 +7,6 @@ import ProjectSelection from "../components/projectSelection"
 
 
 export default function Home({ navigation, screenProps }) {
-  let data = screenProps.data
 
 
 
@@ -30,7 +29,7 @@ export default function Home({ navigation, screenProps }) {
     <View style={gs.container}>
       <Button title="Go" onPress={() => setProjectSelectionOpen(true)} />
       {
-        projectSelectionOpen && <ProjectSelection {...{data, navigation, setProjectSelectionOpen, startProject}} />
+        projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject}} />
       }
     </View>
   );
