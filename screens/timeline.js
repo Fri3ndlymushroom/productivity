@@ -7,13 +7,18 @@ import ProjectSelection from "../components/projectSelection"
 
 
 export default function Home({ navigation, screenProps }) {
-
-
   let data = screenProps.data
-  console.log(data)
+
 
 
   const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
+  /*
+  if(navigation.getParam("closeProjectSelection")){
+    navigation.setParams({closeProjectSelection: false})
+    console.log("a: "+navigation.getParam("closeProjectSelection"))
+    setProjectSelectionOpen(false)
+  }
+  */
 
 
   const startProject = (projectIndex) => {
