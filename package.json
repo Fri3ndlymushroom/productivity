@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.15.8",
     "date-fns": "^2.25.0",
     "expo": "^42.0.4",
     "expo-status-bar": "~1.0.4",
@@ -23,7 +24,7 @@
     "react-navigation-stack": "^2.10.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.15.8"
   },
   "private": true
 }

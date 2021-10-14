@@ -10,7 +10,7 @@ export default function projectSelection({data, navigation, setProjectSelectionO
                 {data.projects.map((project, i) => {
                     return (
                         <View key={"projectSelection"+i} style={s.projectButtonWrapper}>
-                            <Button title={project.name} onPress={()=>{startProject(i); setProjectSelectionOpen(false)}} />
+                            <Button title={project.name} onPress={()=>{startProject(project.name); setProjectSelectionOpen(false)}} />
                         </View>
                     )
                 })}

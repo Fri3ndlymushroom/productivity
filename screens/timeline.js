@@ -5,6 +5,7 @@ import gs from '../styles/global'
 import { DefaultText } from '../components/components'
 import ProjectSelection from "../components/projectSelection"
 import TimelineDay from '../components/TimelineDay';
+import StartButton from '../components/StartButton';
 
 
 export default function Home({ navigation, screenProps }) {
@@ -21,22 +22,33 @@ export default function Home({ navigation, screenProps }) {
   */
 
 
-  const startProject = (projectIndex) => {
-    console.log(projectIndex)
+  const startProject = (project) => {
+
+    let copy = { ...screenProps.data }
+
+    copy.running.running = true
+    copy.running.start = new Date().getTime()
+    copy.running.project = project
+
+    screenProps.setData(copy)
+
+  }
+
+  const stopProject = () =>{
+    
   }
 
 
   return (
     <View style={gs.container}>
-      <Button title="Go" onPress={() => setProjectSelectionOpen(true)} />
+      <StartButton data={screenProps.data} {...{ setProjectSelectionOpen, stopProject }} />
       {
-        projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject}} />
+        projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
       }
       {
-        /*
-        screenProps.data.timeline.map((dayData)=>{
-          return<TimelineDay {...{dayData}}/>
-        })*/
+        screenProps.data.daily_logs.map((dayData) => {
+          return <TimelineDay {...{ dayData }} />
+        })
       }
     </View>
   );

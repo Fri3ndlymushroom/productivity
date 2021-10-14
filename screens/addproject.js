@@ -6,17 +6,24 @@ import { DefaultText } from '../components/components'
 import ProjectSelection from "../components/projectSelection"
 
 export default function Home({ navigation, screenProps }) {
-    let data = screenProps.data
 
     const [newProjectName, setNewProjectName] = React.useState("");
 
     const addProject = () => {
-        data.projects.push(        {
+
+        let copy = screenProps.data
+
+        copy.refactored = false
+
+
+        copy.projects.push(        {
             name: newProjectName,
             trackings: [
             ]
         }) 
         navigation.navigate("Timeline", {closeProjectSelection: true})
+
+        screenProps.setData(copy)
     }
 
     return (

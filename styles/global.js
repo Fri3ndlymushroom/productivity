@@ -5,8 +5,10 @@ export const p = {
     bg2: "#202231",
     bg3: "#2d2f41",
 
-    text__main: "#fff",
+    text__main: "#a6a7ab",
     text__dim: "#a6a7ab",
+
+    br: "10px"
 }
 
 
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text:{
-        color: p.text__dim
+        color: p.text__main
     }
 });
 
