@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Button, Text, View, TouchableOpacity } from 'react-native'
 import { p } from '../styles/global'
-import { secondsToFormatedString } from '../functions'
+import { secondsToFormatedString } from '../js/timerfunctions'
 
 export default function StartButton({data, setProjectSelectionOpen, stopProject}) {
 

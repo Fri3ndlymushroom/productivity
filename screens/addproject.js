@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, TextInput, Button, Text, View } from "react-native"
-import gs from '../styles/global'
+import g from '../styles/global'
 import { DefaultText } from '../components/components'
 import ProjectSelection from "../components/projectSelection"
 
@@ -27,7 +27,7 @@ export default function Home({ navigation, screenProps }) {
     }
 
     return (
-        <View style={gs.container}>
+        <View style={g.container}>
             <TextInput
                 style={s.input}
                 onChangeText={setNewProjectName}

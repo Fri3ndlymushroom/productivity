@@ -1,46 +1,33 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import g, {p} from "../styles/global"
-import { secondsToFormatedString } from '../functions'
+import { StyleSheet, Text, Touchable, View, TouchableOpacity } from 'react-native'
+import g, { p } from "../styles/global"
+import { secondsToFormatedString, secondsToDateString } from '../js/timerfunctions'
 
-export default function TimelineDay({ dayData }) {
+export default function TimelineDay({ dayData, navigation }) {
 
-    return (
-        <View style={s.dayContainer} >
-            <Text style={s.dayTitle}>day {dayData.day}</Text>
-            {
-                dayData.projects.map((project) => {
+   return (
+      <View style={s.dayContainer} >
+         <Text style={g.dayTitle}>{secondsToDateString(dayData.day * 24*60*60)}</Text>
+         {
+            dayData.projects.map((project) => {
 
-                    return(
-                        <View key={"day"+dayData.day+"project"+project.name} style={s.projectContainer}>
-                            <Text style={g.text}>{project.name}</Text>
-                            <Text style={g.text}>{secondsToFormatedString(project.total_duration)}</Text>
-                        </View>
+               return (
+                  <TouchableOpacity onPress={() => navigation.navigate("ProjectView", { projectViewProject: project.name })} key={"day" + dayData.day + "project" + project.name} style={g.projectContainer}>
+                     <Text style={g.text}>{project.name}</Text>
+                     <Text style={g.text}>{secondsToFormatedString(project.total_duration)}</Text>
+                  </TouchableOpacity>
 
-                    )
-                })
-            }
-        </View>
-    )
+               )
+            })
+         }
+      </View>
+   )
 }
 
 const s = StyleSheet.create({
-    dayContainer:{
-        marginBottom: "30px",
-        marginHorizontal: "60px"
-    },
-    projectContainer:{
-        backgroundColor: p.bg2,
-        width: "300px",
-        margin: "5px",
-        padding: "10px",
-        display: "flex",
-        flexDirection: "row",
-        borderRadius: p.br,
-        justifyContent: "space-between"
-    },
-    dayTitle:{
-        marginLeft: "5px",
-        color: p.text__main
-    }
+   dayContainer: {
+      marginBottom: "30px",
+      marginHorizontal: "60px"
+   },
+
 })

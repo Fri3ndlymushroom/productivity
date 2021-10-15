@@ -21,6 +21,14 @@ export default function App() {
 
 	const setData = (newData) => {
 		let dataCopy = { ...newData }
+
+
+
+        dataCopy.all_logs.sort(function (a, b) {
+            return b.start - a.start;
+        });
+
+
 		dataCopy.daily_logs = []
 
 		let neededDays = []
@@ -59,6 +67,9 @@ export default function App() {
 		dataCopy.projects.forEach((project) => {
 			project.logs = dataCopy.all_logs.filter((log) => log.project === project.name)
 		})
+
+
+
 
 
 

@@ -23,7 +23,7 @@ export default function Home({ navigation, screenProps }) {
 
         copy.all_logs.push({
             project: project,
-            day: Math.floor(start / 60 / 60 / 24),
+            day: Math.ceil(start / 60 / 60 / 24),
             start: start,
             duration: 0,
             running: true,
@@ -58,7 +58,7 @@ export default function Home({ navigation, screenProps }) {
             }
             {
                 screenProps.data.daily_logs.map((dayData) => {
-                    return <TimelineDay key={"dayContainer" + dayData.day} {...{ dayData }} />
+                    return <TimelineDay key={"dayContainer" + dayData.day} {...{navigation, dayData }} />
                 })
             }
         </View>
