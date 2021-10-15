@@ -11,6 +11,7 @@ export default function projectSelection({data, navigation, setProjectSelectionO
                     return (
                         <View key={"projectSelection"+i} style={s.projectButtonWrapper}>
                             <Button title={project.name} onPress={()=>{startProject(project.name); setProjectSelectionOpen(false)}} />
+                            <Button title={"Edit"} onPress={()=>{navigation.navigate("ProjectView", { projectViewProject: project.name })}}/>
                         </View>
                     )
                 })}

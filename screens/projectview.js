@@ -14,6 +14,7 @@ export default function ProjectView({ navigation, screenProps }) {
    return (
 
       <View style={g.container}>
+         <Text style={g.text}>{projectName}</Text>
          {
             projectData.logs.map((log) => {
 
