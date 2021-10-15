@@ -28,6 +28,28 @@ export default function Home({ navigation, screenProps }) {
   }
 
   const stopProject = () =>{
+    let timerCopy = {...screenProps.timer}
+    let dataCopy = {...screenProps.data}
+
+
+    dataCopy.all_logs.push({
+      project: timerCopy.project,
+      day: Math.floor(timerCopy.start/1000/60/60/24),
+      start: timerCopy.start,
+      end: new Date().getTime(),
+      duration:  new Date().getTime() - timerCopy.start
+    })
+
+
+    timerCopy={
+      running: false,
+      start: 0,
+      project: "",
+      duration: 0
+    }
+
+    screenProps.setTimer(timerCopy)
+    screenProps.setData(dataCopy)
 
   }
 

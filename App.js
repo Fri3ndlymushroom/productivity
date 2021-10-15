@@ -15,102 +15,111 @@ export default function App() {
 
 
 
-	const [data, setData] = useState({
+	const [data, setRefactoredData] = useState({
 		refactored: false,
-		projects: [
-			{
-				name: "MMonitor",
-				logs: []
-			},
-			{
-				name: "HyperTyper",
-				logs: []
-			}
-		],
-		all_logs: [
-			{
-				project: "MMonitor",
-				day: 18913,
-				start: 1634159644,
-				end: 1634159744,
-				duration: 100
-			},
-			{
-				project: "MMonitor",
-				day: 18913,
-				start: 1634159844,
-				end: 1634159944,
-				duration: 100
-			},
-			{
-				project: "HyperTyper",
-				day: 18913,
-				start: 1634159144,
-				end: 1634159244,
-				duration: 100
-			},
-		],
+		projects: [],
+		all_logs: [],
 		daily_logs: []
 	})
-	useEffect(() => {
-		if (!data.refactored) {
-			let dataCopy = { ...data }
-			dataCopy.refactored = true
-			dataCopy.daily_logs = []
 
-			let neededDays = []
-			dataCopy.all_logs.forEach((log) => {
-				if (neededDays.filter((day) => day === log.day).length === 0) {
-					neededDays.push(log.day)
+
+	const setData = (newData) => {
+		let dataCopy = { ...newData }
+		dataCopy.refactored = true
+		dataCopy.daily_logs = []
+
+		let neededDays = []
+		dataCopy.all_logs.forEach((log) => {
+			if (neededDays.filter((day) => day === log.day).length === 0) {
+				neededDays.push(log.day)
+			}
+		})
+
+		neededDays.forEach(function (day) {
+			let logs = dataCopy.all_logs.filter((log) => log.day === day)
+
+			let neededProjects = []
+			logs.forEach((log) => {
+				if (neededProjects.filter((project) => project === log.project).length === 0) {
+					neededProjects.push(log.project)
 				}
 			})
 
-			neededDays.forEach(function (day) {
-				let logs = dataCopy.all_logs.filter((log) => log.day === day)
+			let sortedLogs = []
 
-				let neededProjects = []
-				logs.forEach((log) => {
-					if (neededProjects.filter((project) => project === log.project).length === 0) {
-						neededProjects.push(log.project)
-					}
-				})
-
-				let sortedLogs = []
-
-				neededProjects.forEach((project) => {
-					let projectLogs = logs.filter((log) => log.project === project)
-					let time = 0
-					projectLogs.forEach((log) => { time += log.duration })
-					sortedLogs.push({ name: project, logs: projectLogs, total_duration: time })
-				})
-
-				dataCopy.daily_logs.push({
-					day: day,
-					projects: sortedLogs
-				})
+			neededProjects.forEach((project) => {
+				let projectLogs = logs.filter((log) => log.project === project)
+				let time = 0
+				projectLogs.forEach((log) => { time += log.duration })
+				sortedLogs.push({ name: project, logs: projectLogs, total_duration: time })
 			})
 
-
-			dataCopy.projects.forEach((project) => {
-				project.logs = dataCopy.all_logs.filter((log) => log.project === project.name)
+			dataCopy.daily_logs.push({
+				day: day,
+				projects: sortedLogs
 			})
+		})
+
+
+		dataCopy.projects.forEach((project) => {
+			project.logs = dataCopy.all_logs.filter((log) => log.project === project.name)
+		})
 
 
 
 
 
-			setData(dataCopy)
+		setRefactoredData(dataCopy)
 
-		}
+	}
 
-	}, [data])
+	useEffect(() => {
+		setData({
+			refactored: false,
+			projects: [
+				{
+					name: "MMonitor",
+					logs: []
+				},
+				{
+					name: "HyperTyper",
+					logs: []
+				}
+			],
+			all_logs: [
+				{
+					project: "MMonitor",
+					day: 18913,
+					start: 1634159644,
+					end: 1634159744,
+					duration: 100
+				},
+				{
+					project: "MMonitor",
+					day: 18913,
+					start: 1634159844,
+					end: 1634159944,
+					duration: 100
+				},
+				{
+					project: "HyperTyper",
+					day: 18913,
+					start: 1634159144,
+					end: 1634159244,
+					duration: 100
+				},
+			],
+			daily_logs: []
+		})
+	}, [])
+
 
 
 	useEffect(() => {
-		const interval =setInterval(() => {
+		const interval = setInterval(() => {
 			if (timer.running) {
 				let copy = { ...timer }
-				
+
 				copy.duration += 1
 				setTimer(copy)
 			}
