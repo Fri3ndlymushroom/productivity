@@ -5,9 +5,18 @@ import { addDays } from "date-fns"
 
 export default function App() {
 
+	const [timer, setTimer] = useState({
+		running: false,
+		start: 0,
+		project: "",
+		duration: 0
+	})
+
+
+
+
 	const [data, setData] = useState({
 		refactored: false,
-		running: { running: false, start: 0, project: "", duration: 0 },
 		projects: [
 			{
 				name: "MMonitor",
@@ -96,22 +105,21 @@ export default function App() {
 
 	}, [data])
 
-	useEffect(() => {
-		setInterval(() => {
-			if (data.running.running) {
-				let copy = { ...data }
 
-				copy.running.duration += 1
-				setData(copy)
+	useEffect(() => {
+		const interval =setInterval(() => {
+			if (timer.running) {
+				let copy = { ...timer }
+				
+				copy.duration += 1
+				setTimer(copy)
 			}
 		}, 1000)
-	}, [])
-
-
-	console.log(data)
+		return () => clearInterval(interval)
+	}, [timer])
 
 	return (
-		<RootNavigator screenProps={{ ...{ data, setData } }} />
+		<RootNavigator screenProps={{ ...{ data, setData, timer, setTimer } }} />
 	);
 }
 

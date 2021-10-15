@@ -5,7 +5,7 @@ import g, {p} from "../styles/global"
 export default function TimelineDay({ dayData }) {
 
     return (
-        <View style={s.dayContainer} key={"dayContainer"+dayData.day}>
+        <View style={s.dayContainer} >
             <Text style={s.dayTitle}>day {dayData.day}</Text>
             {
                 dayData.projects.map((project) => {

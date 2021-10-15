@@ -11,43 +11,36 @@ import StartButton from '../components/StartButton';
 export default function Home({ navigation, screenProps }) {
 
 
-
   const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
-  /*
-  if(navigation.getParam("closeProjectSelection")){
-    navigation.setParams({closeProjectSelection: false})
-    console.log("a: "+navigation.getParam("closeProjectSelection"))
-    setProjectSelectionOpen(false)
-  }
-  */
+
 
 
   const startProject = (project) => {
 
-    let copy = { ...screenProps.data }
+    let copy = { ...screenProps.timer }
 
-    copy.running.running = true
-    copy.running.start = new Date().getTime()
-    copy.running.project = project
+    copy.running = true
+    copy.start = new Date().getTime()
+    copy.project = project
 
-    screenProps.setData(copy)
 
+    screenProps.setTimer(copy)
   }
 
   const stopProject = () =>{
-    
+
   }
 
 
   return (
     <View style={gs.container}>
-      <StartButton data={screenProps.data} {...{ setProjectSelectionOpen, stopProject }} />
+      <StartButton timer={screenProps.timer} {...{ setProjectSelectionOpen, stopProject }} />
       {
         projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
       }
       {
         screenProps.data.daily_logs.map((dayData) => {
-          return <TimelineDay {...{ dayData }} />
+          return <TimelineDay key={"dayContainer"+dayData.day} {...{ dayData }} />
         })
       }
     </View>
