@@ -16,7 +16,12 @@ export default function App() {
 
 
 	const [data, setRefactoredData] = useState({
-		refactored: false,
+		timer: {
+            running: false,
+            start: 0,
+            project: "",
+            duration: 0
+        },
 		projects: [],
 		all_logs: [],
 		daily_logs: []
@@ -25,7 +30,6 @@ export default function App() {
 
 	const setData = (newData) => {
 		let dataCopy = { ...newData }
-		dataCopy.refactored = true
 		dataCopy.daily_logs = []
 
 		let neededDays = []
@@ -75,6 +79,12 @@ export default function App() {
 
 	useEffect(() => {
 		setData({
+            timer: {
+                running: false,
+                start: 0,
+                project: "",
+                duration: 0
+            },
 			refactored: false,
 			projects: [
 				{
@@ -117,18 +127,23 @@ export default function App() {
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			if (timer.running) {
-				let copy = { ...timer }
 
-				copy.duration += 1
-				setTimer(copy)
-			}
+            if(data.all_logs.filter((log)=>log.running === true).length > 0){
+                let index = data.all_logs.findIndex((log)=>log.running === true)
+                let copy = {...data}
+                let now = Math.round(new Date().getTime() / 1000)
+                copy.all_logs[index].duration = now - copy.all_logs[index].start
+                setData(copy)
+            }
+
 		}, 1000)
 		return () => clearInterval(interval)
-	}, [timer])
+	}, [data])
+
+
 
 	return (
-		<RootNavigator screenProps={{ ...{ data, setData, timer, setTimer } }} />
+		<RootNavigator screenProps={{ ...{ data, setData} }} />
 	);
 }
 

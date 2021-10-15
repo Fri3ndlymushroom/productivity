@@ -2,14 +2,15 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, TouchableOpacity } from 'react-native'
 import { p } from '../styles/global'
 
-export default function StartButton({timer, setProjectSelectionOpen, stopProject}) {
+export default function StartButton({data, setProjectSelectionOpen, stopProject}) {
 
 
-    if(timer.running){
+    if(data.all_logs.filter((log)=>log.running === true).length > 0){
+        let index = data.all_logs.findIndex((log)=>log.running === true)
         return (
             <TouchableOpacity style={s.goButton} onPress={() =>  stopProject()}>
                 <Text style={s.stopText}>Stop</Text>
-                <Text style={s.timerText}>{timer.duration}</Text>
+                <Text style={s.timerText}>{data.all_logs[index].duration}</Text>
             </TouchableOpacity>
         )
     }else{

@@ -11,60 +11,56 @@ import StartButton from '../components/StartButton';
 export default function Home({ navigation, screenProps }) {
 
 
-  const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
+    const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
 
 
 
-  const startProject = (project) => {
+    const startProject = (project) => {
 
-    let copy = { ...screenProps.timer }
+        let copy = { ...screenProps.data }
 
-    copy.running = true
-    copy.start = new Date().getTime()
-    copy.project = project
+        let start = Math.round(new Date().getTime() / 1000)
 
+        copy.all_logs.push({
+            project: project,
+            day: Math.floor(start / 60 / 60 / 24),
+            start: start,
+            duration: 0,
+            running: true,
+        })
 
-    screenProps.setTimer(copy)
-  }
-
-  const stopProject = () =>{
-    let timerCopy = {...screenProps.timer}
-    let dataCopy = {...screenProps.data}
-
-
-    dataCopy.all_logs.push({
-      project: timerCopy.project,
-      day: Math.floor(timerCopy.start/1000/60/60/24),
-      start: timerCopy.start,
-      end: new Date().getTime(),
-      duration:  new Date().getTime() - timerCopy.start
-    })
-
-
-    timerCopy={
-      running: false,
-      start: 0,
-      project: "",
-      duration: 0
+        screenProps.setData(copy)
     }
 
-    screenProps.setTimer(timerCopy)
-    screenProps.setData(dataCopy)
+    const stopProject = () => {
+        let dataCopy = { ...screenProps.data }
 
-  }
+        let runningIndex = dataCopy.all_logs.findIndex((log)=>log.running === true)
+
+        let end = Math.round(new Date().getTime() / 1000)
+        let start = dataCopy.all_logs[runningIndex].start
+
+        dataCopy.all_logs[runningIndex].running = false
+        dataCopy.all_logs[runningIndex].end = end 
+        dataCopy.all_logs[runningIndex].duration = end - start 
 
 
-  return (
-    <View style={gs.container}>
-      <StartButton timer={screenProps.timer} {...{ setProjectSelectionOpen, stopProject }} />
-      {
-        projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
-      }
-      {
-        screenProps.data.daily_logs.map((dayData) => {
-          return <TimelineDay key={"dayContainer"+dayData.day} {...{ dayData }} />
-        })
-      }
-    </View>
-  );
+        screenProps.setData(dataCopy)
+
+    }
+
+
+    return (
+        <View style={gs.container}>
+            <StartButton data={screenProps.data} {...{ setProjectSelectionOpen, stopProject }} />
+            {
+                projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
+            }
+            {
+                screenProps.data.daily_logs.map((dayData) => {
+                    return <TimelineDay key={"dayContainer" + dayData.day} {...{ dayData }} />
+                })
+            }
+        </View>
+    );
 }

@@ -5,11 +5,12 @@ export const p = {
     bg2: "#202231",
     bg3: "#2d2f41",
 
-    text__main: "#a6a7ab",
+    text__main: "#ffffff",
     text__dim: "#a6a7ab",
 
     br: "10px"
 }
+
 
 
 export const headerStyle = {
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    text:{
+    text: {
         color: p.text__main
     }
 });
