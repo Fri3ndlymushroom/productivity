@@ -5,15 +5,6 @@ import { addDays } from "date-fns"
 
 export default function App() {
 
-	const [timer, setTimer] = useState({
-		running: false,
-		start: 0,
-		project: "",
-		duration: 0
-	})
-
-
-
 
 	const [data, setRefactoredData] = useState({
 		timer: {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import g, {p} from "../styles/global"
+import { secondsToFormatedString } from '../functions'
 
 export default function TimelineDay({ dayData }) {
 
@@ -13,7 +14,7 @@ export default function TimelineDay({ dayData }) {
                     return(
                         <View key={"day"+dayData.day+"project"+project.name} style={s.projectContainer}>
                             <Text style={g.text}>{project.name}</Text>
-                            <Text style={g.text}>{project.total_duration}</Text>
+                            <Text style={g.text}>{secondsToFormatedString(project.total_duration)}</Text>
                         </View>
 
                     )

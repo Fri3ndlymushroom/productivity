@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Button, Text, View, TouchableOpacity } from 'react-native'
 import { p } from '../styles/global'
+import { secondsToFormatedString } from '../functions'
 
 export default function StartButton({data, setProjectSelectionOpen, stopProject}) {
 
@@ -10,7 +11,7 @@ export default function StartButton({data, setProjectSelectionOpen, stopProject}
         return (
             <TouchableOpacity style={s.goButton} onPress={() =>  stopProject()}>
                 <Text style={s.stopText}>Stop</Text>
-                <Text style={s.timerText}>{data.all_logs[index].duration}</Text>
+                <Text style={s.timerText}>{secondsToFormatedString(data.all_logs[index].duration)}</Text>
             </TouchableOpacity>
         )
     }else{
