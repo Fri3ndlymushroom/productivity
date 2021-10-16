@@ -10,7 +10,7 @@ export default function EditLog({ navigation, screenProps }) {
 
    let log = navigation.getParam("edited_log")
 
-
+   const [showDateTime, setShowDateTime] = useState(false)
 
    const editLog = () => {
 
@@ -40,16 +40,20 @@ export default function EditLog({ navigation, screenProps }) {
 
    return (
       <View style={g.body}>
+         <View>
+            {showDateTime && (
+               <DateTimePicker
+                  testID="dateTimePicker"
+                  value={new Date(log.start)}
+                  mode={"date"}
+                  is24Hour={true}
+                  display="default"
+                  onChange={() => editLog()}
+               />
+            )}
+         </View>
 
-         <DateTimePicker
-            testID="dateTimePicker"
-            value={new Date(log.start)}
-            mode={"date"}
-            is24Hour={true}
-            display="default"
-            onChange={() => editLog()}
-         />
-         <TouchableOpacity><Text>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
+         <TouchableOpacity onPress={()=>setShowDateTime(true)}><Text>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
          <Text>{secondsToFormatedString(log.duration)}</Text>
          <View style={s.timeCorrector}>
             <TouchableOpacity onPress={() => add10ToLog("start", -600)}><Text>-</Text></TouchableOpacity>

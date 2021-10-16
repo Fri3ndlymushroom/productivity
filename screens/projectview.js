@@ -9,36 +9,43 @@ export default function ProjectView({ navigation, screenProps }) {
    let projectData = screenProps.data.projects[projectIndex]
    let lastDay = 0
 
-   const addLog = () =>{
-      let copy = {...screenProps.data}
+   const addLog = () => {
+      let copy = { ...screenProps.data }
       let start = Math.round(new Date().getTime() / 1000)
       copy.all_logs.push({
          project: projectName,
          day: Math.ceil(start / 60 / 60 / 24),
          start: start,
          duration: 600,
-         end: start+600,
+         end: start + 600,
          running: false,
       })
       screenProps.setData(copy)
    }
 
 
+
+
    return (
 
       <View style={g.body}>
          <Text style={g.text}>{projectName}</Text>
-         <Button title="add" onPress={()=>addLog()}/>
+         <Button title="add" onPress={() => addLog()} />
          {
             projectData.logs.map((log) => {
 
                let logs = null
 
+
+
                let card = (
+
                   <TouchableOpacity onPress={() => { navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
                      <Text style={g.text}>{secondsToShortTimeString(log.start)} - {secondsToShortTimeString(log.end)}</Text>
                      <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
                   </TouchableOpacity>
+
+
                )
 
 
