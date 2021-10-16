@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native'
+
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
 import g from "../styles/global"
-import { secondsToTimeString , secondsToFormatedString, secondsToDateString} from '../js/timerfunctions';
+import { secondsToTimeString, secondsToFormatedString, secondsToDateString } from '../js/timerfunctions';
 
 export default function ProjectView({ navigation, screenProps }) {
    let projectName = navigation.getParam("projectViewProject")
@@ -20,26 +20,25 @@ export default function ProjectView({ navigation, screenProps }) {
 
                let logs = null
 
+               let card = (
+                  <TouchableOpacity onPress={()=>{navigation.navigate("EditLog", {edited_log:log})}} style={g.projectContainer}>
+                     <Text style={g.text}>{secondsToTimeString(log.start)} - {secondsToTimeString(log.end)}</Text>
+                     <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
+                  </TouchableOpacity>
+               )
+
 
                if (lastDay !== log.day) {
                   logs = (
                      <View key={"projectViewLog" + log.start}>
                         <Text style={g.dayTitle}>{secondsToDateString(log.start)}</Text>
-                        <View style={g.projectContainer}>
-
-                           <Text style={g.text}>{secondsToTimeString(log.start)} - {secondsToTimeString(log.end)}</Text>
-
-                           <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
-                        </View>
+                        {card}
                      </View>
                   )
                } else {
                   logs = (
                      <View key={"projectViewLog" + log.start}>
-                        <View style={g.projectContainer}>
-                           <Text style={g.text}>{secondsToTimeString(log.start)} - {secondsToTimeString(log.end)}</Text>
-                           <Text style={g.text} >{secondsToFormatedString(log.duration)}</Text>
-                        </View>
+                        {card}
                      </View>
                   )
 

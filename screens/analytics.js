@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button } from "react-native"
 import React from 'react';
 import { Text, View } from 'react-native';
 import gs from '../styles/global'

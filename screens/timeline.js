@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { Button, Text, View } from "react-native"
-import gs from '../styles/global'
+import g from '../styles/global'
 import { DefaultText } from '../components/components'
 import ProjectSelection from "../components/projectSelection"
 import TimelineDay from '../components/TimelineDay';
@@ -51,7 +50,7 @@ export default function Home({ navigation, screenProps }) {
 
 
    return (
-      <View style={gs.container}>
+      <View style={g.container}>
          <StartButton data={screenProps.data} {...{ setProjectSelectionOpen, stopProject }} />
          {
             projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />

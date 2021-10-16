@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, TextInput, Button, Text, View } from "react-native"
 import g from '../styles/global'
 import { DefaultText } from '../components/components'
