@@ -1,6 +1,6 @@
 import React from 'react'
-import { TouchableOpacity, Button, StyleSheet, Text, View } from 'react-native'
-import { p } from "../styles/global"
+import { TouchableOpacity, Button, StyleSheet, Text, View, Touchable } from 'react-native'
+import g, { p } from "../styles/global"
 
 
 export default function projectSelection({ data, navigation, setProjectSelectionOpen, startProject }) {
@@ -9,15 +9,17 @@ export default function projectSelection({ data, navigation, setProjectSelection
          <View style={s.projectSelectionWindow}>
             {data.projects.map((project, i) => {
                return (
-                  <View key={"projectSelection" + i} style={s.projectButtonWrapper}>
-                     <Button title={project.name} onPress={() => { startProject(project.name); setProjectSelectionOpen(false) }} />
-                     <Button title={"Edit"} onPress={() => { navigation.navigate("ProjectView", { projectViewProject: project.name }) }} />
-                  </View>
+                  <TouchableOpacity style={g.projectCard} key={"projectSelection" + i} onPress={() => { startProject(project.name); setProjectSelectionOpen(false) }} >
+                     <Text>{project.name}</Text>
+                     <TouchableOpacity onPress={() => { navigation.navigate("ProjectView", { projectViewProject: project.name }) }}>
+                        <Text>Edit</Text>
+                     </TouchableOpacity>
+                  </TouchableOpacity>
                )
             })}
-            <View style={s.projectButtonWrapper}>
-               <Button title={"add Project"} onPress={() => { navigation.navigate("AddProject") }} />
-            </View>
+
+            <TouchableOpacity onPress={() => { navigation.navigate("AddProject") }}><Text>Add Project</Text></TouchableOpacity>
+
          </View>
       </TouchableOpacity>
    )

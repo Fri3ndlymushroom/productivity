@@ -26,7 +26,7 @@ export default function Home({ navigation, screenProps }) {
     }
 
     return (
-        <View style={g.container}>
+        <View style={g.body}>
             <TextInput
                 style={s.input}
                 onChangeText={setNewProjectName}
