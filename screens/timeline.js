@@ -50,7 +50,7 @@ export default function Home({ navigation, screenProps }) {
 
 
    return (
-      <View style={g.container}>
+      <View style={g.body}>
          <StartButton data={screenProps.data} {...{ setProjectSelectionOpen, stopProject }} />
          {
             projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />

@@ -1,49 +1,50 @@
 import React from 'react'
-import {TouchableOpacity, Button, StyleSheet, Text, View } from 'react-native'
+import { TouchableOpacity, Button, StyleSheet, Text, View } from 'react-native'
 import { p } from "../styles/global"
 
 
-export default function projectSelection({data, navigation, setProjectSelectionOpen, startProject}) {
-    return (
-        <TouchableOpacity style={s.projectSelectionWrapper} onPress={()=>setProjectSelectionOpen(false)}>
-            <View style={s.projectSelectionWindow}>
-                {data.projects.map((project, i) => {
-                    return (
-                        <View key={"projectSelection"+i} style={s.projectButtonWrapper}>
-                            <Button title={project.name} onPress={()=>{startProject(project.name); setProjectSelectionOpen(false)}} />
-                            <Button title={"Edit"} onPress={()=>{navigation.navigate("ProjectView", { projectViewProject: project.name })}}/>
-                        </View>
-                    )
-                })}
-                <View style={s.projectButtonWrapper}>
-                    <Button title={"add Project"} onPress={()=>{navigation.navigate("AddProject")}}/>
-                </View>
+export default function projectSelection({ data, navigation, setProjectSelectionOpen, startProject }) {
+   return (
+      <TouchableOpacity style={s.projectSelectionWrapper} onPress={() => setProjectSelectionOpen(false)}>
+         <View style={s.projectSelectionWindow}>
+            {data.projects.map((project, i) => {
+               return (
+                  <View key={"projectSelection" + i} style={s.projectButtonWrapper}>
+                     <Button title={project.name} onPress={() => { startProject(project.name); setProjectSelectionOpen(false) }} />
+                     <Button title={"Edit"} onPress={() => { navigation.navigate("ProjectView", { projectViewProject: project.name }) }} />
+                  </View>
+               )
+            })}
+            <View style={s.projectButtonWrapper}>
+               <Button title={"add Project"} onPress={() => { navigation.navigate("AddProject") }} />
             </View>
-        </TouchableOpacity>
-    )
+         </View>
+      </TouchableOpacity>
+   )
 }
 
 const s = StyleSheet.create({
-    projectSelectionWrapper: {
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        right: 0,
-        left: 0,
-        backgroundColor: "#00000090",
+   projectSelectionWrapper: {
+      zIndex: 2,
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 0,
+      backgroundColor: "#00000090",
 
 
-    },
-    projectSelectionWindow: {
-        position: "absolute",
-        bottom: 0,
-        backgroundColor: p.bg2,
-        height: "300px",
-        width: "100%",
-        borderTopLeftRadius: "10px",
-        borderTopRightRadius: "10px",
-        alignItems: 'center',
-        padding: "30px"
+   },
+   projectSelectionWindow: {
+      position: "absolute",
+      bottom: 0,
+      backgroundColor: p.bg2,
+      height: "300px",
+      width: "100%",
+      borderTopLeftRadius: "10px",
+      borderTopRightRadius: "10px",
+      alignItems: 'center',
+      padding: "30px"
 
-    }
+   }
 })

@@ -12,7 +12,7 @@ export default function TimelineDay({ dayData, navigation }) {
             dayData.projects.map((project) => {
 
                return (
-                  <TouchableOpacity onPress={() => navigation.navigate("ProjectView", { projectViewProject: project.name })} key={"day" + dayData.day + "project" + project.name} style={g.projectContainer}>
+                  <TouchableOpacity onPress={() => navigation.navigate("ProjectView", { projectViewProject: project.name })} key={"day" + dayData.day + "project" + project.name} style={g.projectCard}>
                      <Text style={g.text}>{project.name}</Text>
                      <Text style={g.text}>{secondsToFormatedString(project.total_duration)}</Text>
                   </TouchableOpacity>
@@ -29,5 +29,4 @@ const s = StyleSheet.create({
       marginBottom: "30px",
       marginHorizontal: "60px"
    },
-
 })
