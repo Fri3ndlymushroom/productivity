@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import RootNavigator from './routes/draw'
-import { addDays } from "date-fns"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { dummyData } from './data';
 
 
 export default function App() {
@@ -19,9 +20,9 @@ export default function App() {
    })
 
 
-   const setData = (newData) => {
+   const setData = async (newData) => {
+      await AsyncStorage.setItem('@data', JSON.stringify(newData))
       let dataCopy = { ...newData }
-
 
 
       dataCopy.all_logs.sort(function (a, b) {
@@ -79,50 +80,28 @@ export default function App() {
 
    }
 
+
+
+
    useEffect(() => {
-      setData({
-         timer: {
-            running: false,
-            start: 0,
-            project: "",
-            duration: 0
-         },
-         refactored: false,
-         projects: [
-            {
-               name: "MMonitor",
-               logs: []
-            },
-            {
-               name: "HyperTyper",
-               logs: []
+
+
+      const getdbData = async () => {
+         try {
+            let dbData = JSON.parse(await AsyncStorage.getItem('@data'))
+            if(dbData === null){
+               dbData = dummyData
             }
-         ],
-         all_logs: [
-            {
-               project: "MMonitor",
-               day: 18913,
-               start: 1634159644,
-               end: 1634159744,
-               duration: 100
-            },
-            {
-               project: "MMonitor",
-               day: 18913,
-               start: 1634159844,
-               end: 1634159944,
-               duration: 100
-            },
-            {
-               project: "HyperTyper",
-               day: 18913,
-               start: 1634159144,
-               end: 1634159244,
-               duration: 100
-            },
-         ],
-         daily_logs: []
-      })
+            setData(dbData)
+         } catch (err) {
+            console.log(err)
+         }
+      }
+
+      getdbData()
+
+
+
    }, [])
 
 
