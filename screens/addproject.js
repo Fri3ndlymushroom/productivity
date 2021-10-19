@@ -35,13 +35,13 @@ export default function Home({ navigation, screenProps }) {
         <View style={g.body}>
             <View>
                 {/* https://www.npmjs.com/package/react-native-color-palette */}
-                {/* <ColorPalette
+                <ColorPalette
                     onChange={color => { selectedColor = color }}
                     defaultColor={'#C0392B'}
                     colors={['#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9']}
                     title={"Choose a color for your project:"}
                     icon={<Icon name={'check'} size={25} color={'white'} />}
-                /> */}
+                /> 
             </View>
             <TextInput
                 style={s.input}
