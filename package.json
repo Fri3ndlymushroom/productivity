@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.15.8",
-    "@react-native-async-storage/async-storage": "^1.15.9",
-    "@react-native-community/datetimepicker": "^3.5.2",
-    "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-async-storage/async-storage": "~1.15.0",
+    "@react-native-community/datetimepicker": "3.5.2",
+    "@react-native-community/masked-view": "0.1.10",
     "async-storage": "^0.1.0",
     "date-fns": "^2.25.0",
     "expo": "^42.0.4",
@@ -20,10 +20,10 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-color-palette": "^2.2.0",
-    "react-native-gesture-handler": "^1.10.3",
-    "react-native-reanimated": "^1.13.1",
-    "react-native-screens": "^3.8.0",
-    "react-native-svg": "^12.1.1",
+    "react-native-gesture-handler": "~1.10.2",
+    "react-native-reanimated": "~2.2.0",
+    "react-native-screens": "~3.4.0",
+    "react-native-svg": "12.1.1",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.4",
@@ -31,7 +31,7 @@
     "react-navigation-stack": "^2.10.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.8"
+    "@babel/core": "~7.9.0"
   },
   "private": true
 }
