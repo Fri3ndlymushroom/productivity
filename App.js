@@ -55,7 +55,7 @@ export default function App() {
                 let projectLogs = logs.filter((log) => log.project === project)
                 let time = 0
                 projectLogs.forEach((log) => { time += log.duration })
-                sortedLogs.push({ name: project, logs: projectLogs, total_duration: time })
+                sortedLogs.push({ name: project, logs: projectLogs, total_duration: time , color: projectLogs[0].color})
             })
 
             dataCopy.daily_logs.push({
