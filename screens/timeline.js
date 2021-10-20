@@ -5,8 +5,9 @@ import { DefaultText } from '../components/components'
 import ProjectSelection from "../components/projectSelection"
 import TimelineDay from '../components/TimelineDay';
 import StartButton from '../components/StartButton';
+import { v4 as uuidv4 } from 'uuid';
 
-
+console.log("L_"+uuidv4())
 
 export default function Home({ navigation, screenProps }) {
 
@@ -26,6 +27,7 @@ export default function Home({ navigation, screenProps }) {
         copy.all_logs.push({
             project: name,
             pid: pid,
+            lid: "L_"+uuidv4(),
             day: Math.ceil(start / 60 / 60 / 24),
             start: start,
             duration: 0,

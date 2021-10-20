@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
 import g from "../styles/global"
 import { secondsToShortTimeString, secondsToFormatedString, secondsToDateString } from '../js/timerfunctions';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function ProjectView({ navigation, screenProps }) {
     let pid = navigation.getParam("projectViewPid")
@@ -16,6 +17,7 @@ export default function ProjectView({ navigation, screenProps }) {
         copy.all_logs.push({
             project: projectName,
             pid:pid,
+            lid: "L_"+uuidv4(),
             day: Math.ceil(start / 60 / 60 / 24),
             start: start,
             duration: 600,

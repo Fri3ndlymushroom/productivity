@@ -24,7 +24,7 @@ export default function Home({ navigation, screenProps }) {
 
 
         copy.projects.push({
-            pid: uuidv4(),
+            pid: "P_"+uuidv4(),
             name: newProjectName,
             trackings: [],
             color: selectedColor

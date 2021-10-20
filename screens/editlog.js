@@ -8,69 +8,88 @@ import { LongPressGestureHandler } from 'react-native-gesture-handler';
 
 export default function EditLog({ navigation, screenProps }) {
 
-   let log = navigation.getParam("edited_log")
 
-   const [showDateTime, setShowDateTime] = useState(false)
-
-   const editLog = () => {
-
-   }
-
-   const add10ToLog = (type, value) => {
-      let copy = { ...screenProps.data }
+    const [log, setLog] = useState(JSON.parse(JSON.stringify(navigation.getParam("edited_log"))))
 
 
-      let index = copy.all_logs.findIndex((fit) => fit.start === log.start && fit.end === log.end && fit.project === log.project)
+    const [showDateTime, setShowDateTime] = useState(false)
 
-      if (type === "end") {
-         copy.all_logs[index].end += value
-      } else if (type === "start") {
-         copy.all_logs[index].start += value
-      }
+    const editLog = () => {
 
-      copy.all_logs[index].duration = copy.all_logs[index].end - copy.all_logs[index].start
+    }
 
 
-      if (copy.all_logs[index].duration > 0)
-         screenProps.setData(copy)
-   }
+    const editStartOfLog = (value) => {
+
+        let logCopy = JSON.parse(JSON.stringify(log))
+ 
+        logCopy.start += value
+        logCopy.duration = logCopy.end - logCopy.start
+
+        if(logCopy.duration > 0){
+            setLog(logCopy)
+        }
+    }
+
+    const editEndOfLog = (value) => {
+
+        let logCopy = JSON.parse(JSON.stringify(log))
+ 
+        logCopy.end += value
+        logCopy.duration = logCopy.end - logCopy.start
+
+        if(logCopy.duration > 0){
+            setLog(logCopy)
+        }
+    }
+
+    const saveChanges = () =>{
+        let copy = JSON.parse(JSON.stringify(screenProps.data))
+        let index = copy.all_logs.findIndex((logRef)=>logRef.lid === log.lid )
+
+        copy.all_logs[index] = log
+        console.log(log)
+        screenProps.setData(copy)
+    }
 
 
 
 
-   return (
-      <View style={g.body}>
-         <View>
-            {showDateTime && (
-               <DateTimePicker
-                  testID="dateTimePicker"
-                  value={new Date(log.start)}
-                  mode={"date"}
-                  is24Hour={true}
-                  display="default"
-                  onChange={() => editLog()}
-               />
-            )}
-         </View>
 
-         <TouchableOpacity onPress={()=>setShowDateTime(true)}><Text>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
-         <Text>{secondsToFormatedString(log.duration)}</Text>
-         <View style={s.timeCorrector}>
-            <TouchableOpacity onPress={() => add10ToLog("start", -600)}><Text>-</Text></TouchableOpacity>
-            <TouchableOpacity><Text>From: {secondsToShortTimeString(log.start)}</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => add10ToLog("start", 600)}><Text>+</Text></TouchableOpacity>
-         </View>
-         <View style={s.timeCorrector}>
-            <TouchableOpacity onPress={() => add10ToLog("end", -600)}><Text>-</Text></TouchableOpacity>
-            <TouchableOpacity><Text>To: {secondsToShortTimeString(log.end)}</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => add10ToLog("end", 600)}><Text>+</Text></TouchableOpacity>
-         </View>
-      </View>
-   );
+    return (
+        <View style={g.body}>
+            <View>
+                {showDateTime && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={new Date(log.start)}
+                        mode={"date"}
+                        is24Hour={true}
+                        display="default"
+                        onChange={() => editLog()}
+                    />
+                )}
+            </View>
+
+            <TouchableOpacity onPress={() => setShowDateTime(true)}><Text>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
+            <Text>{secondsToFormatedString(log.duration)}</Text>
+            <View style={s.timeCorrector}>
+                <TouchableOpacity onPress={() => editStartOfLog(-600)}><Text>-</Text></TouchableOpacity>
+                <TouchableOpacity><Text>From: {secondsToShortTimeString(log.start)}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => editStartOfLog(600)}><Text>+</Text></TouchableOpacity>
+            </View>
+            <View style={s.timeCorrector}>
+                <TouchableOpacity onPress={() => editEndOfLog(-600)}><Text>-</Text></TouchableOpacity>
+                <TouchableOpacity><Text>To: {secondsToShortTimeString(log.end)}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => editEndOfLog(600)}><Text>+</Text></TouchableOpacity>
+            </View>
+            <Button title="save changes" onPress={()=>saveChanges()}/>
+        </View>
+    );
 }
 const s = StyleSheet.create({
-   timeCorrector: {
-      display: "flex",
-      flexDirection: "row"
-   }
+    timeCorrector: {
+        display: "flex",
+        flexDirection: "row"
+    }
 });

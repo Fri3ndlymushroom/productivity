@@ -21,8 +21,11 @@ export default function App() {
 
 
     const setData = async (newData) => {
+
+
+
         await AsyncStorage.setItem('@data', JSON.stringify(newData))
-        let dataCopy = { ...newData }
+        let dataCopy =  JSON.parse(JSON.stringify(newData))
 
         // daily logs
         dataCopy.all_logs.sort(function (a, b) {
@@ -75,6 +78,7 @@ export default function App() {
             project.logs = dataCopy.all_logs.filter((log) => log.pid === project.pid)
         })
 
+        //console.log(dataCopy.all_logs[2].duration)
         setRefactoredData(dataCopy)
 
     }
