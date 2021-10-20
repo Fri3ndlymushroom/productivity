@@ -22,7 +22,7 @@ export default function TimelineDay({ dayData, navigation }) {
                     })
 
                     return (
-                        <TouchableOpacity onPress={() => navigation.navigate("ProjectView", { projectViewProject: project.name })} key={"day" + dayData.day + "project" + project.name} style={[g.projectCard, colorStyle.color]}>
+                        <TouchableOpacity onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })} key={"day" + dayData.day + "project" + project.name} style={[g.projectCard, colorStyle.color]}>
                             <Text style={g.text}>{project.name}</Text>
                             <Text style={g.text}>{secondsToFormatedString(project.total_duration)}</Text>
                         </TouchableOpacity>

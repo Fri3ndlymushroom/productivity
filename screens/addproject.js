@@ -5,6 +5,8 @@ import { DefaultText } from '../components/components'
 import ProjectSelection from "../components/projectSelection"
 import ColorPalette from 'react-native-color-palette'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { v4 as uuidv4 } from 'uuid';
+
 
 let selectedColor = "#ffffff"
 
@@ -22,6 +24,7 @@ export default function Home({ navigation, screenProps }) {
 
 
         copy.projects.push({
+            pid: uuidv4(),
             name: newProjectName,
             trackings: [],
             color: selectedColor

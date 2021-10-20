@@ -4,14 +4,15 @@ import g, { p } from "../styles/global"
 
 
 export default function projectSelection({ data, navigation, setProjectSelectionOpen, startProject }) {
+
     return (
         <TouchableOpacity style={s.projectSelectionWrapper} onPress={() => setProjectSelectionOpen(false)}>
             <View style={s.projectSelectionWindow}>
                 {data.projects.map((project, i) => {
                     return (
-                        <TouchableOpacity style={g.projectCard} key={"projectSelection" + i} onPress={() => { startProject(project.name); setProjectSelectionOpen(false) }} >
+                        <TouchableOpacity style={g.projectCard} key={"projectSelection" + i} onPress={() => { startProject(project.pid); setProjectSelectionOpen(false) }} >
                             <Text>{project.name}</Text>
-                            <TouchableOpacity onPress={() => { navigation.navigate("ProjectView", { projectViewProject: project.name }) }}>
+                            <TouchableOpacity onPress={() => { navigation.navigate("ProjectView", { projectViewPid: project.pid }) }}>
                                 <Text>Edit</Text>
                             </TouchableOpacity>
                         </TouchableOpacity>

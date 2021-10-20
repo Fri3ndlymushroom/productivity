@@ -4,9 +4,10 @@ import g from "../styles/global"
 import { secondsToShortTimeString, secondsToFormatedString, secondsToDateString } from '../js/timerfunctions';
 
 export default function ProjectView({ navigation, screenProps }) {
-    let projectName = navigation.getParam("projectViewProject")
-    let projectIndex = screenProps.data.projects.findIndex((project) => project.name === projectName)
+    let pid = navigation.getParam("projectViewPid")
+    let projectIndex = screenProps.data.projects.findIndex((project) => project.pid === pid)
     let projectData = screenProps.data.projects[projectIndex]
+    let projectName = projectData.name
     let lastDay = 0
 
     const addLog = () => {
@@ -14,11 +15,13 @@ export default function ProjectView({ navigation, screenProps }) {
         let start = Math.round(new Date().getTime() / 1000)
         copy.all_logs.push({
             project: projectName,
+            pid:pid,
             day: Math.ceil(start / 60 / 60 / 24),
             start: start,
             duration: 600,
             end: start + 600,
             running: false,
+
         })
         screenProps.setData(copy)
     }
@@ -35,9 +38,6 @@ export default function ProjectView({ navigation, screenProps }) {
                 projectData.logs.map((log) => {
 
                     let logs = null
-
-
-
                     let card = (
 
                         <TouchableOpacity onPress={() => { navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
@@ -47,8 +47,6 @@ export default function ProjectView({ navigation, screenProps }) {
 
 
                     )
-
-
                     if (lastDay !== log.day) {
                         logs = (
                             <View key={"projectViewLog" + log.start}>

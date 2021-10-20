@@ -7,6 +7,7 @@ import TimelineDay from '../components/TimelineDay';
 import StartButton from '../components/StartButton';
 
 
+
 export default function Home({ navigation, screenProps }) {
 
 
@@ -14,17 +15,17 @@ export default function Home({ navigation, screenProps }) {
 
 
 
-    const startProject = (project) => {
+    const startProject = (pid) => {
 
         let copy = { ...screenProps.data }
 
-        console.log(project)
         let start = Math.round(new Date().getTime() / 1000)
-        let color = copy.projects[copy.projects.findIndex((projectRef)=>projectRef.name === project)].color
-
+        let color = copy.projects.filter((projectRef)=>projectRef.pid === pid)[0].color
+        let name = copy.projects.filter((projectRef)=>projectRef.pid === pid)[0].name
 
         copy.all_logs.push({
-            project: project,
+            project: name,
+            pid: pid,
             day: Math.ceil(start / 60 / 60 / 24),
             start: start,
             duration: 0,

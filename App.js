@@ -24,11 +24,10 @@ export default function App() {
         await AsyncStorage.setItem('@data', JSON.stringify(newData))
         let dataCopy = { ...newData }
 
-
+        // daily logs
         dataCopy.all_logs.sort(function (a, b) {
             return b.start - a.start;
         });
-
 
         dataCopy.daily_logs = []
 
@@ -44,18 +43,25 @@ export default function App() {
 
             let neededProjects = []
             logs.forEach((log) => {
-                if (neededProjects.filter((project) => project === log.project).length === 0) {
-                    neededProjects.push(log.project)
+                if (neededProjects.filter((pid) => pid === log.pid).length === 0) {
+                    neededProjects.push(log.pid)
                 }
             })
 
             let sortedLogs = []
 
-            neededProjects.forEach((project) => {
-                let projectLogs = logs.filter((log) => log.project === project)
+            neededProjects.forEach((pid) => {
+                let projectLogs = logs.filter((log) => log.pid === pid)
                 let time = 0
                 projectLogs.forEach((log) => { time += log.duration })
-                sortedLogs.push({ name: project, logs: projectLogs, total_duration: time , color: projectLogs[0].color})
+                let name = dataCopy.projects.filter((project) => project.pid === pid)[0].name
+                sortedLogs.push({
+                    name: name,
+                    pid: pid,
+                    logs: projectLogs,
+                    total_duration: time,
+                    color: projectLogs[0].color
+                })
             })
 
             dataCopy.daily_logs.push({
@@ -64,17 +70,10 @@ export default function App() {
             })
         })
 
-
+        // projects
         dataCopy.projects.forEach((project) => {
-            project.logs = dataCopy.all_logs.filter((log) => log.project === project.name)
+            project.logs = dataCopy.all_logs.filter((log) => log.pid === project.pid)
         })
-
-
-
-
-
-
-
 
         setRefactoredData(dataCopy)
 
@@ -84,8 +83,6 @@ export default function App() {
 
 
     useEffect(() => {
-
-
         const getdbData = async () => {
             try {
                 let dbData = JSON.parse(await AsyncStorage.getItem('@data'))
@@ -99,16 +96,12 @@ export default function App() {
         }
 
         getdbData()
-
-
-
     }, [])
 
 
 
     useEffect(() => {
         const interval = setInterval(() => {
-
             if (data.all_logs.filter((log) => log.running === true).length > 0) {
                 let index = data.all_logs.findIndex((log) => log.running === true)
                 let copy = { ...data }
