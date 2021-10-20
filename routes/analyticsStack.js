@@ -1,6 +1,6 @@
 import { createStackNavigator } from "react-navigation-stack";
 
-import Analytics from "../screens/analytics"
+import Analytics from "../screens/Analytics"
 
 import {headerStyle} from "../styles/global"
 

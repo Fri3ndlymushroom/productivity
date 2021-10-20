@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View } from 'react-native';
 import gs from '../styles/global'
-import {DefaultText} from '../components/components'
+import {DefaultText} from '../components/Components'
 
 export default function Analytics({ navigation }) {
   return (

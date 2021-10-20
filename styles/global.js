@@ -63,10 +63,15 @@ const styles = StyleSheet.create({
         marginLeft: "5px",
         color: p.text__main
     },
-
     text: {
         color: p.text__main
-    }
+    },
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+    },
 });
 
 export default styles

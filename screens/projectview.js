@@ -35,6 +35,7 @@ export default function ProjectView({ navigation, screenProps }) {
 
         <View style={g.body}>
             <Text style={g.text}>{projectName}</Text>
+            <Button title="Edit project" onPress={()=>{ navigation.navigate("EditProject", { edited_project: pid }) }}/>
             <Button title="add" onPress={() => addLog()} />
             {
                 projectData.logs.map((log) => {

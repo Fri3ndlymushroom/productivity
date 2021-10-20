@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, Button, Text, View } from "react-native"
 import g, { p } from '../styles/global'
-import { DefaultText } from '../components/components'
-import ProjectSelection from "../components/projectSelection"
+import { DefaultText } from '../components/Components'
+import ProjectSelection from "../components/ProjectSelection"
 import ColorPalette from 'react-native-color-palette'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { v4 as uuidv4 } from 'uuid';
@@ -47,19 +47,10 @@ export default function Home({ navigation, screenProps }) {
                 /> 
             </View>
             <TextInput
-                style={s.input}
+                style={g.input}
                 onChangeText={setNewProjectName}
                 value={newProjectName} />
             <Button title={"Add Project"} onPress={() => addProject()} />
         </View>
     );
 }
-
-const s = StyleSheet.create({
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-    },
-});

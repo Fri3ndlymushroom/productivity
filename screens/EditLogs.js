@@ -14,16 +14,10 @@ export default function EditLog({ navigation, screenProps }) {
 
     const [showDateTime, setShowDateTime] = useState(false)
 
-    const editLog = () => {
-
-    }
-
-
-    const editStartOfLog = (value) => {
-
+    const editDateOfLog = (date) => {
         let logCopy = JSON.parse(JSON.stringify(log))
  
-        logCopy.start += value
+        logCopy.start += start
         logCopy.duration = logCopy.end - logCopy.start
 
         if(logCopy.duration > 0){
@@ -31,11 +25,24 @@ export default function EditLog({ navigation, screenProps }) {
         }
     }
 
-    const editEndOfLog = (value) => {
+
+    const editStartOfLog = (start) => {
 
         let logCopy = JSON.parse(JSON.stringify(log))
  
-        logCopy.end += value
+        logCopy.start += start
+        logCopy.duration = logCopy.end - logCopy.start
+
+        if(logCopy.duration > 0){
+            setLog(logCopy)
+        }
+    }
+
+    const editEndOfLog = (end) => {
+
+        let logCopy = JSON.parse(JSON.stringify(log))
+ 
+        logCopy.end += end
         logCopy.duration = logCopy.end - logCopy.start
 
         if(logCopy.duration > 0){
@@ -66,7 +73,7 @@ export default function EditLog({ navigation, screenProps }) {
                         mode={"date"}
                         is24Hour={true}
                         display="default"
-                        onChange={() => editLog()}
+                        onChange={(date) => editDateOfLog(date)}
                     />
                 )}
             </View>

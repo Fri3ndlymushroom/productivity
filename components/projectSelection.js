@@ -4,7 +4,7 @@ import g, { p } from "../styles/global"
 
 
 export default function projectSelection({ data, navigation, setProjectSelectionOpen, startProject }) {
-
+    // todo: make scrollable
     return (
         <TouchableOpacity style={s.projectSelectionWrapper} onPress={() => setProjectSelectionOpen(false)}>
             <View style={s.projectSelectionWindow}>

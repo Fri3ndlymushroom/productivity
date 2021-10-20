@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Button, Text, View } from "react-native"
 import g from '../styles/global'
-import { DefaultText } from '../components/components'
-import ProjectSelection from "../components/projectSelection"
+import { DefaultText } from '../components/Components'
+import ProjectSelection from "../components/ProjectSelection"
 import TimelineDay from '../components/TimelineDay';
 import StartButton from '../components/StartButton';
 import { v4 as uuidv4 } from 'uuid';
 
 console.log("L_"+uuidv4())
 
-export default function Home({ navigation, screenProps }) {
+export default function Timeline({ navigation, screenProps }) {
 
 
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
