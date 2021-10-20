@@ -21,7 +21,6 @@ export default function Timeline({ navigation, screenProps }) {
         let copy = { ...screenProps.data }
 
         let start = Math.round(new Date().getTime() / 1000)
-        let color = copy.projects.filter((projectRef)=>projectRef.pid === pid)[0].color
         let name = copy.projects.filter((projectRef)=>projectRef.pid === pid)[0].name
 
         copy.all_logs.push({
@@ -31,8 +30,7 @@ export default function Timeline({ navigation, screenProps }) {
             day: Math.ceil(start / 60 / 60 / 24),
             start: start,
             duration: 0,
-            running: true,
-            color: color
+            running: true
         })
 
         screenProps.setData(copy)

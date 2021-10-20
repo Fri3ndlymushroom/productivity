@@ -23,7 +23,6 @@ export default function ProjectView({ navigation, screenProps }) {
             duration: 600,
             end: start + 600,
             running: false,
-
         })
         screenProps.setData(copy)
     }

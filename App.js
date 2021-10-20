@@ -27,6 +27,17 @@ export default function App() {
         await AsyncStorage.setItem('@data', JSON.stringify(newData))
         let dataCopy =  JSON.parse(JSON.stringify(newData))
 
+        // colors
+
+        dataCopy.all_logs.forEach(function(log){
+            let projectColor = dataCopy.projects.filter((project)=>project.pid === log.pid)[0].color
+            log.color = projectColor
+        })
+
+
+
+
+
         // daily logs
         dataCopy.all_logs.sort(function (a, b) {
             return b.start - a.start;
