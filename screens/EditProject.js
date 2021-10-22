@@ -24,7 +24,6 @@ export default function EditProject({ navigation, screenProps }) {
     const changeProjectColor = (newColor)=>{
         let copy = copyObject(project)
         copy.color = newColor
-        console.log(copy.color)
         setProject(copy)
     }
 

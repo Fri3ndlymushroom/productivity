@@ -18,7 +18,7 @@ export let dummyData = {
             name: "HyperTyper",
             pid: "P_82d0c204-bfae-4f11-aafc-5bcd8a1a670a",
             logs: [],
-            color:"#f0f1233",
+            color:"#f0f123",
         }
     ],
     all_logs: [

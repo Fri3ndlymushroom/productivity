@@ -7,7 +7,6 @@ import TimelineDay from '../components/TimelineDay';
 import StartButton from '../components/StartButton';
 import { v4 as uuidv4 } from 'uuid';
 
-console.log("L_"+uuidv4())
 
 export default function Timeline({ navigation, screenProps }) {
 
@@ -52,6 +51,8 @@ export default function Timeline({ navigation, screenProps }) {
         screenProps.setData(dataCopy)
 
     }
+
+
 
 
     return (

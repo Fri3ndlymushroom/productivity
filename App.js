@@ -89,15 +89,13 @@ export default function App() {
             project.logs = dataCopy.all_logs.filter((log) => log.pid === project.pid)
         })
 
-        //console.log(dataCopy.all_logs[2].duration)
         setRefactoredData(dataCopy)
 
     }
 
 
-
-
     useEffect(() => {
+        
         const getdbData = async () => {
             try {
                 let dbData = JSON.parse(await AsyncStorage.getItem('@data'))
@@ -106,11 +104,13 @@ export default function App() {
                 }
                 setData(dbData)
             } catch (err) {
-                console.log(err)
+                console.error(err)
             }
         }
 
+
         getdbData()
+
     }, [])
 
 

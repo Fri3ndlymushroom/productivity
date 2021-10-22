@@ -55,7 +55,6 @@ export default function EditLog({ navigation, screenProps }) {
         let index = copy.all_logs.findIndex((logRef)=>logRef.lid === log.lid )
 
         copy.all_logs[index] = log
-        console.log(log)
         screenProps.setData(copy)
     }
 
