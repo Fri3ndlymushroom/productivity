@@ -3,7 +3,8 @@ import React from 'react';
 import { Text, View, Dimensions } from 'react-native';
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
-import { LineChart } from "react-native-chart-kit"
+import { LineChart, StackedBarChart } from "react-native-chart-kit"
+import getAnalytics from "../js/analysis"
 
 
 let dummy_data = {
@@ -23,12 +24,13 @@ let dummy_data = {
 }
 
 let config = {
-    backgroundColor: "#e26a00",
-    backgroundGradientFrom: "#fb8c00",
-    backgroundGradientTo: "#ffa726",
+
+    backgroundColor: "white",
+    backgroundGradientFrom: "white",
+    backgroundGradientTo: "white",
     decimalPlaces: 2, // optional, defaults to 2dp
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     style: {
         borderRadius: 16
     },
@@ -37,6 +39,7 @@ let config = {
         strokeWidth: "2",
         stroke: "#ffa726"
     }
+
 }
 
 
@@ -45,7 +48,28 @@ let config = {
 
 
 
-export default function Analytics({ navigation }) {
+export default function Analytics({ navigation, screenProps }) {
+
+
+
+
+
+
+    const settings = {
+        general_chart: {
+            time: 604800, // week
+            gap: 50400,
+            view: "bar"
+        }
+
+    }
+
+    let analysedData = getAnalytics(screenProps.data, settings)
+
+
+    console.log(analysedData.general_chart)
+
+
     return (
         <View style={g.body}>
             <DefaultText>Analytics</DefaultText>
@@ -63,6 +87,22 @@ export default function Analytics({ navigation }) {
                     borderRadius: 16
                 }}
             />
+
+            <StackedBarChart
+                style={{
+                    marginVertical: 8,
+                    borderRadius: 16
+                }}
+                data={analysedData.general_chart}
+                width={Dimensions.get("window").width}
+                height={220}
+                chartConfig={config}
+                withHorizontalLabels={false}
+                showValuesOnTopOfBars={false}
+                barPercentage={0.001}
+            />
+
+
         </View>
     );
 }

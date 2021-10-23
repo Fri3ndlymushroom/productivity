@@ -8,7 +8,10 @@ import StartButton from '../components/StartButton';
 import { v4 as uuidv4 } from 'uuid';
 
 
+
 export default function Timeline({ navigation, screenProps }) {
+
+
 
 
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
@@ -26,7 +29,7 @@ export default function Timeline({ navigation, screenProps }) {
             project: name,
             pid: pid,
             lid: "L_"+uuidv4(),
-            day: Math.ceil(start / 60 / 60 / 24),
+            day: Math.floor(start / 60 / 60 / 24),
             start: start,
             duration: 0,
             running: true
