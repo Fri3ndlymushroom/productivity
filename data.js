@@ -6,7 +6,6 @@ export let dummyData = {
         project: "",
         duration: 0
     },
-    refactored: false,
     projects: [
         {
             name: "MMonitor",

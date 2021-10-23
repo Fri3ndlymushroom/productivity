@@ -67,8 +67,6 @@ export default function Analytics({ navigation, screenProps }) {
     let analysedData = getAnalytics(screenProps.data, settings)
 
 
-    console.log(analysedData.general_chart)
-
 
     return (
         <View style={g.body}>
@@ -93,13 +91,12 @@ export default function Analytics({ navigation, screenProps }) {
                     marginVertical: 8,
                     borderRadius: 16
                 }}
-                data={analysedData.general_chart}
+                data={analysedData.general_chart.bar}
                 width={Dimensions.get("window").width}
                 height={220}
                 chartConfig={config}
                 withHorizontalLabels={false}
                 showValuesOnTopOfBars={false}
-                barPercentage={0.001}
             />
 
 

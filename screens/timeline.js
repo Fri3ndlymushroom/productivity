@@ -6,13 +6,22 @@ import ProjectSelection from "../components/ProjectSelection"
 import TimelineDay from '../components/TimelineDay';
 import StartButton from '../components/StartButton';
 import { v4 as uuidv4 } from 'uuid';
-
+import getAnalytics from "../js/analysis"
 
 
 export default function Timeline({ navigation, screenProps }) {
 
 
+    const settings = {
+        general_chart: {
+            time: 604800, // week
+            gap: 86400,
+            view: "bar"
+        }
 
+    }
+
+    let analysedData = getAnalytics(screenProps.data, settings)
 
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
 

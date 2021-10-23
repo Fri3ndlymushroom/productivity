@@ -20,8 +20,6 @@ export default function Home({ navigation, screenProps }) {
 
         let copy = screenProps.data
 
-        copy.refactored = false
-
 
         copy.projects.push({
             pid: "P_"+uuidv4(),
