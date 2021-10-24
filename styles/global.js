@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
     },
     projectCard: {
         backgroundColor: p.bg2,
-        width: "300px",
-        margin: "5px",
-        padding: "10px",
+        width: 300,
+        margin: 5,
+        padding: 10,
         display: "flex",
         flexDirection: "row",
         borderRadius: p.br,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     dayTitle: {
-        marginLeft: "5px",
+        marginLeft: 5,
         color: p.text__main
     },
     text: {

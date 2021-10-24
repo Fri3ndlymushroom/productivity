@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Button, StyleSheet, Text, View, Touchable } from 'react-native'
+import { TouchableOpacity,Dimensions, Button, StyleSheet, Text, View, Touchable } from 'react-native'
 import g, { p } from "../styles/global"
 
 
@@ -42,12 +42,12 @@ const s = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         backgroundColor: p.bg2,
-        height: "300px",
-        width: "100%",
+        height: 300,
+        width: Dimensions.get("window").width,
         borderTopLeftRadius: p.br,
         borderTopRightRadius: p.br,
         alignItems: 'center',
-        padding: "30px"
+        padding: 30
 
     }
 })

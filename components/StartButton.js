@@ -27,8 +27,8 @@ export default function StartButton({ data, setProjectSelectionOpen, stopProject
 
 const s = StyleSheet.create({
     goButton: {
-        width: "100px",
-        height: "100px",
+        width: 100,
+        height: 100,
         borderRadius: p.br,
         backgroundColor: p.bg2,
         alignItems: 'center',

@@ -9,6 +9,7 @@ const getAnalytics = (data, settings) => {
             bar: getBarChartData(data, settings.general_chart),
             line: getLineChartData(data, settings.general_chart)
         }
+        
 
     }
 

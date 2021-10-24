@@ -6,7 +6,6 @@ import { DefaultText } from '../components/Components'
 import { LineChart, StackedBarChart } from "react-native-chart-kit"
 import getAnalytics from "../js/analysis"
 
-
 let dummy_data = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [

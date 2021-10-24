@@ -24,7 +24,7 @@ export default function App() {
 
 
 
-        await AsyncStorage.setItem('@data', JSON.stringify(newData))
+        //await AsyncStorage.setItem('@data', JSON.stringify(newData))
         let dataCopy =  JSON.parse(JSON.stringify(newData))
 
         // colors
@@ -98,7 +98,8 @@ export default function App() {
         
         const getdbData = async () => {
             try {
-                let dbData = JSON.parse(await AsyncStorage.getItem('@data'))
+                //let dbData = JSON.parse(await AsyncStorage.getItem('@data'))$
+                let dbData = null
                 if (dbData === null) {
                     dbData = dummyData
                 }
