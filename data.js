@@ -11,13 +11,13 @@ export let dummyData = {
             name: "MMonitor",
             pid: "P_399966c6-ba0d-48ae-be0f-700e4157fbb0",
             logs: [],
-            color: "#ffffff",
+            color: "#2980B9",
         },
         {
             name: "HyperTyper",
             pid: "P_82d0c204-bfae-4f11-aafc-5bcd8a1a670a",
             logs: [],
-            color:"#f0f123",
+            color:"#8E44AD",
         }
     ],
     all_logs: [
@@ -29,7 +29,7 @@ export let dummyData = {
             start: 1634159644,
             end: 1634159744,
             duration: 100,
-            color: "#ffffff"
+            color: "#2980B9"
         },
         {
             project: "MMonitor",
@@ -39,7 +39,7 @@ export let dummyData = {
             start: 1634159844,
             end: 1634159944,
             duration: 100,
-            color: "#ffffff"
+            color: "#2980B9"
         },
         {
             project: "HyperTyper",
@@ -49,9 +49,12 @@ export let dummyData = {
             start: 1634159144,
             end: 1634159244,
             duration: 100,
-            color:"#f0f123",
+            color:"#8E44AD",
         },
     ],
     daily_logs: []
 }
 
+export let settings = {
+    startOfDay = 7200 //2h
+}

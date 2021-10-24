@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import RootNavigator from './routes/draw'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { dummyData } from './data';
+import { dummyData, defaultSettings } from './data';
 
 
 export default function App() {
@@ -19,18 +19,32 @@ export default function App() {
         daily_logs: []
     })
 
+    const [settings, setSavedSettings] = useState(defaultSettings)
+
+    const setSettings = (newSettings) => {
+        await AsyncStorage.setItem('@settings', JSON.stringify(newSettings))
+        setSavedSettings(newSettings)
+    }
+
+    useEffect(() => {
+        let dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
+        if (dbSettings !== null) {
+            setSavedSettings(dbSettings)
+        }
+    }, [])
+
 
     const setData = async (newData) => {
 
 
 
-        //await AsyncStorage.setItem('@data', JSON.stringify(newData))
-        let dataCopy =  JSON.parse(JSON.stringify(newData))
+        await AsyncStorage.setItem('@data', JSON.stringify(newData))
+        let dataCopy = JSON.parse(JSON.stringify(newData))
 
         // colors
 
-        dataCopy.all_logs.forEach(function(log){
-            let projectColor = dataCopy.projects.filter((project)=>project.pid === log.pid)[0].color
+        dataCopy.all_logs.forEach(function (log) {
+            let projectColor = dataCopy.projects.filter((project) => project.pid === log.pid)[0].color
             log.color = projectColor
         })
 
@@ -95,7 +109,7 @@ export default function App() {
 
 
     useEffect(() => {
-        
+
         const getdbData = async () => {
             try {
                 //let dbData = JSON.parse(await AsyncStorage.getItem('@data'))$
