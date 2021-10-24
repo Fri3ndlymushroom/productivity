@@ -55,6 +55,6 @@ export let dummyData = {
     daily_logs: []
 }
 
-export let settings = {
-    startOfDay = 7200 //2h
+export let defaultSettings = {
+    start_of_day: 7200 //2h
 }

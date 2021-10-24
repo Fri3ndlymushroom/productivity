@@ -21,16 +21,22 @@ export default function App() {
 
     const [settings, setSavedSettings] = useState(defaultSettings)
 
-    const setSettings = (newSettings) => {
+    const setSettings = async (newSettings) => {
         await AsyncStorage.setItem('@settings', JSON.stringify(newSettings))
         setSavedSettings(newSettings)
     }
 
     useEffect(() => {
-        let dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
-        if (dbSettings !== null) {
-            setSavedSettings(dbSettings)
+        const getDB = async()=>{
+            //let dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
+            let dbSettings = null
+            if (dbSettings !== null) {
+                console.log("yes")
+                setSavedSettings(dbSettings)
+            }
         }
+        getDB()
+
     }, [])
 
 
@@ -147,7 +153,7 @@ export default function App() {
 
 
     return (
-        <RootNavigator screenProps={{ ...{ data, setData } }} />
+        <RootNavigator screenProps={{ ...{ data, setData, settings, setSettings } }} />
     );
 }
 
