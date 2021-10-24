@@ -4,6 +4,7 @@ import g from '../styles/global'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { secondsToFormatedString, secondsToShortTimeString, secondsToDateString } from '../js/timerfunctions';
 import { LongPressGestureHandler } from 'react-native-gesture-handler';
+import {copyObject} from "../js/functions"
 
 
 export default function EditLog({ navigation, screenProps }) {
@@ -14,15 +15,21 @@ export default function EditLog({ navigation, screenProps }) {
 
     const [showDateTime, setShowDateTime] = useState(false)
 
-    const editDateOfLog = (date) => {
-        let logCopy = JSON.parse(JSON.stringify(log))
- 
-        logCopy.start += start
-        logCopy.duration = logCopy.end - logCopy.start
+    const editDateOfLog = (event, date) => {
 
-        if(logCopy.duration > 0){
-            setLog(logCopy)
+        if (date){
+            let start = date.getTime() / 1000
+            let move = start - log.start
+            let end = log.end + move
+            
+            let copy = copyObject(log)
+            copy.start = start 
+            copy.end = end
+            copy.day = Math.floor(copy.start / 60 / 60 / 24)
+            setShowDateTime(false)
+            setLog(copy)
         }
+
     }
 
 
@@ -68,11 +75,11 @@ export default function EditLog({ navigation, screenProps }) {
                 {showDateTime && (
                     <DateTimePicker
                         testID="dateTimePicker"
-                        value={new Date(log.start)}
                         mode={"date"}
                         is24Hour={true}
                         display="default"
-                        onChange={(date) => editDateOfLog(date)}
+                        value={new Date(log.start*1000)}
+                        onChange={editDateOfLog}
                     />
                 )}
             </View>

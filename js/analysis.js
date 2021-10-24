@@ -24,7 +24,6 @@ const getLineChartData = (data, settings) => {
 const filterLineDataByTime = (data, settings) =>{
     if(!data.all_logs[0])return
 
-    console.log(data)
 
 
     // average
