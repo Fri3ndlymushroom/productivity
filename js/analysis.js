@@ -19,6 +19,30 @@ export default getAnalytics;
 
 const getLineChartData = (data, settings) => {
     let filtered = filterLineDataByTime(data, settings)
+    let bundeled = bundleLineChartData(filtered)
+    return bundeled
+}
+
+const bundleLineChartData = (filtered) =>{
+
+    console.log(filtered)
+
+    let data = filtered ? filtered : []
+
+    let refactored = {
+        data: [],
+    }
+
+
+
+    data.forEach((element)=>{
+        let current = []
+        element.forEach((point, i)=>{
+            current.push({x: i, y: point})
+        })
+        refactored.data.push( current)
+    })
+    return refactored
 }
 
 const filterLineDataByTime = (data, settings) =>{
@@ -95,6 +119,7 @@ const getBarChartData = (data, settings) => {
 
 const bundleBarChartData = (data) => {
 
+
     let generalChartData = {
         labels: [],
         legend: [],
@@ -102,11 +127,17 @@ const bundleBarChartData = (data) => {
         barColors: ["#dfe4ea", "#ced6e0"]
     }
 
+    let colors = []
+
     data.forEach((unit) => {
         // get all present projects
         unit.logs.forEach((log) => {
             if (generalChartData.legend.filter((project) => project === log.project).length === 0) {
                 generalChartData.legend.push(log.project)
+                if(colors.filter((color)=>color === log.color).length === 0){
+
+                    colors.push(log.color)
+                }
             }
         })
 
@@ -132,7 +163,8 @@ const bundleBarChartData = (data) => {
 
 
     let refactored = {
-        data: []
+        data: [],
+        colors: colors
     }
 
     generalChartData.legend.forEach((project, i)=>{

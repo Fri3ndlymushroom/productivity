@@ -4,7 +4,7 @@ import { Text, View, Dimensions } from 'react-native';
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import getAnalytics from "../js/analysis"
-import { VictoryBar, VictoryStack } from 'victory';
+import { VictoryBar, VictoryStack, VictoryChart, VictoryLine } from 'victory';
 
 let config = {
 
@@ -37,32 +37,45 @@ export default function Analytics({ navigation, screenProps }) {
 
     }
 
-    
-    
+
+
     let analysedData = getAnalytics(screenProps.data, settings)
 
-    console.log(analysedData)
 
     return (
         <View style={g.body}>
             <DefaultText>Analytics</DefaultText>
 
             <VictoryStack
-                colorScale={["tomato", "orange", "gold", "yellow" , "pink"]}
+                colorScale={analysedData.general_chart.bar.colors}
             >
                 {
                     analysedData.general_chart.bar.data.map((data, i) => {
-                        console.log(data)
                         return <VictoryBar
-                            key={"general_chart-bar"+i}
+                            key={"general_chart-bar" + i}
                             data={data}
-                            
+
                         />
                     }
                     )
                 }
 
             </VictoryStack>
+            {
+                
+                <VictoryChart>
+                {
+                    analysedData.general_chart.line.data.map((data, i) => {
+                        console.log(data)
+                        return (<VictoryLine
+                            key={"general_chart-line" + i}
+                            data={data}
+                            interpolation="natural"
+                        />)
+                    })
+                }
+
+            </VictoryChart> }
 
         </View>
     );
