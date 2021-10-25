@@ -48,6 +48,7 @@ export default function Analytics({ navigation, screenProps }) {
             <DefaultText>Analytics</DefaultText>
 
             <VictoryPie
+                colorScale={analysedData.distribution_chart.colors}
                 data={analysedData.distribution_chart.data}
             />
 

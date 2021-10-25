@@ -23,11 +23,14 @@ export default getAnalytics;
 const getPieChartData = (data) =>{
 
     let dataObj = {}
+    let colors = []
 
     
     data.all_logs.forEach((log)=>{
         if(!dataObj[log.project])dataObj[log.project] = 0
         dataObj[log.project] += log.duration
+
+        if(colors.filter((color)=>color === log.color).length === 0) colors.push(log.color)
     })
     let dataArr = []
 
@@ -36,7 +39,10 @@ const getPieChartData = (data) =>{
         dataArr.push({x: project, y: info})
     }
 
-    let returnObj = {data: dataArr}
+    let returnObj = {
+        data: dataArr,
+        colors: colors
+    }
 
     return returnObj
 }
