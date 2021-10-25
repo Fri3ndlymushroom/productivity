@@ -4,7 +4,7 @@ import { Text, View, Dimensions } from 'react-native';
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import getAnalytics from "../js/analysis"
-import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea, VictoryPie } from 'victory';
+import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea, VictoryPie } from 'victory-native';
 
 let config = {
 

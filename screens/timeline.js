@@ -65,8 +65,6 @@ export default function Timeline({ navigation, screenProps }) {
     }
 
 
-
-
     return (
         <View style={g.body}>
             <StartButton data={screenProps.data} {...{ setProjectSelectionOpen, stopProject }} />
