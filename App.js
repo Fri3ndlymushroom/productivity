@@ -28,8 +28,7 @@ export default function App() {
 
     useEffect(() => {
         const getDB = async()=>{
-            //let dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
-            let dbSettings = null
+            let dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
             if (dbSettings !== null) {
                 console.log("yes")
                 setSavedSettings(dbSettings)
@@ -118,8 +117,7 @@ export default function App() {
 
         const getdbData = async () => {
             try {
-                //let dbData = JSON.parse(await AsyncStorage.getItem('@data'))$
-                let dbData = null
+                let dbData = JSON.parse(await AsyncStorage.getItem('@data'))
                 if (dbData === null) {
                     dbData = dummyData
                 }

@@ -87,8 +87,9 @@ const filterLineDataByTime = (data, settings) =>{
 // general chart
 
 const getBarChartData = (data, settings) => {
-    let filteredData = filterBarDataByTime(data, settings)
-    return bundleBarChartData(filteredData)
+    let filtered = filterBarDataByTime(data, settings)
+    let bundeled = bundleBarChartData(filtered)
+    return bundeled
 }
 
 
@@ -128,7 +129,24 @@ const bundleBarChartData = (data) => {
 
         generalChartData.data.push(chartUnitData)
     })
-    return (generalChartData)
+
+
+    let refactored = {
+        data: []
+    }
+
+    generalChartData.legend.forEach((project, i)=>{
+        let refactoredProjects = []
+        generalChartData.data.forEach((unit, y)=>{
+            refactoredProjects.push({
+                x: generalChartData.labels[y],
+                y: unit[i]
+            })
+        })
+        refactored.data.push(refactoredProjects)    
+    })
+    
+    return (refactored)
 }
 
 const filterBarDataByTime = (data, settings) => {
@@ -152,6 +170,8 @@ const filterBarDataByTime = (data, settings) => {
     })
 
     let classifiedArray = []
+
+    
 
     for (let unit in classified) {
         let time = formatSeconds(parseInt(unit) * settings.gap, "dd, MM")
