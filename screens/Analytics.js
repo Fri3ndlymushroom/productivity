@@ -4,7 +4,7 @@ import { Text, View, Dimensions } from 'react-native';
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import getAnalytics from "../js/analysis"
-import { VictoryBar, VictoryStack, VictoryChart, VictoryLine } from 'victory';
+import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea } from 'victory';
 
 let config = {
 
@@ -56,26 +56,38 @@ export default function Analytics({ navigation, screenProps }) {
                             data={data}
 
                         />
-                    }
-                    )
-                }
-
-            </VictoryStack>
-            {
-                
-                <VictoryChart>
-                {
-                    analysedData.general_chart.line.data.map((data, i) => {
-                        console.log(data)
-                        return (<VictoryLine
-                            key={"general_chart-line" + i}
-                            data={data}
-                            interpolation="natural"
-                        />)
                     })
                 }
 
-            </VictoryChart> }
+            </VictoryStack>
+            <VictoryStack
+                colorScale={analysedData.general_chart.bar.colors}
+            >
+                {
+                    analysedData.general_chart.bar.data.map((data, i) => {
+                        return <VictoryArea
+                            key={"general_chart-bar" + i}
+                            data={data}
+
+                        />
+                    })
+                }
+            </VictoryStack>
+            {
+
+                <VictoryChart>
+                    {
+                        analysedData.general_chart.line.data.map((data, i) => {
+                            console.log(data)
+                            return (<VictoryLine
+                                key={"general_chart-line" + i}
+                                data={data}
+                                interpolation="natural"
+                            />)
+                        })
+                    }
+
+                </VictoryChart>}
 
         </View>
     );
