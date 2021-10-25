@@ -6,6 +6,7 @@ import { secondsToFormatedString, secondsToShortTimeString, secondsToDateString 
 import { copyObject } from "../js/functions"
 
 
+
 export default function EditLog({ navigation, screenProps }) {
 
 
@@ -144,9 +145,19 @@ export default function EditLog({ navigation, screenProps }) {
 
         copy.all_logs[index] = log
         screenProps.setData(copy)
+        navigation.pop()
     }
 
 
+    const deleteLog =()=>{
+        
+        let copy = copyObject(screenProps.data)
+        let index = copy.all_logs.findIndex((match)=>log.lid === match.lid)
+        copy.all_logs.splice(index, 1)
+
+        screenProps.setData(copy)
+        navigation.pop()
+    }
 
 
 
@@ -178,7 +189,8 @@ export default function EditLog({ navigation, screenProps }) {
                 <TouchableOpacity onPress={() => { setShowDateTime(true); setMode("time"); setChanging("end") }}><Text>To: {secondsToShortTimeString(log.end)}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => moveEndOfLog(600)}><Text>+</Text></TouchableOpacity>
             </View>
-            <Button title="save changes" onPress={() => saveChanges()} />
+            <Button title="Save Changes" onPress={() => saveChanges()} />
+            <Button title="Delete Log" onPress={() => deleteLog()} />
         </View>
     );
 }
