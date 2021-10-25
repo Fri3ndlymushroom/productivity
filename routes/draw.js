@@ -6,12 +6,13 @@ import TimelineStack from "./homeStack";
 
 
 const RootDrawNavigator = createDrawerNavigator({
-    Analytics: {
-        screen: AnalyticsStack,
-    },
     Timeline: {
         screen: TimelineStack,
     },
+    Analytics: {
+        screen: AnalyticsStack,
+    },
+
     
 })
 
