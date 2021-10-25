@@ -30,7 +30,6 @@ export default function App() {
         const getDB = async()=>{
             let dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
             if (dbSettings !== null) {
-                console.log("yes")
                 setSavedSettings(dbSettings)
             }
         }

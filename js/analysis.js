@@ -8,7 +8,9 @@ const getAnalytics = (data, settings) => {
         general_chart: {
             bar: getBarChartData(data, settings.general_chart),
             line: getLineChartData(data, settings.general_chart)
-        }
+        },
+        distribution_chart: getPieChartData(data)
+
         
 
     }
@@ -16,6 +18,30 @@ const getAnalytics = (data, settings) => {
     return chartsData
 }
 export default getAnalytics;
+
+
+const getPieChartData = (data) =>{
+
+    let dataObj = {}
+
+    
+    data.all_logs.forEach((log)=>{
+        if(!dataObj[log.project])dataObj[log.project] = 0
+        dataObj[log.project] += log.duration
+    })
+    let dataArr = []
+
+    for(let project in dataObj){
+        let info =dataObj[project]
+        dataArr.push({x: project, y: info})
+    }
+
+    let returnObj = {data: dataArr}
+
+    return returnObj
+}
+
+
 
 const getLineChartData = (data, settings) => {
     let filtered = filterLineDataByTime(data, settings)
@@ -25,7 +51,6 @@ const getLineChartData = (data, settings) => {
 
 const bundleLineChartData = (filtered) =>{
 
-    console.log(filtered)
 
     let data = filtered ? filtered : []
 
