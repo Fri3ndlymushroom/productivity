@@ -12,8 +12,15 @@ export default function EditLog({ navigation, screenProps }) {
 
     const [log, setLog] = useState(JSON.parse(JSON.stringify(navigation.getParam("edited_log"))))
     const [times, setTimes] = useState({ start: 0, end: 0 })
-    const [mode, setMode] = useState("date")
-    const [changing, setChanging] = useState("start")
+
+    const [dateTimeProps, setDateTimeProps] = useState({
+        target: "daily_goal",
+        value: 3600,
+        mode: "time",
+        open: false
+    })
+
+
     let day = Math.floor(log.start / 24 / 60 / 60) * 24 * 60 * 60
 
     useEffect(() => {
@@ -25,16 +32,14 @@ export default function EditLog({ navigation, screenProps }) {
 
 
 
-    const [showDateTime, setShowDateTime] = useState(false)
-
     const EditLog = (event, value) => {
         if (value) {
-            if (changing === "date") editDateOfLog(value)
-            else if (changing === "start") editStartOfLog(value)
-            else if (changing === "end") editEndOfLog(value)
+            if (dateTimeProps.target === "date") editDateOfLog(value)
+            else if (dateTimeProps.target === "start") editStartOfLog(value)
+            else if (dateTimeProps.target === "end") editEndOfLog(value)
         }
         else {
-            setShowDateTime(false)
+            setDateTimeProps({target: "daily_goal",value: 3600,mode: "time",open: false})
         }
     }
 
@@ -42,10 +47,11 @@ export default function EditLog({ navigation, screenProps }) {
         let newEnd = value.getTime() / 1000
         let newAbsEnd = newEnd - day
 
-        
+
         let endIsBigger = newAbsEnd > times.start
         let doesntExceed = newAbsEnd - screenProps.settings.start_of_day <= 86400
-        
+
+        setDateTimeProps({target: "daily_goal",value: 3600,mode: "time",open: false})
         if (endIsBigger && doesntExceed) {
 
             setTimes({
@@ -57,7 +63,6 @@ export default function EditLog({ navigation, screenProps }) {
 
             logCopy.end = newEnd
             logCopy.duration = logCopy.end - logCopy.start
-            setShowDateTime(false)
             setLog(logCopy)
         }
     }
@@ -69,6 +74,7 @@ export default function EditLog({ navigation, screenProps }) {
         let endIsBigger = times.end > newAbsStart
         let doesntExceed = newAbsStart - screenProps.settings.start_of_day <= 86400
 
+        setDateTimeProps({target: "daily_goal",value: 3600,mode: "time",open: false})
         if (endIsBigger && doesntExceed) {
             setTimes({
                 start: newAbsStart,
@@ -79,7 +85,6 @@ export default function EditLog({ navigation, screenProps }) {
 
             logCopy.start = newStart
             logCopy.duration = logCopy.end - logCopy.start
-            setShowDateTime(false)
             setLog(logCopy)
         }
     }
@@ -95,7 +100,7 @@ export default function EditLog({ navigation, screenProps }) {
         copy.start = start
         copy.end = end
         copy.day = Math.floor((copy.start - screenProps.settings.start_of_day) / 60 / 60 / 24)
-        setShowDateTime(false)
+        setDateTimeProps({target: "daily_goal",value: 3600,mode: "time",open: false})
         setLog(copy)
 
     }
@@ -148,10 +153,10 @@ export default function EditLog({ navigation, screenProps }) {
     }
 
 
-    const deleteLog =()=>{
-        
+    const deleteLog = () => {
+
         let copy = copyObject(screenProps.data)
-        let index = copy.all_logs.findIndex((match)=>log.lid === match.lid)
+        let index = copy.all_logs.findIndex((match) => log.lid === match.lid)
         copy.all_logs.splice(index, 1)
 
         screenProps.setData(copy)
@@ -163,29 +168,43 @@ export default function EditLog({ navigation, screenProps }) {
     return (
         <View style={g.body}>
             <View>
-                {showDateTime && (
+                {dateTimeProps.open && (
                     <RNDateTimePicker
                         testID="dateTimePicker"
-                        mode={mode}
+                        mode={dateTimeProps.mode}
                         is24Hour={true}
                         display="default"
-                        value={new Date(log.start * 1000)}
+                        value={new Date(dateTimeProps.value * 1000)}
                         onChange={EditLog}
-                        timeZoneOffsetInMinutes={120}
+                        timeZoneOffsetInMinutes={0}
                     />
                 )}
             </View>
-
-            <TouchableOpacity onPress={() => { setShowDateTime(true); setMode("date"); setChanging("date") }}><Text>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => setDateTimeProps({
+                target: "date",
+                value: log.start,
+                mode: "date",
+                open: true
+            })}><Text>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
             <Text>{secondsToFormatedString(log.duration)}</Text>
             <View style={s.timeCorrector}>
                 <TouchableOpacity onPress={() => moveStartOfLog(-600)}><Text>-</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => { setShowDateTime(true); setMode("time"); setChanging("start") }}><Text>From: {secondsToShortTimeString(log.start)}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setDateTimeProps({
+                target: "start",
+                value: log.start,
+                mode: "time",
+                open: true
+            })}><Text>From: {secondsToShortTimeString(log.start)}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => moveStartOfLog(600)}><Text>+</Text></TouchableOpacity>
             </View>
             <View style={s.timeCorrector}>
                 <TouchableOpacity onPress={() => moveEndOfLog(-600)}><Text>-</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => { setShowDateTime(true); setMode("time"); setChanging("end") }}><Text>To: {log.end ? secondsToShortTimeString(log.end): "running"}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setDateTimeProps({
+                target: "end",
+                value: log.end,
+                mode: "time",
+                open: true
+            })}><Text>To: {log.end ? secondsToShortTimeString(log.end) : "running"}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => moveEndOfLog(600)}><Text>+</Text></TouchableOpacity>
             </View>
             <Button title="Save Changes" onPress={() => saveChanges()} />
