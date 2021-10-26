@@ -5,9 +5,6 @@ import { secondsToFormatedString, secondsToDateString } from '../js/timerfunctio
 
 export default function TimelineDay({ dayData, navigation }) {
 
-
-
-
     return (
         <View style={s.dayContainer} >
             <Text style={g.dayTitle}>{secondsToDateString(dayData.day * 24 * 60 * 60)}</Text>
@@ -21,13 +18,15 @@ export default function TimelineDay({ dayData, navigation }) {
                         },
                     })
 
-                    return (
-                        <TouchableOpacity onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })} key={"day" + dayData.day + "project" + project.name} style={[g.projectCard, colorStyle.color]}>
-                            <Text style={g.text}>{project.name}</Text>
-                            <Text style={g.text}>{secondsToFormatedString(project.total_duration)}</Text>
-                        </TouchableOpacity>
+                    if (!project.archived) {
+                        return (
+                            <TouchableOpacity onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })} key={"day" + dayData.day + "project" + project.name} style={[g.projectCard, colorStyle.color]}>
+                                <Text style={g.text}>{project.name}</Text>
+                                <Text style={g.text}>{secondsToFormatedString(project.total_duration)}</Text>
+                            </TouchableOpacity>
 
-                    )
+                        )
+                    }else return
                 })
             }
         </View>

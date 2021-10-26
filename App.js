@@ -92,7 +92,8 @@ export default function App() {
                     pid: pid,
                     logs: projectLogs,
                     total_duration: time,
-                    color: projectLogs[0].color
+                    color: projectLogs[0].color,
+                    archived: projectLogs[0].archived,
                 })
             })
 
@@ -117,7 +118,7 @@ export default function App() {
         const getdbData = async () => {
             try {
                 let dbData = null
-                //dbData = JSON.parse(await AsyncStorage.getItem('@data'))
+                dbData = JSON.parse(await AsyncStorage.getItem('@data'))
                 if (dbData === null) {
                     dbData = dummyData
                 }

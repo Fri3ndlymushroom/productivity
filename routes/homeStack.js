@@ -5,7 +5,7 @@ import AddProject from "../screens/AddProject"
 import ProjectView from "../screens/ProjectView";
 import EditLog from "../screens/EditLogs"
 import EditProject from "../screens/EditProject"
-
+import Archive from "../screens/Archive";
 
 import { headerStyle } from "../styles/global"
 
@@ -28,6 +28,10 @@ const screens = {
     },
     EditProject:{
         screen: EditProject,
+        navigationOptions: { headerStyle: headerStyle }
+    },
+    Archive:{
+        screen: Archive,
         navigationOptions: { headerStyle: headerStyle }
     }
 }

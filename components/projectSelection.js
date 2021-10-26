@@ -20,6 +20,7 @@ export default function projectSelection({ data, navigation, setProjectSelection
                 })}
 
                 <TouchableOpacity onPress={() => { navigation.navigate("AddProject") }}><Text>Add Project</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => { navigation.navigate("Archive") }}><Text>Archived projects</Text></TouchableOpacity>
 
             </View>
         </TouchableOpacity>
