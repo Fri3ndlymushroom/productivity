@@ -185,7 +185,7 @@ export default function EditLog({ navigation, screenProps }) {
             </View>
             <View style={s.timeCorrector}>
                 <TouchableOpacity onPress={() => moveEndOfLog(-600)}><Text>-</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => { setShowDateTime(true); setMode("time"); setChanging("end") }}><Text>To: {secondsToShortTimeString(log.end)}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => { setShowDateTime(true); setMode("time"); setChanging("end") }}><Text>To: {log.end ? secondsToShortTimeString(log.end): "running"}</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => moveEndOfLog(600)}><Text>+</Text></TouchableOpacity>
             </View>
             <Button title="Save Changes" onPress={() => saveChanges()} />

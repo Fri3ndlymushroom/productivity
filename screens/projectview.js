@@ -43,8 +43,8 @@ export default function ProjectView({ navigation, screenProps }) {
                     let logs = null
                     let card = (
 
-                        <TouchableOpacity onPress={() => { navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
-                            <Text style={g.text}>{secondsToShortTimeString(log.start)} - {secondsToShortTimeString(log.end)}</Text>
+                        <TouchableOpacity onPress={() => {if(log.end)navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
+                            <Text style={g.text}>{secondsToShortTimeString(log.start)} - {log.end ? secondsToShortTimeString( log.end): "running"}</Text>
                             <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
                         </TouchableOpacity>
 
