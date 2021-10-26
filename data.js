@@ -56,5 +56,6 @@ export let dummyData = {
 }
 
 export let defaultSettings = {
-    start_of_day: 7200 //2h
+    start_of_day: 7200, //2h
+    daily_goal: 3600
 }

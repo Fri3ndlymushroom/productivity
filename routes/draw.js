@@ -3,6 +3,7 @@ import { createAppContainer } from "react-navigation";
 
 import AnalyticsStack from "./analyticsStack";
 import TimelineStack from "./homeStack";
+import SettingsStack from "./settingsStack";
 
 
 const RootDrawNavigator = createDrawerNavigator({
@@ -12,6 +13,9 @@ const RootDrawNavigator = createDrawerNavigator({
     Analytics: {
         screen: AnalyticsStack,
     },
+    Settings:{
+        screen: SettingsStack
+    }
 
     
 })
