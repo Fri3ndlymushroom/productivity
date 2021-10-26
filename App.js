@@ -116,7 +116,8 @@ export default function App() {
 
         const getdbData = async () => {
             try {
-                let dbData = JSON.parse(await AsyncStorage.getItem('@data'))
+                let dbData = null
+                //dbData = JSON.parse(await AsyncStorage.getItem('@data'))
                 if (dbData === null) {
                     dbData = dummyData
                 }

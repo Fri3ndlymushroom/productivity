@@ -33,6 +33,37 @@ export default function EditProject({ navigation, screenProps }) {
         screenProps.setData(copy)
     }
 
+    const archiveProject = () =>{
+        let copy = copyObject(screenProps.data)
+        let index = copy.projects.findIndex((project) => project.pid === pid)
+
+        copy.projects[index].archived = true
+
+        copy.all_logs.forEach((log, i)=>{
+            if (log.pid === pid){
+                copy.all_logs[i].archived = true
+            }
+        })
+
+        screenProps.setData(copy)
+        navigation.pop()
+        navigation.pop()
+    }
+
+    const deleteProject = () =>{
+        let copy = copyObject(screenProps.data)
+        let index = copy.projects.findIndex((project) => project.pid === pid)
+
+        copy.projects.splice(index, 1)
+
+        copy.all_logs = copy.all_logs.filter((log)=> log.pid !== pid)
+
+        screenProps.setData(copy)
+
+        navigation.pop()
+        navigation.pop()
+    }
+
 
     return (
         <View style={g.body}>
@@ -56,6 +87,8 @@ export default function EditProject({ navigation, screenProps }) {
                 />
             </View>
             <Button title="Save Changes" onPress={() => saveChanges()} />
+            <Button title="Archive Project" onPress={()=>archiveProject()}/>
+            <Button title="Delete Project" onPress={()=>deleteProject()}/>
         </View>
     );
 }

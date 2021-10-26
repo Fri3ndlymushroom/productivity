@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity,Dimensions, Button, StyleSheet, Text, View, Touchable } from 'react-native'
+import { TouchableOpacity,Dimensions, Platform, Button, StyleSheet, Text, View, Touchable } from 'react-native'
 import g, { p } from "../styles/global"
 
 
@@ -28,7 +28,8 @@ export default function projectSelection({ data, navigation, setProjectSelection
 
 const s = StyleSheet.create({
     projectSelectionWrapper: {
-        zIndex: 2,
+        zIndex: 10,
+        elevation: (Platform.OS === 'android') ? 10 : 0,
         position: "absolute",
         top: 0,
         bottom: 0,
