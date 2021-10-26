@@ -31,7 +31,9 @@ export default function EditProject({ navigation, screenProps }) {
         let copy = copyObject(screenProps.data)
         copy.projects[index] = project
         screenProps.setData(copy)
+        navigation.pop()
     }
+
 
     const archiveProject = () =>{
         let copy = copyObject(screenProps.data)
