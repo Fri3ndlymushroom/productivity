@@ -94,10 +94,9 @@ export default function EditLog({ navigation, screenProps }) {
         let copy = copyObject(log)
         copy.start = start
         copy.end = end
-        copy.day = Math.floor(copy.start / 60 / 60 / 24)
+        copy.day = Math.floor((copy.start - screenProps.settings.start_of_day) / 60 / 60 / 24)
         setShowDateTime(false)
         setLog(copy)
-
 
     }
 

@@ -18,7 +18,7 @@ export default function ProjectView({ navigation, screenProps }) {
             project: projectName,
             pid:pid,
             lid: "L_"+uuidv4(),
-            day: Math.ceil(start / 60 / 60 / 24),
+            day: Math.ceil((start - screenProps.settings.start_of_day) / 60 / 60 / 24),
             start: start,
             duration: 600,
             end: start + 600,

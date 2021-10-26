@@ -38,7 +38,7 @@ export default function Timeline({ navigation, screenProps }) {
             project: name,
             pid: pid,
             lid: "L_"+uuidv4(),
-            day: Math.floor(start / 60 / 60 / 24),
+            day: Math.floor((start - screenProps.settings.start_of_day)/ 60 / 60 / 24),
             start: start,
             duration: 0,
             running: true
