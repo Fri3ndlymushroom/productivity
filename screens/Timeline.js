@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Text, View } from "react-native"
+import {ScrollView, Button, Text, View } from "react-native"
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
@@ -29,22 +29,28 @@ export default function Timeline({ navigation, screenProps }) {
 
     const startProject = (pid) => {
 
-        let copy = { ...screenProps.data }
+        let alreadyRunning = screenProps.data.all_logs.filter((log) => log.running).length > 0
 
-        let start = Math.round(new Date().getTime() / 1000)
-        let name = copy.projects.filter((projectRef)=>projectRef.pid === pid)[0].name
+        if (!alreadyRunning) {
 
-        copy.all_logs.push({
-            project: name,
-            pid: pid,
-            lid: "L_"+uuidv4(),
-            day: Math.floor((start - screenProps.settings.start_of_day)/ 60 / 60 / 24),
-            start: start,
-            duration: 0,
-            running: true
-        })
 
-        screenProps.setData(copy)
+            let copy = { ...screenProps.data }
+
+            let start = Math.round(new Date().getTime() / 1000)
+            let name = copy.projects.filter((projectRef) => projectRef.pid === pid)[0].name
+
+            copy.all_logs.push({
+                project: name,
+                pid: pid,
+                lid: "L_" + uuidv4(),
+                day: Math.floor((start - screenProps.settings.start_of_day) / 60 / 60 / 24),
+                start: start,
+                duration: 0,
+                running: true
+            })
+
+            screenProps.setData(copy)
+        }
     }
 
     const stopProject = () => {
@@ -72,11 +78,13 @@ export default function Timeline({ navigation, screenProps }) {
             {
                 projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
             }
+            <ScrollView>
             {
                 screenProps.data.daily_logs.map((dayData) => {
-                    return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject}{...{navigation, dayData }} />
+                    return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject}{...{ navigation, dayData }} />
                 })
             }
+            </ScrollView>
         </View>
     );
 }

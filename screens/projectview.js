@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
 import g from "../styles/global"
 import { secondsToShortTimeString, secondsToFormatedString, secondsToDateString } from '../js/timerfunctions';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,8 +16,8 @@ export default function ProjectView({ navigation, screenProps }) {
         let start = Math.round(new Date().getTime() / 1000)
         copy.all_logs.push({
             project: projectName,
-            pid:pid,
-            lid: "L_"+uuidv4(),
+            pid: pid,
+            lid: "L_" + uuidv4(),
             day: Math.ceil((start - screenProps.settings.start_of_day) / 60 / 60 / 24),
             start: start,
             duration: 600,
@@ -28,53 +28,55 @@ export default function ProjectView({ navigation, screenProps }) {
     }
 
 
-    
+
 
 
     return (
 
         <View style={g.body}>
             <Text style={g.text}>{projectName}</Text>
-            <Button title="Edit project" onPress={()=>{ navigation.navigate("EditProject", { edited_project: pid }) }}/>
+            <Button title="Edit project" onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }} />
             <Button title="add" onPress={() => addLog()} />
-            {
-                projectData.logs.map((log) => {
+            <ScrollView>
+                {
+                    projectData.logs.map((log) => {
 
-                    let logs = null
-                    let card = (
+                        let logs = null
+                        let card = (
 
-                        <TouchableOpacity onPress={() => {if(log.end)navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
-                            <Text style={g.text}>{secondsToShortTimeString(log.start)} - {log.end ? secondsToShortTimeString( log.end): "running"}</Text>
-                            <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
+                                <Text style={g.text}>{secondsToShortTimeString(log.start)} - {log.end ? secondsToShortTimeString(log.end) : "running"}</Text>
+                                <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
+                            </TouchableOpacity>
 
 
-                    )
-                    if (lastDay !== log.day) {
-                        logs = (
-                            <View key={"projectViewLog" + log.start}>
-                                <Text style={g.dayTitle}>{secondsToDateString(log.start)}</Text>
-                                {card}
-                            </View>
                         )
-                    } else {
-                        logs = (
-                            <View key={"projectViewLog" + log.start}>
-                                {card}
-                            </View>
+                        if (lastDay !== log.day) {
+                            logs = (
+                                <View key={"projectViewLog" + log.start}>
+                                    <Text style={g.dayTitle}>{secondsToDateString(log.start)}</Text>
+                                    {card}
+                                </View>
+                            )
+                        } else {
+                            logs = (
+                                <View key={"projectViewLog" + log.start}>
+                                    {card}
+                                </View>
+                            )
+
+                        }
+
+                        lastDay = log.day
+
+                        return (
+                            logs
                         )
 
-                    }
 
-                    lastDay = log.day
-
-                    return (
-                        logs
-                    )
-
-
-                })
-            }
+                    })
+                }
+            </ScrollView>
         </View >
     )
 }

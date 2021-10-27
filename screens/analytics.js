@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text, View, Dimensions } from 'react-native';
+import { Text, View, Dimensions, ScrollView } from 'react-native';
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import getAnalytics from "../js/analysis"
@@ -41,59 +41,57 @@ export default function Analytics({ navigation, screenProps }) {
 
     let analysedData = getAnalytics(screenProps.data, settings)
 
-    console.log(analysedData.distribution_chart)
 
     return (
         <View style={g.body}>
-            <DefaultText>Analytics</DefaultText>
+            <ScrollView>
+                <VictoryPie
+                    colorScale={analysedData.distribution_chart.colors}
+                    data={analysedData.distribution_chart.data}
+                />
 
-            <VictoryPie
-                colorScale={analysedData.distribution_chart.colors}
-                data={analysedData.distribution_chart.data}
-            />
-
-            <VictoryStack
-                colorScale={analysedData.general_chart.bar.colors}
-            >
-                {
-                    analysedData.general_chart.bar.data.map((data, i) => {
-                        return <VictoryBar
-                            key={"general_chart-bar" + i}
-                            data={data}
-
-                        />
-                    })
-                }
-
-            </VictoryStack>
-            <VictoryStack
-                colorScale={analysedData.general_chart.bar.colors}
-            >
-                {
-                    analysedData.general_chart.bar.data.map((data, i) => {
-                        return <VictoryArea
-                            key={"general_chart-bar" + i}
-                            data={data}
-
-                        />
-                    })
-                }
-            </VictoryStack>
-            {
-
-                <VictoryChart>
+                <VictoryStack
+                    colorScale={analysedData.general_chart.bar.colors}
+                >
                     {
-                        analysedData.general_chart.line.data.map((data, i) => {
-                            return (<VictoryLine
-                                key={"general_chart-line" + i}
+                        analysedData.general_chart.bar.data.map((data, i) => {
+                            return <VictoryBar
+                                key={"general_chart-bar" + i}
                                 data={data}
-                                interpolation="natural"
-                            />)
+
+                            />
                         })
                     }
 
-                </VictoryChart>}
+                </VictoryStack>
+                <VictoryStack
+                    colorScale={analysedData.general_chart.bar.colors}
+                >
+                    {
+                        analysedData.general_chart.bar.data.map((data, i) => {
+                            return <VictoryArea
+                                key={"general_chart-bar" + i}
+                                data={data}
 
+                            />
+                        })
+                    }
+                </VictoryStack>
+                {
+
+                    <VictoryChart>
+                        {
+                            analysedData.general_chart.line.data.map((data, i) => {
+                                return (<VictoryLine
+                                    key={"general_chart-line" + i}
+                                    data={data}
+                                    interpolation="natural"
+                                />)
+                            })
+                        }
+
+                    </VictoryChart>}
+            </ScrollView>
         </View>
     );
 }

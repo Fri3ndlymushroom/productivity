@@ -5,7 +5,6 @@ import { secondsToFormatedString, secondsToDateString } from '../js/timerfunctio
 
 export default function TimelineDay({ startProject, dayData, navigation }) {
 
-    console.log(startProject)
 
     return (
         <View style={s.dayContainer} >
@@ -19,6 +18,7 @@ export default function TimelineDay({ startProject, dayData, navigation }) {
                             backgroundColor: project.color
                         },
                     })
+
 
                     if (!project.archived) {
                         return (

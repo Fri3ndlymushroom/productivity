@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import RootNavigator from './routes/draw'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { dummyData, defaultSettings } from './data';
-
+import { v4 as uuidv4 } from 'uuid';
 
 export default function App() {
 
@@ -27,7 +27,7 @@ export default function App() {
     }
 
     useEffect(() => {
-        const getDB = async()=>{
+        const getDB = async () => {
             let dbSettings = null
             dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
             if (dbSettings !== null) {
@@ -142,7 +142,34 @@ export default function App() {
                 let index = data.all_logs.findIndex((log) => log.running === true)
                 let copy = { ...data }
                 let now = Math.round(new Date().getTime() / 1000)
-                copy.all_logs[index].duration = now - copy.all_logs[index].start
+
+                let startDay = Math.floor((copy.all_logs[index].start - settings.start_of_day) / 60 / 60 / 24)
+                let nowDay = Math.floor((now - settings.start_of_day) / 60 / 60 / 24)
+                let pid = copy.all_logs[index].pid
+                let name = copy.all_logs[index].name
+
+
+                if (startDay !== nowDay) {
+                    // stop old project
+                    copy.all_logs[index].running = false
+                    copy.all_logs[index].end = now
+                    copy.all_logs[index].duration = now - copy.all_logs[index].start
+
+                    // start new
+                    copy.all_logs.push({
+                        project: name,
+                        pid: pid,
+                        lid: "L_" + uuidv4(),
+                        day: Math.floor((now - screenProps.settings.start_of_day) / 60 / 60 / 24),
+                        start: now,
+                        duration: 0,
+                        running: true
+                    })
+                }
+                else {
+                    copy.all_logs[index].duration = now - copy.all_logs[index].start
+                }
+
                 setData(copy)
             }
 
