@@ -3,7 +3,9 @@ import { StyleSheet, Text, Touchable, View, TouchableOpacity } from 'react-nativ
 import g, { p } from "../styles/global"
 import { secondsToFormatedString, secondsToDateString } from '../js/timerfunctions'
 
-export default function TimelineDay({ dayData, navigation }) {
+export default function TimelineDay({ startProject, dayData, navigation }) {
+
+    console.log(startProject)
 
     return (
         <View style={s.dayContainer} >
@@ -22,9 +24,8 @@ export default function TimelineDay({ dayData, navigation }) {
                         return (
                             <TouchableOpacity onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })} key={"day" + dayData.day + "project" + project.name} style={[g.projectCard, colorStyle.color]}>
                                 <Text style={g.text}>{project.name}</Text>
-                                <Text style={g.text}>{secondsToFormatedString(project.total_duration)}</Text>
+                                <TouchableOpacity onPress={()=>startProject(project.pid)} style={s.startButton}><Text>{secondsToFormatedString(project.total_duration)}</Text></TouchableOpacity>
                             </TouchableOpacity>
-
                         )
                     }else return
                 })
@@ -38,4 +39,9 @@ const s = StyleSheet.create({
         marginBottom: 30,
         marginHorizontal: 60
     },
+    startButton:{
+        backgroundColor: "#ffffff20",
+        paddingHorizontal: 5,
+        borderRadius: p.br
+    }
 })

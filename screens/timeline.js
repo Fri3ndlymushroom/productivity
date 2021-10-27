@@ -22,7 +22,6 @@ export default function Timeline({ navigation, screenProps }) {
 
     }
 
-    let analysedData = getAnalytics(screenProps.data, settings)
 
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
 
@@ -66,6 +65,7 @@ export default function Timeline({ navigation, screenProps }) {
     }
 
 
+
     return (
         <View style={g.body}>
             <StartButton data={screenProps.data} {...{ setProjectSelectionOpen, stopProject }} />
@@ -74,7 +74,7 @@ export default function Timeline({ navigation, screenProps }) {
             }
             {
                 screenProps.data.daily_logs.map((dayData) => {
-                    return <TimelineDay key={"dayContainer" + dayData.day} {...{ navigation, dayData }} />
+                    return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject}{...{navigation, dayData }} />
                 })
             }
         </View>
