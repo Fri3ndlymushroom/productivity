@@ -77,20 +77,18 @@ export default function Analytics({ navigation, screenProps }) {
                         })
                     }
                 </VictoryStack>
-                {
+                <VictoryChart>
+                    {
+                        analysedData.general_chart.line.data.map((data, i) => {
+                            return (<VictoryLine
+                                key={"general_chart-line" + i}
+                                data={data}
+                                interpolation="natural"
+                            />)
+                        })
+                    }
+                </VictoryChart>
 
-                    <VictoryChart>
-                        {
-                            analysedData.general_chart.line.data.map((data, i) => {
-                                return (<VictoryLine
-                                    key={"general_chart-line" + i}
-                                    data={data}
-                                    interpolation="natural"
-                                />)
-                            })
-                        }
-
-                    </VictoryChart>}
             </ScrollView>
         </View>
     );

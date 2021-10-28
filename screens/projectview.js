@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View, Button, TouchableOpacity } from 're
 import g from "../styles/global"
 import { secondsToShortTimeString, secondsToFormatedString, secondsToDateString } from '../js/timerfunctions';
 import { v4 as uuidv4 } from 'uuid';
+import { VictoryBar } from 'victory-native';
 
 export default function ProjectView({ navigation, screenProps }) {
     let pid = navigation.getParam("projectViewPid")
@@ -27,6 +28,29 @@ export default function ProjectView({ navigation, screenProps }) {
         screenProps.setData(copy)
     }
 
+    const getBarData = () => {
+        let relevant = []
+
+        let boundaries = { end: screenProps.data.daily_logs[0].day, start: screenProps.data.daily_logs[screenProps.data.daily_logs.length - 1].day }
+        let x = 0
+        for (let i = boundaries.start; i <= boundaries.end; i++) {
+            let sum = 0
+            let index = screenProps.data.daily_logs.findIndex((day) => day.day === i)
+
+            if (index >= 0) {
+                let day = screenProps.data.daily_logs[index]
+                let project = day.projects.find((project) => project.pid === pid)
+                project.logs.forEach((log) => {
+                    sum += log.duration
+                })
+            }
+            x++
+            relevant.push({ x: x, y: sum })
+        }
+
+
+        return relevant
+    }
 
 
 
@@ -34,6 +58,12 @@ export default function ProjectView({ navigation, screenProps }) {
     return (
 
         <View style={g.body}>
+            <VictoryBar
+                data={
+                    getBarData()
+                }
+
+            />
             <Text style={g.text}>{projectName}</Text>
             <Button title="Edit project" onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }} />
             <Button title="add" onPress={() => addLog()} />
