@@ -7,7 +7,7 @@ import TimelineDay from '../components/TimelineDay';
 import StartButton from '../components/StartButton';
 import { v4 as uuidv4 } from 'uuid';
 import { copyObject } from '../js/functions';
-
+import TimelineToday from "../components/TimelineToday"
 
 
 export default function Timeline({ navigation, screenProps }) {
@@ -81,10 +81,14 @@ export default function Timeline({ navigation, screenProps }) {
             >
                 {
                     screenProps.data.reversed_daily_logs.map((dayData, i) => {
-                        return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject} {...{ navigation, dayData }} />
+                        if(screenProps.data.reversed_daily_logs.length -1 !== i)
+                            return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject} {...{ navigation, dayData }} />
+                        else return
                     })
                 }
-                
+                {
+                <TimelineToday stopProject={stopProject} startProject={startProject} projects={screenProps.data.projects} {...{navigation}}/>
+                }
             </ScrollView>
         </View>
     );
