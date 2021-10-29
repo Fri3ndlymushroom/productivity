@@ -16,7 +16,8 @@ export default function App() {
         },
         projects: [],
         all_logs: [],
-        daily_logs: []
+        daily_logs: [],
+        reversed_daily_logs: []
     })
 
     const [settings, setSavedSettings] = useState(defaultSettings)
@@ -103,6 +104,10 @@ export default function App() {
                 projects: sortedLogs
             })
         })
+
+        dataCopy.reversed_daily_logs = dataCopy.daily_logs.reverse()
+
+
 
         // projects
         dataCopy.projects.forEach((project) => {

@@ -1,12 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 export const p = {
-    bg1: "#FFFFFF",
-    bg2: "#FFFFFF",
-    bg3: "#2d2f41",
+    bg1: "#191B2A",
+    bg2: "#1C2033",
 
-    text__main: "#000000",
-    text__dim: "#a6a7ab",
+    text__main: "#FFFFFF",
+    text__dim: "#444866",
 
     br: 10
 }
