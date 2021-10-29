@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, View, Text, StyleSheet, Button } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { ScrollView, View, Text, StyleSheet, Button,TouchableOpacity } from 'react-native'
 import g, { p } from "../styles/global"
 import { secondsToTimeString } from '../js/timerfunctions'
 
@@ -56,18 +55,22 @@ export default function TimelineToday({ stopProject, projects, startProject, nav
                                     style={[s.projectCard, color.c]}
                                 >
                                     <Text>{project.name}</Text>
-                                    <Button onPress={() => stopProject()} title={"Stop"} />
+                                    <TouchableOpacity style={s.stopButton} onPress={() => stopProject()}>
+                                        <Text>Stop</Text>
+                                    </TouchableOpacity>
                                 </TouchableOpacity>
                             )
                         } else
                             return (
-                                
+
                                 <TouchableOpacity
                                     style={s.projectCard}
                                     onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })}
                                 >
                                     <Text>{project.name}</Text>
-                                    <Button onPress={() => startProject(project.pid)} title={secondsToTimeString(project.total_duration.toString(10))} />
+                                    <TouchableOpacity style={s.startButton} onPress={() => startProject(project.pid)}>
+                                        <Text>{secondsToTimeString(project.total_duration.toString(10))} </Text>
+                                    </TouchableOpacity>
                                 </TouchableOpacity>
                             )
                     })
@@ -91,6 +94,16 @@ const s = StyleSheet.create({
         borderRadius: p.br,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    startButton:{
+        backgroundColor: "#ffffff20",
+        padding: 10,
+        borderRadius: p.br,
+    },
+    stopButton:{
+        backgroundColor: "#ffffff20",
+        padding: 10,
+        borderRadius: p.br
     }
 })
 

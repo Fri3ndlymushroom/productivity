@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    
     projectCard: {
         backgroundColor: p.bg2,
         width: 300,
