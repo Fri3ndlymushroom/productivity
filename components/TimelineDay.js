@@ -6,6 +6,7 @@ import { secondsToFormatedString, secondsToDateString } from '../js/timerfunctio
 export default function TimelineDay({ startProject, dayData, navigation }) {
 
 
+    
     return (
         <View style={s.dayContainer} >
             <Text style={g.dayTitle}>{secondsToDateString(dayData.day * 24 * 60 * 60)}</Text>

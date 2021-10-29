@@ -3,6 +3,7 @@ import RootNavigator from './routes/draw'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { dummyData, defaultSettings } from './data';
 import { v4 as uuidv4 } from 'uuid';
+import { copyObject } from './js/functions';
 
 export default function App() {
 
@@ -105,8 +106,7 @@ export default function App() {
             })
         })
 
-        dataCopy.reversed_daily_logs = dataCopy.daily_logs.reverse()
-
+        dataCopy.reversed_daily_logs =copyObject(dataCopy.daily_logs).reverse()
 
 
         // projects

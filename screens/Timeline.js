@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, Button, Text, View } from "react-native"
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
@@ -69,8 +69,6 @@ export default function Timeline({ navigation, screenProps }) {
         screenProps.setData(dataCopy)
 
     }
-
-
     return (
         <View style={g.body}>
             <StartButton data={screenProps.data} {...{ setProjectSelectionOpen, stopProject }} />
@@ -78,14 +76,12 @@ export default function Timeline({ navigation, screenProps }) {
                 projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
             }
             <ScrollView
-                ref={ref => {this.scrollView = ref}}
-                onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
+                ref={ref => {this.timelineScrollView = ref}}
+                onContentSizeChange={() => this.timelineScrollView.scrollToEnd({animated: true})}
             >
                 {
-                    screenProps.data.reversed_daily_logs.map((dayData) => {
-
-
-                        return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject}{...{ navigation, dayData }} />
+                    screenProps.data.reversed_daily_logs.map((dayData, i) => {
+                        return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject} {...{ navigation, dayData }} />
                     })
                 }
                 

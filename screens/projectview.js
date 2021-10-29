@@ -7,10 +7,14 @@ import { VictoryBar } from 'victory-native';
 
 export default function ProjectView({ navigation, screenProps }) {
     let pid = navigation.getParam("projectViewPid")
+
+    
+
     let projectIndex = screenProps.data.projects.findIndex((project) => project.pid === pid)
     let projectData = screenProps.data.projects[projectIndex]
     let projectName = projectData.name
     let lastDay = 0
+
 
     const addLog = () => {
         let copy = { ...screenProps.data }
@@ -31,6 +35,8 @@ export default function ProjectView({ navigation, screenProps }) {
     const getBarData = () => {
         let relevant = []
 
+
+
         let boundaries = { end: screenProps.data.daily_logs[0].day, start: screenProps.data.daily_logs[screenProps.data.daily_logs.length - 1].day }
         let x = 0
         for (let i = boundaries.start; i <= boundaries.end; i++) {
@@ -48,7 +54,7 @@ export default function ProjectView({ navigation, screenProps }) {
             relevant.push({ x: x, y: sum })
         }
 
-
+        
         return relevant
     }
 
