@@ -54,16 +54,18 @@ export default function TimelineToday({ stopProject, projects, startProject, nav
 
                         if (i === 0) {
                             infoCard =
-                                <View>
+                                <View style={s.infoCards}>
                                     <Text>Daily goal</Text>
                                 </View>
                         } else if (i === 1) {
                             let allCards = [...relevantData[0]]
                             allCards.push(...relevantData[1])
-                            if (allCards.filter((card) => card.running).length > 0) {
+
+                            let running = allCards.filter((card) => card.running)
+                            if (running.length > 0) {
                                 infoCard = 
-                                <View>
-                                    <Text>Running</Text>
+                                <View style={s.infoCards}>
+                                    <Text>{secondsToTimeString(running[0].total_duration)}</Text>
                                 </View>
                             }
                         }
@@ -112,10 +114,20 @@ export default function TimelineToday({ stopProject, projects, startProject, nav
 }
 
 const s = StyleSheet.create({
+    infoCards:{
+        flex: 1,
+        backgroundColor: p.bg2,
+        height: 200,
+        width: 140,
+        maxWidth: 140,
+        borderRadius: p.br,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 10
+    },
     projectCardContainer: {
         display: "flex",
         flexDirection: "row",
-        flexWrap: "wrap"
     },
     projectCardColumnContainer: {
         display: "flex",
@@ -128,6 +140,7 @@ const s = StyleSheet.create({
         backgroundColor: p.bg2,
         height: 200,
         width: 140,
+        maxWidth: 140,
         borderRadius: p.br,
         alignItems: 'center',
         justifyContent: 'center',
