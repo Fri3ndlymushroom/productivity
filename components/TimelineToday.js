@@ -26,14 +26,13 @@ export default function TimelineToday({ stopProject, projects, startProject, nav
                 color: project.color
             })
         })
-        console.log(relevant)
 
         const half = relevant.length / 2;
 
-        
-        
+
+
         let halfed = [relevant.slice(0, Math.ceil(half)), relevant.slice(-Math.floor(half))]
-        
+
         setRelevantData(halfed)
     }, [projects])
 
@@ -49,44 +48,61 @@ export default function TimelineToday({ stopProject, projects, startProject, nav
             >
                 {
                     relevantData.map((half, i) => {
-                        return (
-                            <View style={s.projectCardContainer}>
-                                {
-                                half.map((project) => {
-                                    const color = StyleSheet.create({
-                                        c: {
-                                            backgroundColor: project.color
-                                        }
-                                    })
-                                    if (project.running) {
-                                        return (
-                                            <TouchableOpacity
-                                                onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })}
-                                                style={[s.projectCard, color.c]}
-                                            >
-                                                <Text>{project.name}</Text>
-                                                <TouchableOpacity style={s.stopButton} onPress={() => stopProject()}>
-                                                    <Text>Stop</Text>
-                                                </TouchableOpacity>
-                                            </TouchableOpacity>
-                                        )
-                                    } else
-                                        return (
 
-                                            <TouchableOpacity
-                                                style={s.projectCard}
-                                                onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })}
-                                            >
-                                                <Text>{project.name}</Text>
-                                                <TouchableOpacity style={[s.startButton, color.c]} onPress={() => startProject(project.pid)}>
-                                                    <Text>{secondsToTimeString(project.total_duration.toString(10))} </Text>
-                                                </TouchableOpacity>
-                                            </TouchableOpacity>
-                                        )
-                                })
+
+                        let infoCard = null
+
+                        if (i === 0) {
+                            infoCard =
+                                <View>
+                                    <Text>Daily goal</Text>
+                                </View>
+                        } else if (i === 1) {
+                            let allCards = [...relevantData[0]]
+                            allCards.push(...relevantData[1])
+                            if (allCards.filter((card) => card.running).length > 0) {
+                                infoCard = 
+                                <View>
+                                    <Text>Running</Text>
+                                </View>
+                            }
+                        }
+
+                        let projectCards = half.map((project) => {
+                            const color = StyleSheet.create({
+                                c: {
+                                    backgroundColor: project.color
                                 }
-                            </View>
-                        )
+                            })
+
+                            if (project.running) {
+                                return (
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })}
+                                        style={[s.projectCard, color.c]}
+                                        key={"today" + project.pid}
+                                    >
+                                        <Text>{project.name}</Text>
+                                        <TouchableOpacity style={s.stopButton} onPress={() => stopProject()}>
+                                            <Text>Stop</Text>
+                                        </TouchableOpacity>
+                                    </TouchableOpacity>)
+
+                            } else
+                                return (
+                                    <TouchableOpacity
+                                        style={s.projectCard}
+                                        onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })}
+                                        key={"today" + project.pid}
+                                    >
+                                        <Text>{project.name}</Text>
+                                        <TouchableOpacity style={[s.startButton, color.c]} onPress={() => startProject(project.pid)}>
+                                            <Text>{secondsToTimeString(project.total_duration.toString(10))} </Text>
+                                        </TouchableOpacity>
+                                    </TouchableOpacity>)
+                        })
+
+                        return (<View style={s.projectCardContainer}>{infoCard}{projectCards}</View>)
 
                     })
                 }
@@ -104,7 +120,8 @@ const s = StyleSheet.create({
     projectCardColumnContainer: {
         display: "flex",
         flexDirection: "column",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        marginLeft: 50
     },
     projectCard: {
         flex: 1,

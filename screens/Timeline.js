@@ -4,7 +4,6 @@ import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
 import TimelineDay from '../components/TimelineDay';
-import StartButton from '../components/StartButton';
 import { v4 as uuidv4 } from 'uuid';
 import { copyObject } from '../js/functions';
 import TimelineToday from "../components/TimelineToday"
@@ -71,7 +70,6 @@ export default function Timeline({ navigation, screenProps }) {
     }
     return (
         <View style={g.body}>
-            <StartButton data={screenProps.data} {...{ setProjectSelectionOpen, stopProject }} />
             {
                 projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
             }
@@ -81,7 +79,7 @@ export default function Timeline({ navigation, screenProps }) {
             >
                 {
                     screenProps.data.reversed_daily_logs.map((dayData, i) => {
-                        if(screenProps.data.reversed_daily_logs.length -1 !== i)
+                        if(dayData.day !== Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24))
                             return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject} {...{ navigation, dayData }} />
                         else return
                     })
