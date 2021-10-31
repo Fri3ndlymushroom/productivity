@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { ScrollView, View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import g, { p } from "../styles/global"
 import { secondsToTimeString } from '../js/timerfunctions'
+import { VictoryPie } from 'victory-native'
+import { secondsToShortTimeString } from '../js/timerfunctions'
 
-export default function TimelineToday({ stopProject, projects, startProject, navigation }) {
+export default function TimelineToday({ goal, stopProject, projects, startProject, navigation }) {
     const [relevantData, setRelevantData] = useState([])
 
     let day = Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24)
@@ -52,21 +54,56 @@ export default function TimelineToday({ stopProject, projects, startProject, nav
 
                         let infoCard = null
 
+                        let allCards = [...relevantData[0]]
+                        allCards.push(...relevantData[1])
+
                         if (i === 0) {
+
+                            let achieved = allCards.reduce((sum, log) => sum + log.total_duration, 0)
+
+
+                            let diff = goal - achieved > 0 ? goal - achieved : 0
+
+                            let perc = 100 / goal * achieved >= 100? 100 : Math.round(100 / goal * achieved)
+
                             infoCard =
-                                <View style={s.infoCards}>
-                                    <Text>Daily goal</Text>
+                                <View style={s.infoCards} key="InfoCardGoal">
+                                    
+                                    <VictoryPie
+                                        colorScale={[p.hl, p.bg1, ]}
+
+                                        height={100}
+                                        innerRadius={(obj)=>{
+                                            return obj.datum.ri * obj.datum.factor
+                                        }}
+                                        radius={(obj)=>{
+                                            return  (obj.datum.ri + obj.datum.ro) * obj.datum.factor
+                                        }}
+                                        cornerRadius={4}
+                                        data={[
+                                            { y: perc, factor: 4, ri: 9, ro: 2 },
+                                            { y: 100 - perc, factor: 4, ri: 9.5, ro: 1},
+                                          ]}
+                                        style={{
+                                            labels:{
+                                                fill: "#00000000"
+                                            }
+                                        }}
+                                        
+                                    />
+                                    <Text style={s.InfoCardGoalTextMain}>{secondsToShortTimeString(diff)}</Text>
+                                    <Text style={s.InfoCardGoalTextSec}>Remaining to reach your daily goal</Text>
+                                    <Text style={s.InfoCardGoalTextPerc}>{perc}%</Text>
                                 </View>
                         } else if (i === 1) {
-                            let allCards = [...relevantData[0]]
-                            allCards.push(...relevantData[1])
+
 
                             let running = allCards.filter((card) => card.running)
                             if (running.length > 0) {
-                                infoCard = 
-                                <View style={s.infoCards}>
-                                    <Text>{secondsToTimeString(running[0].total_duration)}</Text>
-                                </View>
+                                infoCard =
+                                    <View style={s.infoCards} key="InfoCardCounter">
+                                        <Text>{secondsToTimeString(running[0].total_duration)}</Text>
+                                    </View>
                             }
                         }
 
@@ -114,7 +151,7 @@ export default function TimelineToday({ stopProject, projects, startProject, nav
 }
 
 const s = StyleSheet.create({
-    infoCards:{
+    infoCards: {
         flex: 1,
         backgroundColor: p.bg2,
         height: 200,
@@ -123,7 +160,8 @@ const s = StyleSheet.create({
         borderRadius: p.br,
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10
+        margin: 10,
+        padding: 20
     },
     projectCardContainer: {
         display: "flex",
@@ -155,6 +193,21 @@ const s = StyleSheet.create({
         backgroundColor: "#ffffff20",
         padding: 10,
         borderRadius: p.br
+    },
+    InfoCardGoalTextMain:{
+        color: p.text__main
+    },
+    InfoCardGoalTextSec:{
+        color: p.text__dim,
+        fontSize: 11,
+        textAlign: "center"
+    },
+    InfoCardGoalTextPerc:{
+        color: p.text__main,
+        fontSize: 20,
+        fontWeight: "bold",
+        position: 'absolute',
+        top: 65
     }
 })
 

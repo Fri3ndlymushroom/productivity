@@ -4,6 +4,8 @@ export const p = {
     bg1: "#191B2A",
     bg2: "#1C2033",
 
+    hl: "#5755D3",
+
     text__main: "#FFFFFF",
     text__dim: "#444866",
 

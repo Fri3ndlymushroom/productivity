@@ -16,8 +16,6 @@ const RootDrawNavigator = createDrawerNavigator({
     Settings:{
         screen: SettingsStack
     }
-
-    
 })
 
 export default createAppContainer(RootDrawNavigator)

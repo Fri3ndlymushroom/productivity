@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Text, View, TouchableOpacity, StyleSheet } from "react-native"
-import g from '../styles/global'
+import g, { p } from '../styles/global'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { secondsToFormatedString, secondsToShortTimeString, secondsToDateString } from '../js/timerfunctions';
 import { copyObject } from "../js/functions"
@@ -20,7 +20,6 @@ export default function EditLog({ navigation, screenProps }) {
         open: false
     })
 
-
     let day = Math.floor(log.start / 24 / 60 / 60) * 24 * 60 * 60
 
     useEffect(() => {
@@ -39,7 +38,7 @@ export default function EditLog({ navigation, screenProps }) {
             else if (dateTimeProps.target === "end") editEndOfLog(value)
         }
         else {
-            setDateTimeProps({target: "daily_goal",value: 3600,mode: "time",open: false})
+            setDateTimeProps({ target: "daily_goal", value: 3600, mode: "time", open: false })
         }
     }
 
@@ -51,7 +50,7 @@ export default function EditLog({ navigation, screenProps }) {
         let endIsBigger = newAbsEnd > times.start
         let doesntExceed = newAbsEnd - screenProps.settings.start_of_day <= 86400
 
-        setDateTimeProps({target: "daily_goal",value: 3600,mode: "time",open: false})
+        setDateTimeProps({ target: "daily_goal", value: 3600, mode: "time", open: false })
         if (endIsBigger && doesntExceed) {
 
             setTimes({
@@ -74,7 +73,7 @@ export default function EditLog({ navigation, screenProps }) {
         let endIsBigger = times.end > newAbsStart
         let doesntExceed = newAbsStart - screenProps.settings.start_of_day <= 86400
 
-        setDateTimeProps({target: "daily_goal",value: 3600,mode: "time",open: false})
+        setDateTimeProps({ target: "daily_goal", value: 3600, mode: "time", open: false })
         if (endIsBigger && doesntExceed) {
             setTimes({
                 start: newAbsStart,
@@ -100,7 +99,7 @@ export default function EditLog({ navigation, screenProps }) {
         copy.start = start
         copy.end = end
         copy.day = Math.floor((copy.start - screenProps.settings.start_of_day) / 60 / 60 / 24)
-        setDateTimeProps({target: "daily_goal",value: 3600,mode: "time",open: false})
+        setDateTimeProps({ target: "daily_goal", value: 3600, mode: "time", open: false })
         setLog(copy)
 
     }
@@ -180,32 +179,44 @@ export default function EditLog({ navigation, screenProps }) {
                     />
                 )}
             </View>
-            <TouchableOpacity onPress={() => setDateTimeProps({
+
+
+            <Text>{secondsToFormatedString(log.duration)}</Text>
+
+            <TouchableOpacity style={s.timeCorrectorButton} onPress={() => setDateTimeProps({
                 target: "date",
                 value: log.start,
                 mode: "date",
                 open: true
             })}><Text>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
-            <Text>{secondsToFormatedString(log.duration)}</Text>
+
+
+
             <View style={s.timeCorrector}>
-                <TouchableOpacity onPress={() => moveStartOfLog(-600)}><Text>-</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setDateTimeProps({
-                target: "start",
-                value: log.start,
-                mode: "time",
-                open: true
-            })}><Text>From: {secondsToShortTimeString(log.start)}</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => moveStartOfLog(600)}><Text>+</Text></TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveStartOfLog(-600)}><Text>-</Text></TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => setDateTimeProps({
+                    target: "start",
+                    value: log.start,
+                    mode: "time",
+                    open: true
+                })}>
+                    <Text>{secondsToShortTimeString(log.start)}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveStartOfLog(600)}><Text>+</Text></TouchableOpacity>
             </View>
+
+
             <View style={s.timeCorrector}>
-                <TouchableOpacity onPress={() => moveEndOfLog(-600)}><Text>-</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => setDateTimeProps({
-                target: "end",
-                value: log.end,
-                mode: "time",
-                open: true
-            })}><Text>To: {log.end ? secondsToShortTimeString(log.end) : "running"}</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => moveEndOfLog(600)}><Text>+</Text></TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveEndOfLog(-600)}><Text>-</Text></TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => setDateTimeProps({
+                    target: "end",
+                    value: log.end,
+                    mode: "time",
+                    open: true
+                })}>
+                    <Text>{log.end ? secondsToShortTimeString(log.end) : "running"}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveEndOfLog(600)}><Text>+</Text></TouchableOpacity>
             </View>
             <Button title="Save Changes" onPress={() => saveChanges()} />
             <Button title="Delete Log" onPress={() => deleteLog()} />
@@ -215,6 +226,14 @@ export default function EditLog({ navigation, screenProps }) {
 const s = StyleSheet.create({
     timeCorrector: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        width: 200,
+        justifyContent: "space-between",
+        margin: 10,
+    },
+    timeCorrectorButton:{
+        padding: 10,
+        backgroundColor: p.bg2,
+        borderRadius: p.br
     }
 });

@@ -8,7 +8,7 @@ import { VictoryBar } from 'victory-native';
 export default function ProjectView({ navigation, screenProps }) {
     let pid = navigation.getParam("projectViewPid")
 
-    
+
 
     let projectIndex = screenProps.data.projects.findIndex((project) => project.pid === pid)
     let projectData = screenProps.data.projects[projectIndex]
@@ -54,7 +54,7 @@ export default function ProjectView({ navigation, screenProps }) {
             relevant.push({ x: x, y: sum })
         }
 
-        
+
         return relevant
     }
 
@@ -64,56 +64,65 @@ export default function ProjectView({ navigation, screenProps }) {
     return (
 
         <View style={g.body}>
-            <VictoryBar
-                data={
-                    getBarData()
-                }
-
-            />
-            <Text style={g.text}>{projectName}</Text>
-            <Button title="Edit project" onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }} />
-            <Button title="add" onPress={() => addLog()} />
             <ScrollView>
-                {
-                    projectData.logs.map((log) => {
+                <VictoryBar
+                    data={
+                        getBarData()
+                    }
 
-                        let logs = null
-                        let card = (
+                />
+                <Text style={g.text}>{projectName}</Text>
+                <Button title="Edit project" onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }} />
+                <Button title="add" onPress={() => addLog()} />
 
-                            <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
-                                <Text style={g.text}>{secondsToShortTimeString(log.start)} - {log.end ? secondsToShortTimeString(log.end) : "running"}</Text>
-                                <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
-                            </TouchableOpacity>
+                <View style={s.logs}>
+                    {
+                        projectData.logs.map((log) => {
+
+                            let logs = null
+                            let card = (
+
+                                <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
+                                    <Text style={g.text}>{secondsToShortTimeString(log.start)} - {log.end ? secondsToShortTimeString(log.end) : "running"}</Text>
+                                    <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
+                                </TouchableOpacity>
 
 
-                        )
-                        if (lastDay !== log.day) {
-                            logs = (
-                                <View key={"projectViewLog" + log.start}>
-                                    <Text style={g.dayTitle}>{secondsToDateString(log.start)}</Text>
-                                    {card}
-                                </View>
                             )
-                        } else {
-                            logs = (
-                                <View key={"projectViewLog" + log.start}>
-                                    {card}
-                                </View>
+                            if (lastDay !== log.day) {
+                                logs = (
+                                    <View key={"projectViewLog" + log.start}>
+                                        <Text style={g.dayTitle}>{secondsToDateString(log.start)}</Text>
+                                        {card}
+                                    </View>
+                                )
+                            } else {
+                                logs = (
+                                    <View key={"projectViewLog" + log.start}>
+                                        {card}
+                                    </View>
+                                )
+
+                            }
+
+                            lastDay = log.day
+
+                            return (
+                                logs
                             )
 
-                        }
 
-                        lastDay = log.day
-
-                        return (
-                            logs
-                        )
-
-
-                    })
-                }
+                        })
+                    }
+                </View>
             </ScrollView>
         </View >
     )
 }
 
+const s = StyleSheet.create({
+    logs:{
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+})

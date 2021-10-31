@@ -46,7 +46,7 @@ export function secondsToShortDateString(seconds) {
 
 export function secondsToShortTimeString(seconds) {
     let d = new Date(seconds * 1000)
-    let f = format(d, 'HH:mm')
+    let f = format(d, "HH'h' mm'min'")
     return f
 }
 
