@@ -241,7 +241,7 @@ const s = StyleSheet.create({
         borderRadius: p.br,
     },
     stopButton: {
-        backgroundColor: "#ffffff20",
+        backgroundColor: p.bg2,
         padding: 10,
         borderRadius: p.br
     },
