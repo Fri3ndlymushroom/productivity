@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView, View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import g, { p } from "../styles/global"
-import { secondsToTimeString } from '../js/timerfunctions'
+import { formatSeconds, secondsToTimeString } from '../js/timerfunctions'
 import { VictoryPie } from 'victory-native'
 import { secondsToShortTimeString } from '../js/timerfunctions'
+import Svg, { Path } from "react-native-svg"
 
 export default function TimelineToday({ goal, stopProject, projects, startProject, navigation }) {
     const [relevantData, setRelevantData] = useState([])
@@ -64,32 +65,32 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
 
                             let diff = goal - achieved > 0 ? goal - achieved : 0
 
-                            let perc = 100 / goal * achieved >= 100? 100 : Math.round(100 / goal * achieved)
+                            let perc = 100 / goal * achieved >= 100 ? 100 : Math.round(100 / goal * achieved)
 
                             infoCard =
                                 <View style={s.infoCards} key="InfoCardGoal">
-                                    
+
                                     <VictoryPie
-                                        colorScale={[p.hl, p.bg1, ]}
+                                        colorScale={[p.hl, p.bg1,]}
 
                                         height={100}
-                                        innerRadius={(obj)=>{
+                                        innerRadius={(obj) => {
                                             return obj.datum.ri * obj.datum.factor
                                         }}
-                                        radius={(obj)=>{
-                                            return  (obj.datum.ri + obj.datum.ro) * obj.datum.factor
+                                        radius={(obj) => {
+                                            return (obj.datum.ri + obj.datum.ro) * obj.datum.factor
                                         }}
                                         cornerRadius={4}
                                         data={[
                                             { y: perc, factor: 4, ri: 9, ro: 2 },
-                                            { y: 100 - perc, factor: 4, ri: 9.5, ro: 1},
-                                          ]}
+                                            { y: 100 - perc, factor: 4, ri: 9.5, ro: 1 },
+                                        ]}
                                         style={{
-                                            labels:{
+                                            labels: {
                                                 fill: "#00000000"
                                             }
                                         }}
-                                        
+
                                     />
                                     <Text style={s.InfoCardGoalTextMain}>{secondsToShortTimeString(diff)}</Text>
                                     <Text style={s.InfoCardGoalTextSec}>Remaining to reach your daily goal</Text>
@@ -100,9 +101,29 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
 
                             let running = allCards.filter((card) => card.running)
                             if (running.length > 0) {
+                                const indicator = StyleSheet.create({
+                                    color: {
+                                        backgroundColor: running[0].color
+                                    }
+                                })
                                 infoCard =
-                                    <View style={s.infoCards} key="InfoCardCounter">
-                                        <Text>{secondsToTimeString(running[0].total_duration)}</Text>
+                                    <View style={s.infoCardCounter} key="InfoCardCounter">
+                                        <View style={[s.infoCardIndicator, indicator.color]}></View>
+
+                                        <View style={s.infoCardCounterColumn}>
+                                            <Text style={s.infoCardCounterTimer}>{formatSeconds(running[0].total_duration, "HH")}</Text>
+                                            <Text style={s.infoCardCounterUnit}>hrs</Text>
+                                        </View>
+                                        <View style={s.infoCardCounterColumn}>
+                                            <Text style={s.infoCardCounterTimer}>{formatSeconds(running[0].total_duration, "mm")}</Text>
+                                            <Text style={s.infoCardCounterUnit}>mins</Text>
+                                        </View>
+                                        <View style={s.infoCardCounterColumn}>
+                                            <Text style={s.infoCardCounterTimer}>{formatSeconds(running[0].total_duration, "ss")}</Text>
+                                            <Text style={s.infoCardCounterUnit}>secs</Text>
+                                        </View>
+
+
                                     </View>
                             }
                         }
@@ -121,9 +142,24 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
                                         style={[s.projectCard, color.c]}
                                         key={"today" + project.pid}
                                     >
-                                        <Text>{project.name}</Text>
+                                        <View>
+                                            <View style={[s.logo]}>
+                                                <Svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width={23}
+                                                    height={23}
+                                                    fill="none"
+                                                >
+                                                    <Path
+                                                        stroke="#fff"
+                                                        d="M11.63 21.981L1.04 17.48a.1.1 0 01-.061-.092V5.529a.1.1 0 01.139-.092l10.474 4.452a.1.1 0 00.078 0l10.613-4.512M11.63 21.981v-9.056m0 9.056l10.591-4.502a.1.1 0 00.06-.092V5.377m0 0L11.669.865a.1.1 0 00-.075 0L4.021 3.867"
+                                                    />
+                                                </Svg>
+                                            </View>
+                                            <Text style={s.projectCardTextMain}>{project.name}</Text>
+                                        </View>
                                         <TouchableOpacity style={s.stopButton} onPress={() => stopProject()}>
-                                            <Text>Stop</Text>
+                                            <Text style={s.buttonText}>Stop</Text>
                                         </TouchableOpacity>
                                     </TouchableOpacity>)
 
@@ -134,9 +170,24 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
                                         onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })}
                                         key={"today" + project.pid}
                                     >
-                                        <Text>{project.name}</Text>
+                                        <View>
+                                            <View style={[s.logo, color.c]}>
+                                                <Svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width={23}
+                                                    height={23}
+                                                    fill="none"
+                                                >
+                                                    <Path
+                                                        stroke="#fff"
+                                                        d="M11.63 21.981L1.04 17.48a.1.1 0 01-.061-.092V5.529a.1.1 0 01.139-.092l10.474 4.452a.1.1 0 00.078 0l10.613-4.512M11.63 21.981v-9.056m0 9.056l10.591-4.502a.1.1 0 00.06-.092V5.377m0 0L11.669.865a.1.1 0 00-.075 0L4.021 3.867"
+                                                    />
+                                                </Svg>
+                                            </View>
+                                            <Text style={s.projectCardTextMain}>{project.name}</Text>
+                                        </View>
                                         <TouchableOpacity style={[s.startButton, color.c]} onPress={() => startProject(project.pid)}>
-                                            <Text>{secondsToTimeString(project.total_duration.toString(10))} </Text>
+                                            <Text style={s.buttonText}>{secondsToTimeString(project.total_duration.toString(10))} </Text>
                                         </TouchableOpacity>
                                     </TouchableOpacity>)
                         })
@@ -154,9 +205,9 @@ const s = StyleSheet.create({
     infoCards: {
         flex: 1,
         backgroundColor: p.bg2,
-        height: 200,
-        width: 140,
-        maxWidth: 140,
+        height: 185,
+        width: 150,
+        maxWidth: 150,
         borderRadius: p.br,
         alignItems: 'center',
         justifyContent: 'center',
@@ -176,13 +227,13 @@ const s = StyleSheet.create({
     projectCard: {
         flex: 1,
         backgroundColor: p.bg2,
-        height: 200,
-        width: 140,
-        maxWidth: 140,
+        height: 185,
+        width: 150,
+        maxWidth: 150,
         borderRadius: p.br,
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 10
+        justifyContent: "space-between",
+        margin: 10,
+        padding: 15
     },
     startButton: {
         backgroundColor: "#ffffff20",
@@ -194,20 +245,71 @@ const s = StyleSheet.create({
         padding: 10,
         borderRadius: p.br
     },
-    InfoCardGoalTextMain:{
+    InfoCardGoalTextMain: {
         color: p.text__main
     },
-    InfoCardGoalTextSec:{
+    InfoCardGoalTextSec: {
         color: p.text__dim,
         fontSize: 11,
         textAlign: "center"
     },
-    InfoCardGoalTextPerc:{
+    InfoCardGoalTextPerc: {
         color: p.text__main,
         fontSize: 20,
         fontWeight: "bold",
         position: 'absolute',
-        top: 65
+        top: 55
+    },
+    logo: {
+        height: 38,
+        width: 38,
+        borderRadius: p.br,
+        backgroundColor: p.bg2,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonText: {
+        textAlign: "center",
+        color: p.text__main
+    },
+    projectCardTextMain: {
+        color: p.text__main,
+        marginTop: 10
+    },
+    infoCardCounter: {
+        flex: 1,
+        backgroundColor: p.bg2,
+        height: 185,
+        width: 150,
+        maxWidth: 150,
+        borderRadius: p.br,
+        justifyContent: 'center',
+        margin: 10,
+        padding: 20,
+        paddingTop: 40
+    },
+    infoCardIndicator: {
+        height: 30,
+        width: 150,
+        position: "absolute",
+        top: 0,
+        backgroundColor: p.bg1,
+        borderTopLeftRadius: p.br,
+        borderTopRightRadius: p.br,
+    },
+    infoCardCounterColumn: {
+        flex: 1,
+        flexDirection: "row",
+    },
+
+    infoCardCounterTimer: {
+        color: p.text__main,
+        fontSize: 30
+    },
+    infoCardCounterUnit: {
+        color: p.text__dim,
+        marginTop: 15,
+        marginLeft: 5
     }
 })
 
