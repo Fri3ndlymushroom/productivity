@@ -12,7 +12,10 @@ import { headerStyle } from "../styles/global"
 const screens = {
     Timeline: {
         screen: Timeline,
-        navigationOptions: { headerStyle: headerStyle }
+
+        navigationOptions: {
+            header: null
+        }
     },
     AddProject: {
         screen: AddProject,
@@ -26,11 +29,11 @@ const screens = {
         screen: EditLog,
         navigationOptions: { headerStyle: headerStyle }
     },
-    EditProject:{
+    EditProject: {
         screen: EditProject,
         navigationOptions: { headerStyle: headerStyle }
     },
-    Archive:{
+    Archive: {
         screen: Archive,
         navigationOptions: { headerStyle: headerStyle }
     }
