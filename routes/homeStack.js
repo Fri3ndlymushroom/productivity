@@ -14,7 +14,7 @@ const screens = {
         screen: Timeline,
 
         navigationOptions: {
-            header: null
+            header: null 
         }
     },
     AddProject: {

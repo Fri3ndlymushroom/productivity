@@ -8,6 +8,8 @@ import { VictoryBar } from 'victory-native';
 export default function ProjectView({ navigation, screenProps }) {
     let pid = navigation.getParam("projectViewPid")
 
+    console.log(pid)
+
 
 
     let projectIndex = screenProps.data.projects.findIndex((project) => project.pid === pid)
@@ -46,9 +48,10 @@ export default function ProjectView({ navigation, screenProps }) {
             if (index >= 0) {
                 let day = screenProps.data.daily_logs[index]
                 let project = day.projects.find((project) => project.pid === pid)
-                project.logs.forEach((log) => {
-                    sum += log.duration
-                })
+                if(project)
+                    project.logs.forEach((log) => {
+                        sum += log.duration
+                    })
             }
             x++
             relevant.push({ x: x, y: sum })
