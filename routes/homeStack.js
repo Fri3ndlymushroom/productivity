@@ -9,33 +9,42 @@ import Archive from "../screens/Archive";
 
 import { headerStyle } from "../styles/global"
 
+const navigationOptions = {
+
+    headerStyle: headerStyle,
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+    },
+
+}
+
 const screens = {
     Timeline: {
         screen: Timeline,
 
         navigationOptions: {
-            header: null 
+            header: null
         }
     },
     AddProject: {
         screen: AddProject,
-        navigationOptions: { headerStyle: headerStyle }
+        navigationOptions: navigationOptions
     },
     ProjectView: {
         screen: ProjectView,
-        navigationOptions: { headerStyle: headerStyle }
+        navigationOptions: navigationOptions
     },
     EditLog: {
         screen: EditLog,
-        navigationOptions: { headerStyle: headerStyle }
+        navigationOptions: navigationOptions
     },
     EditProject: {
         screen: EditProject,
-        navigationOptions: { headerStyle: headerStyle }
+        navigationOptions: navigationOptions
     },
     Archive: {
         screen: Archive,
-        navigationOptions: { headerStyle: headerStyle }
+        navigationOptions: navigationOptions
     }
 }
 

@@ -199,8 +199,7 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
                                         </TouchableOpacity>)
                             })
 
-                            return (<View style={s.projectCardContainer}>{infoCard}{projectCards}</View>)
-
+                            return (<View key={"DailyProjectColumnContainer"+i} style={s.projectCardContainer}>{infoCard}{projectCards}</View>)
                         })
                     }
                 </View>
