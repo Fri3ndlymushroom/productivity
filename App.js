@@ -139,8 +139,6 @@ export default function App() {
 
     }, [])
 
-
-
     useEffect(() => {
         const interval = setInterval(() => {
             if (data.all_logs.filter((log) => log.running === true).length > 0) {

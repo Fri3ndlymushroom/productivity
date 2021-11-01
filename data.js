@@ -17,7 +17,7 @@ export let dummyData = {
             name: "HyperTyper",
             pid: "P_82d0c204-bfae-4f11-aafc-5bcd8a1a670a",
             logs: [],
-            color:"#D6C63D",
+            color:"#3DD6BA",
         }
     ],
     all_logs: [
@@ -39,7 +39,7 @@ export let dummyData = {
             start: 1634159844,
             end: 1634159944,
             duration: 100,
-            color: "#EC2964"
+            color: "#6441C8"
         },
         {
             project: "HyperTyper",
@@ -49,7 +49,7 @@ export let dummyData = {
             start: 1634159144,
             end: 1634159244,
             duration: 100,
-            color:"#D6C63D",
+            color:"#3DD6BA",
         },
     ],
     daily_logs: []

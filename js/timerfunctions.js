@@ -11,13 +11,17 @@ export function secondsToFormatedString(seconds) {
     if (stringified.seconds.length == 1) stringified.seconds = "0" + stringified.seconds
 
     if (stringified.hours === "00") {
-        return stringified.minutes + ":" + stringified.seconds
+        return stringified.minutes + " " + stringified.seconds
     } else {
-        return stringified.hours + ":" + stringified.minutes + ":" + stringified.seconds
+        return stringified.hours + " " + stringified.minutes + " " + stringified.seconds
     }
 
 
 }
+
+
+
+
 
 export function formatSeconds(seconds, formatstr) {
     let d = new Date(seconds * 1000)
@@ -52,6 +56,12 @@ export function secondsToShortTimeString(seconds) {
 
 export function secondsToTimeString(seconds) {
     let d = new Date(seconds * 1000)
-    let f = format(d, 'HH:mm:ss')
+    let f = format(d, "HH'h' mm'min' ss'sek'")
+    return f
+}
+
+export function secondsToDayString(seconds) {
+    let d = new Date(seconds * 1000)
+    let f = format(d, "EEE, d MMM ")
     return f
 }

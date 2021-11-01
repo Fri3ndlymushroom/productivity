@@ -19,7 +19,13 @@ export const headerStyle = {
     backgroundColor: p.bg2,
 }
 
-
+const shadow = {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 2
+}
 
 
 const styles = StyleSheet.create({
@@ -40,30 +46,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderRadius: p.br,
         justifyContent: "space-between",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
+        ...shadow
     },
     shadow: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
+        ...shadow
     },
     dayTitle: {
         marginLeft: 5,
-        color: p.text__main
+        color: p.text__main,
+        fontSize: 16,
     },
     text: {
         color: p.text__main
@@ -73,7 +64,7 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-    },
+    }
 });
 
 export default styles
