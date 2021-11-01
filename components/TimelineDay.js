@@ -35,7 +35,7 @@ export default function TimelineDay({ startProject, dayData, navigation }) {
                                 </View>
                                 {/* <TouchableOpacity onPress={() => startProject(project.pid)} style={s.startButton}> */}
                                 
-                                <Text style={g.text} >{secondsToTimeString(project.total_duration)}</Text>
+                                <Text style={s.durationText} >{secondsToTimeString(project.total_duration)}</Text>
                                 {/* </TouchableOpacity> */}
                             </TouchableOpacity>
                         )
@@ -66,5 +66,9 @@ const s = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: 'center',
+    },
+    durationText:{
+        color: p.text__dim,
+        fontSize: 12
     }
 })

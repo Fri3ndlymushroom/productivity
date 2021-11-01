@@ -187,7 +187,10 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
                                                         />
                                                     </Svg>
                                                 </View>
+                                                <View>
                                                 <Text style={s.projectCardTextMain}>{project.name}</Text>
+                                                <Text style={s.projectCardTextSec}>Some stat</Text>
+                                                </View>
                                             </View>
                                             <TouchableOpacity style={[s.startButton, color.c]} onPress={() => startProject(project.pid)}>
                                                 <Icon name={'play'} size={12} color={'white'} />
@@ -262,6 +265,11 @@ const s = StyleSheet.create({
     projectCardTextMain: {
         color: p.text__main,
         marginTop: 10
+    },
+    projectCardTextSec: {
+        color: p.text__dim,
+        marginTop: 2,
+        fontSize: 12
     },
     // info cards
     infoCards: {
