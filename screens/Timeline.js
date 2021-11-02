@@ -12,7 +12,6 @@ import Navbar from '../components/Navbar';
 export default function Timeline({ navigation, screenProps }) {
 
 
-
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
 
 
@@ -61,7 +60,7 @@ export default function Timeline({ navigation, screenProps }) {
     }
     return (
         <View style={g.body}>
-            <Navbar />
+            <Navbar {...{navigation}} location={"Timeline"}/>
             {
                 projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
             }

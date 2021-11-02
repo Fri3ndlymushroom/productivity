@@ -4,7 +4,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import g, { p } from "../styles/global"
 
-export default function Navbar() {
+export default function Navbar({navigation, location}) {
+    const navigate = (loc) =>{
+        navigation.navigate(loc)
+    }
+
+    const navOptions = ["Timeline", "Analytics", "Settings"]
+
+
     return (
         <View style={s.navbarContainer}>
             <LinearGradient
@@ -19,9 +26,13 @@ export default function Navbar() {
                     y:1
                 }}/>
             <View style={s.navbarWrapper}>
-                <TouchableOpacity style={s.navbarButton}><Text style={s.navbarText}>Timeline</Text></TouchableOpacity>
-                <TouchableOpacity style={s.navbarButton}><Text style={s.navbarText}>Analytics</Text></TouchableOpacity>
-                <TouchableOpacity style={s.navbarButton}><Text style={s.navbarText}>Settings</Text></TouchableOpacity>
+                {
+                navOptions.map((navOption)=>{
+                    let style = [s.navbarText]
+                    if(navOption === location) style.push(s.current)
+                    return <TouchableOpacity key={"location"+navOption} onPress={()=>navigate(navOption)} style={s.navbarButton}><Text style={style}>{navOption}</Text></TouchableOpacity>
+                })}
+
             </View>
         </View>
     )
@@ -51,5 +62,8 @@ const s = StyleSheet.create({
     },
     navbarText: {
         color: p.text__dim
+    },
+    current:{
+        color: p.text__main
     }
 })

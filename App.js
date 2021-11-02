@@ -173,6 +173,7 @@ export default function App() {
                     copy.all_logs[index].duration = now - copy.all_logs[index].start
                 }
 
+
                 setData(copy)
             }
 

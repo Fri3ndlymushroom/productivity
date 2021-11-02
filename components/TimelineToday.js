@@ -135,7 +135,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                 })
 
                                 anotherCard =
-                                    <View style={[s.projectCard, g.shadow]} key="InfoCardCounter">
+                                    <View style={[s.projectCard, g.shadow]} key="StartAnother">
 
                                         <View style={[s.logo, color.c]}>
                                             <Svg
