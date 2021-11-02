@@ -6,7 +6,7 @@ import { secondsToShortTimeString, secondsToDayString, formatSeconds, secondsToT
 import Svg, { Path } from "react-native-svg"
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function TimelineToday({ goal, stopProject, projects, startProject, navigation }) {
+export default function TimelineToday({ setProjectSelectionOpen, goal, stopProject, projects, startProject, navigation }) {
     const [relevantData, setRelevantData] = useState([])
 
     let day = Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24)
@@ -56,6 +56,7 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
 
 
                             let infoCard = null
+                            let anotherCard = null
 
                             let allCards = [...relevantData[0]]
                             allCards.push(...relevantData[1])
@@ -124,10 +125,37 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
                                                 <Text style={s.infoCardCounterTimer}>{formatSeconds(running[0].total_duration, "ss")}</Text>
                                                 <Text style={s.infoCardCounterUnit}>secs</Text>
                                             </View>
-
-
                                         </View>
                                 }
+
+                                const color = StyleSheet.create({
+                                    c: {
+                                        backgroundColor: p.hl
+                                    }
+                                })
+
+                                anotherCard =
+                                    <View style={[s.projectCard, g.shadow]} key="InfoCardCounter">
+
+                                        <View style={[s.logo, color.c]}>
+                                            <Svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width={23}
+                                                height={23}
+                                                fill="none"
+                                            >
+                                                <Path
+                                                    stroke="#fff"
+                                                    d="M11.63 21.981L1.04 17.48a.1.1 0 01-.061-.092V5.529a.1.1 0 01.139-.092l10.474 4.452a.1.1 0 00.078 0l10.613-4.512M11.63 21.981v-9.056m0 9.056l10.591-4.502a.1.1 0 00.06-.092V5.377m0 0L11.669.865a.1.1 0 00-.075 0L4.021 3.867"
+                                                />
+                                            </Svg>
+                                        </View>
+
+                                        <TouchableOpacity style={[s.startButton, color.c]} onPress={() => setProjectSelectionOpen(true)}>
+                                            <Icon name={'play'} size={12} color={'white'} />
+                                            <Text style={s.buttonText}>StartAnother</Text>
+                                        </TouchableOpacity>
+                                    </View>
                             }
 
                             let projectCards = half.map((project) => {
@@ -188,8 +216,8 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
                                                     </Svg>
                                                 </View>
                                                 <View>
-                                                <Text style={s.projectCardTextMain}>{project.name}</Text>
-                                                <Text style={s.projectCardTextSec}>Some stat</Text>
+                                                    <Text style={s.projectCardTextMain}>{project.name}</Text>
+                                                    <Text style={s.projectCardTextSec}>Some stat</Text>
                                                 </View>
                                             </View>
                                             <TouchableOpacity style={[s.startButton, color.c]} onPress={() => startProject(project.pid)}>
@@ -199,7 +227,8 @@ export default function TimelineToday({ goal, stopProject, projects, startProjec
                                         </TouchableOpacity>)
                             })
 
-                            return (<View key={"DailyProjectColumnContainer"+i} style={s.projectCardContainer}>{infoCard}{projectCards}</View>)
+
+                            return (<View key={"DailyProjectColumnContainer" + i} style={s.projectCardContainer}>{infoCard}{projectCards}{anotherCard}</View>)
                         })
                     }
                 </View>
@@ -236,7 +265,7 @@ const s = StyleSheet.create({
         padding: 15
     },
     startButton: {
-        alignItems:"center",
+        alignItems: "center",
         justifyContent: "space-between",
         flexDirection: "row",
         backgroundColor: "#ffffff20",

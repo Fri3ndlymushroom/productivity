@@ -80,7 +80,7 @@ export default function Timeline({ navigation, screenProps }) {
                         })
                     }
                     {
-                        <TimelineToday goal={screenProps.settings.daily_goal} stopProject={stopProject} startProject={startProject} projects={screenProps.data.projects} {...{ navigation }} />
+                        <TimelineToday setProjectSelectionOpen={setProjectSelectionOpen} goal={screenProps.settings.daily_goal} stopProject={stopProject} startProject={startProject} projects={screenProps.data.projects} {...{ navigation }} />
                     }
                 </ScrollView>
             </View>
