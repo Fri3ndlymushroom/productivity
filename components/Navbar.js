@@ -32,7 +32,6 @@ export default function Navbar({navigation, location}) {
                     if(navOption === location) style.push(s.current)
                     return <TouchableOpacity key={"location"+navOption} onPress={()=>navigate(navOption)} style={s.navbarButton}><Text style={style}>{navOption}</Text></TouchableOpacity>
                 })}
-
             </View>
         </View>
     )

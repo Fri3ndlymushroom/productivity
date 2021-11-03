@@ -8,7 +8,6 @@ import { VictoryBar } from 'victory-native';
 export default function ProjectView({ navigation, screenProps }) {
     let pid = navigation.getParam("projectViewPid")
 
-    console.log(pid)
 
 
 

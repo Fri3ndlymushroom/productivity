@@ -20,21 +20,45 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
             let total_duration = relevantLogs.reduce((sum, log) => sum + log.duration, 0)
             let running = relevantLogs.filter((log) => log.running).length > 0
 
+            let inLastDays = project.logs.filter((log) =>day -log.day > -7).reduce((sum, log) => sum + log.duration, 0)
+
+
 
             relevant.push({
                 name: project.name,
                 pid: project.pid,
                 running: running,
                 total_duration: total_duration,
-                color: project.color
+                color: project.color,
+                last_seven_days: inLastDays
             })
         })
 
-        const half = relevant.length / 2;
+        // filter
+        
+        let sorted = relevant.sort(function (a, b) {
+            return b.last_seven_days - a.last_seven_days;
+        });
+
+        let runningIndex = sorted.findIndex((project)=>project.running)
+
+        if(runningIndex > -1){
+            let running = sorted[runningIndex]
+            sorted.splice(runningIndex, 1);
+            sorted.splice(0, 0, running);
+        }
 
 
 
-        let halfed = [relevant.slice(0, Math.ceil(half)), relevant.slice(-Math.floor(half))]
+
+
+
+
+
+
+
+        const half = sorted.length / 2;
+        let halfed = [sorted.slice(0, Math.ceil(half)), sorted.slice(-Math.floor(half))]
 
         setRelevantData(halfed)
     }, [projects])

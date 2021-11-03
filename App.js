@@ -106,7 +106,7 @@ export default function App() {
             })
         })
 
-        dataCopy.reversed_daily_logs =copyObject(dataCopy.daily_logs).reverse()
+        dataCopy.reversed_daily_logs = copyObject(dataCopy.daily_logs).reverse()
 
 
         // projects
@@ -146,32 +146,9 @@ export default function App() {
                 let copy = { ...data }
                 let now = Math.round(new Date().getTime() / 1000)
 
-                let startDay = Math.floor((copy.all_logs[index].start - settings.start_of_day) / 60 / 60 / 24)
-                let nowDay = Math.floor((now - settings.start_of_day) / 60 / 60 / 24)
-                let pid = copy.all_logs[index].pid
-                let name = copy.all_logs[index].name
 
+                copy.all_logs[index].duration = now - copy.all_logs[index].start
 
-                if (startDay !== nowDay) {
-                    // stop old project
-                    copy.all_logs[index].running = false
-                    copy.all_logs[index].end = now
-                    copy.all_logs[index].duration = now - copy.all_logs[index].start
-
-                    // start new
-                    copy.all_logs.push({
-                        project: name,
-                        pid: pid,
-                        lid: "L_" + uuidv4(),
-                        day: Math.floor((now - screenProps.settings.start_of_day) / 60 / 60 / 24),
-                        start: now,
-                        duration: 0,
-                        running: true
-                    })
-                }
-                else {
-                    copy.all_logs[index].duration = now - copy.all_logs[index].start
-                }
 
 
                 setData(copy)
