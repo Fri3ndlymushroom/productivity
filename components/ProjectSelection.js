@@ -12,17 +12,17 @@ export default function projectSelection({ data, navigation, setProjectSelection
                     {data.projects.map((project, i) => {
                         return (
                             <TouchableOpacity style={g.projectCard} key={"projectSelection" + i} onPress={() => { startProject(project.pid); setProjectSelectionOpen(false) }} >
-                                <Text>{project.name}</Text>
+                                <Text style={g.text}>{project.name}</Text>
                                 <TouchableOpacity onPress={() => { navigation.navigate("ProjectView", { projectViewPid: project.pid }) }}>
-                                    <Text>Edit</Text>
+                                    <Text style={g.textDim}>Edit</Text>
                                 </TouchableOpacity>
                             </TouchableOpacity>
                         )
                     })}
 
                 </ScrollView>
-                    <TouchableOpacity onPress={() => { navigation.navigate("AddProject") }}><Text>Add Project</Text></TouchableOpacity>
-                    <TouchableOpacity onPress={() => { navigation.navigate("Archive") }}><Text>Archived projects</Text></TouchableOpacity>
+                    <TouchableOpacity style={s.actionButton} onPress={() => { navigation.navigate("AddProject") }}><Text style={g.text}>Add Project</Text></TouchableOpacity>
+                    <TouchableOpacity style={s.actionButton} onPress={() => { navigation.navigate("Archive") }}><Text style={g.text}>Archived projects</Text></TouchableOpacity>
             </View>
         </TouchableOpacity>
     )
@@ -44,7 +44,7 @@ const s = StyleSheet.create({
     projectSelectionWindow: {
         position: "absolute",
         bottom: 0,
-        backgroundColor: p.bg2,
+        backgroundColor: p.bg1,
         height: 300,
         width: Dimensions.get("window").width,
         borderTopLeftRadius: p.br,
@@ -52,5 +52,8 @@ const s = StyleSheet.create({
         alignItems: 'center',
         padding: 30
 
+    },
+    actionButton:{
+        padding: 5
     }
 })

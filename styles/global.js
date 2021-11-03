@@ -60,6 +60,9 @@ const styles = StyleSheet.create({
     text: {
         color: p.text__main
     },
+    textDim:{
+        color: p.text__dim
+    },
     input: {
         height: 40,
         margin: 12,
