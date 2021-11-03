@@ -49,18 +49,57 @@ export default function Timeline({ navigation, screenProps }) {
 
         let end = Math.round(new Date().getTime() / 1000)
         let start = dataCopy.all_logs[runningIndex].start
+        let duration = end - start
+        let project = dataCopy.all_logs[runningIndex].project
+        let pid = dataCopy.all_logs[runningIndex].pid
 
-        dataCopy.all_logs[runningIndex].running = false
-        dataCopy.all_logs[runningIndex].end = end
-        dataCopy.all_logs[runningIndex].duration = end - start
 
+        if (Math.floor((start - screenProps.settings.start_of_day) / 60 / 60 / 24) !== Math.floor((end - screenProps.settings.start_of_day) / 60 / 60 / 24)) {
+
+            let current = start
+            let day = Math.floor((start - screenProps.settings.start_of_day) / 60 / 60 / 24)
+            let all = []
+
+
+            while (current < end){
+                all.push({start: current, end: day * 60 * 60 * 24 + 86399})
+                current += 86400
+                day ++
+            }
+            if (duration > 0){
+                all.push({start: current, end: end, day: day})
+            }
+
+            all.forEach((log, i)=>{
+                if(i === 0){
+                    dataCopy.all_logs[runningIndex].running = false
+                    dataCopy.all_logs[runningIndex].end = log.end
+                    dataCopy.all_logs[runningIndex].duration = log.end - start
+                }else{
+                    dataCopy.all_logs.push({
+                        project: project,
+                        pid: pid,
+                        lid: "L_" + uuidv4(),
+                        day: log.day,
+                        start: log.start,
+                        duration: log.end - log.start,
+                        running: false
+                    })
+                }
+            })
+
+        } else {
+            dataCopy.all_logs[runningIndex].running = false
+            dataCopy.all_logs[runningIndex].end = end
+            dataCopy.all_logs[runningIndex].duration = end - start
+        }
 
         screenProps.setData(dataCopy)
 
     }
     return (
         <View style={g.body}>
-            <Navbar {...{navigation}} location={"Timeline"}/>
+            <Navbar {...{ navigation }} location={"Timeline"} />
             {
                 projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
             }
@@ -88,7 +127,7 @@ export default function Timeline({ navigation, screenProps }) {
 }
 
 const s = StyleSheet.create({
-    timelineTopMargin:{
+    timelineTopMargin: {
         height: 100
     }
 })
