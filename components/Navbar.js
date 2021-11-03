@@ -46,7 +46,7 @@ const s = StyleSheet.create({
         zIndex: 10,
         position: "absolute",
         top: 0,
-        height: 60,
+        height: 80,
         width: Dimensions.get("window").width,
         alignItems: "center",
         justifyContent: "center"
@@ -60,9 +60,13 @@ const s = StyleSheet.create({
         padding: 10
     },
     navbarText: {
-        color: p.text__dim
+        color: p.text__dim,
+        fontSize: 16
     },
     current:{
+        fontSize: 18,
+        position: "relative",
+        bottom: 3,
         color: p.text__main
     }
 })
