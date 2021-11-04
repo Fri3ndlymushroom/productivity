@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
-import g from "../styles/global"
+import { ScrollView, StyleSheet, Text, View, Button, TouchableOpacity, Dimensions } from 'react-native'
+import g, { p } from "../styles/global"
 import { secondsToShortTimeString, secondsToFormatedString, secondsToDateString } from '../js/timerfunctions';
 import { v4 as uuidv4 } from 'uuid';
 import { VictoryBar } from 'victory-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function ProjectView({ navigation, screenProps }) {
     let pid = navigation.getParam("projectViewPid")
@@ -47,7 +48,7 @@ export default function ProjectView({ navigation, screenProps }) {
             if (index >= 0) {
                 let day = screenProps.data.daily_logs[index]
                 let project = day.projects.find((project) => project.pid === pid)
-                if(project)
+                if (project)
                     project.logs.forEach((log) => {
                         sum += log.duration
                     })
@@ -67,15 +68,31 @@ export default function ProjectView({ navigation, screenProps }) {
 
         <View style={g.body}>
             <ScrollView>
-                <VictoryBar
-                    data={
-                        getBarData()
-                    }
 
-                />
-                <Text style={g.text}>{projectName}</Text>
-                <Button title="Edit project" onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }} />
-                <Button title="add" onPress={() => addLog()} />
+                <View style={s.projectHeaderContainer}>
+                    <View style={s.projectHeader}>
+                        <Text style={s.projectTitle}>{projectName}</Text>
+                        <TouchableOpacity style={s.optionsButton} onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }}>
+                            <Icon name={'ellipsis-v'} size={12} color={'white'} />
+                        </TouchableOpacity>
+                    </View>
+                    <VictoryBar
+                        style={{
+                            data: { fill: projectData.color }
+                        }}
+                        data={
+                            getBarData()
+                        }
+
+                    />
+
+
+
+                    <TouchableOpacity style={s.optionsButton} onPress={() => addLog()}>
+                        <Text style={s.buttonText}>Add Log</Text>
+                    </TouchableOpacity>
+                </View>
+
 
                 <View style={s.logs}>
                     {
@@ -123,8 +140,33 @@ export default function ProjectView({ navigation, screenProps }) {
 }
 
 const s = StyleSheet.create({
-    logs:{
+    logs: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    projectTitle: {
+        color: p.text__main,
+        fontSize: 20
+    },
+    optionsButton: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: p.br,
+        //alignSelf: "center",
+    },
+    buttonText: {
+        color: p.text__main,
+    },
+    projectHeaderContainer: {
+        alignItems: "center"
+    },
+    projectHeader: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: Dimensions.get("window").width,
+        paddingHorizontal: 60,
+        alignItems: "center"
     }
 })
+
