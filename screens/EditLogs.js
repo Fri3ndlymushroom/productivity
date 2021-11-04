@@ -181,45 +181,53 @@ export default function EditLog({ navigation, screenProps }) {
             </View>
 
 
-            <Text>{secondsToFormatedString(log.duration)}</Text>
+            <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
 
             <TouchableOpacity style={s.timeCorrectorButton} onPress={() => setDateTimeProps({
                 target: "date",
                 value: log.start,
                 mode: "date",
                 open: true
-            })}><Text>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
+            })}><Text style={g.text}>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
 
 
 
             <View style={s.timeCorrector}>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveStartOfLog(-600)}><Text>-</Text></TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveStartOfLog(-600)}><Text style={g.text}>-</Text></TouchableOpacity>
                 <TouchableOpacity style={s.timeCorrectorButton} onPress={() => setDateTimeProps({
                     target: "start",
                     value: log.start,
                     mode: "time",
                     open: true
                 })}>
-                    <Text>{secondsToShortTimeString(log.start)}</Text>
+                    <Text style={g.text}>{secondsToShortTimeString(log.start)}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveStartOfLog(600)}><Text>+</Text></TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveStartOfLog(600)}><Text style={g.text}>+</Text></TouchableOpacity>
             </View>
 
 
             <View style={s.timeCorrector}>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveEndOfLog(-600)}><Text>-</Text></TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveEndOfLog(-600)}><Text style={g.text}>-</Text></TouchableOpacity>
                 <TouchableOpacity style={s.timeCorrectorButton} onPress={() => setDateTimeProps({
                     target: "end",
                     value: log.end,
                     mode: "time",
                     open: true
                 })}>
-                    <Text>{log.end ? secondsToShortTimeString(log.end) : "running"}</Text>
+                    <Text style={g.text}>{log.end ? secondsToShortTimeString(log.end) : "running"}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveEndOfLog(600)}><Text>+</Text></TouchableOpacity>
+                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveEndOfLog(600)}><Text style={g.text}>+</Text></TouchableOpacity>
             </View>
-            <Button title="Save Changes" onPress={() => saveChanges()} />
-            <Button title="Delete Log" onPress={() => deleteLog()} />
+
+
+            <TouchableOpacity style={s.button} onPress={() => saveChanges()}>
+                <Text style={g.text}>Save Changes</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={s.button} onPress={() => deleteLog()}>
+                <Text style={g.text}>Delete Log</Text>
+            </TouchableOpacity>
+
         </View>
     );
 }
@@ -235,5 +243,12 @@ const s = StyleSheet.create({
         padding: 10,
         backgroundColor: p.bg2,
         borderRadius: p.br
+    },
+    button:{
+       paddingHorizontal:10,
+       paddingVertical: 5,
+       backgroundColor: p.bg2,
+       borderRadius: p.br,
+       margin: 5
     }
 });
