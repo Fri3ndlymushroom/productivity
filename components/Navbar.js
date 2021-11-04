@@ -19,7 +19,7 @@ export default function Navbar({navigation, location}) {
                 colors={[p.bg1, "#00000000"]}
                 start={{
                     x: 0,
-                    y: 0.7
+                    y: 0.5
                 }}
                 end={{
                     x: 0,
@@ -39,14 +39,14 @@ export default function Navbar({navigation, location}) {
 
 const s = StyleSheet.create({
     gradient:{
-        height: 100,
+        height: 200,
         width: Dimensions.get("window").width,
     },
     navbarContainer: {
         zIndex: 10,
         position: "absolute",
         top: 0,
-        height: 80,
+        height: 100,
         width: Dimensions.get("window").width,
         alignItems: "center",
         justifyContent: "center"

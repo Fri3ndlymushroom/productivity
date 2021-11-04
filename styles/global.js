@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: p.br,
         justifyContent: "space-between",
+        alignSelf: "center",
         ...shadow
     },
     shadow: {
