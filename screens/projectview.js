@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, TouchableOpacity, Dimensions } from 'react-native'
 import g, { p } from "../styles/global"
-import { secondsToShortTimeString, secondsToFormatedString, secondsToDateString } from '../js/timerfunctions';
+import { secondsToShortTimeString, secondsToTimeString, secondsToDateString } from '../js/timerfunctions';
 import { v4 as uuidv4 } from 'uuid';
 import { VictoryBar } from 'victory-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -68,7 +68,7 @@ export default function ProjectView({ navigation, screenProps }) {
     return (
 
         <View style={g.body}>
-            <NavbarStack navigation={navigation}loc={projectName}>
+            <NavbarStack navigation={navigation} loc={projectName}>
                 <TouchableOpacity style={s.optionsButton} onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }}>
                     <Icon name={'ellipsis-v'} size={12} color={'white'} />
                 </TouchableOpacity>
@@ -104,7 +104,7 @@ export default function ProjectView({ navigation, screenProps }) {
 
                                 <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
                                     <Text style={g.text}>{secondsToShortTimeString(log.start)} - {log.end ? secondsToShortTimeString(log.end) : "running"}</Text>
-                                    <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
+                                    <Text style={s.totalTime}>{secondsToTimeString(log.duration)}</Text>
                                 </TouchableOpacity>
 
 
@@ -142,6 +142,10 @@ export default function ProjectView({ navigation, screenProps }) {
 }
 
 const s = StyleSheet.create({
+    totalTime: {
+        color: p.text__dim,
+        fontSize: 12,
+    },
     logs: {
         alignItems: 'center',
         justifyContent: 'center',
