@@ -5,6 +5,7 @@ import { secondsToShortTimeString, secondsToFormatedString, secondsToDateString 
 import { v4 as uuidv4 } from 'uuid';
 import { VictoryBar } from 'victory-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import NavbarStack from '../components/NavbarStack'
 
 export default function ProjectView({ navigation, screenProps }) {
     let pid = navigation.getParam("projectViewPid")
@@ -67,15 +68,15 @@ export default function ProjectView({ navigation, screenProps }) {
     return (
 
         <View style={g.body}>
+            <NavbarStack navigation={navigation}loc={projectName}>
+                <TouchableOpacity style={s.optionsButton} onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }}>
+                    <Icon name={'ellipsis-v'} size={12} color={'white'} />
+                </TouchableOpacity>
+            </NavbarStack>
             <ScrollView>
 
                 <View style={s.projectHeaderContainer}>
-                    <View style={s.projectHeader}>
-                        <Text style={s.projectTitle}>{projectName}</Text>
-                        <TouchableOpacity style={s.optionsButton} onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }}>
-                            <Icon name={'ellipsis-v'} size={12} color={'white'} />
-                        </TouchableOpacity>
-                    </View>
+
                     <VictoryBar
                         style={{
                             data: { fill: projectData.color }
@@ -136,6 +137,7 @@ export default function ProjectView({ navigation, screenProps }) {
                 </View>
             </ScrollView>
         </View >
+
     )
 }
 

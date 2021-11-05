@@ -7,7 +7,7 @@ import TimelineDay from '../components/TimelineDay';
 import { v4 as uuidv4 } from 'uuid';
 import { copyObject } from '../js/functions';
 import TimelineToday from "../components/TimelineToday"
-import Navbar from '../components/Navbar';
+import Navbar from '../components/NavbarDrawer';
 
 export default function Timeline({ navigation, screenProps }) {
 

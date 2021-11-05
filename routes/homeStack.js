@@ -14,14 +14,14 @@ const navigationOptions = {
     headerStyle: headerStyle,
     headerTintColor: '#fff',
     headerTitleStyle: {
-    },
+    }, 
+    headerShown: false
 
 }
 
 const screens = {
     Timeline: {
         screen: Timeline,
-
         navigationOptions: {
             headerShown: false
         }
