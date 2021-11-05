@@ -6,7 +6,7 @@ import ProjectSelection from "../components/ProjectSelection"
 import ColorPalette from 'react-native-color-palette'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { v4 as uuidv4 } from 'uuid';
-
+import NavbarStack from '../components/NavbarStack'
 
 let selectedColor = "#ffffff"
 
@@ -34,6 +34,7 @@ export default function Home({ navigation, screenProps }) {
 
     return (
         <View style={g.body}>
+            <NavbarStack navigation={navigation} loc={"Create Project"}></NavbarStack> 
             <View>
                 {/* https://www.npmjs.com/package/react-native-color-palette */}
                 <ColorPalette

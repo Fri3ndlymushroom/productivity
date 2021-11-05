@@ -6,6 +6,7 @@ import ColorPalette from 'react-native-color-palette'
 import { DefaultText } from '../components/Components'
 import { copyObject } from '../js/functions';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import NavbarStack from '../components/NavbarStack'
 
 export default function EditProject({ navigation, screenProps }) {
     let pid = navigation.getParam("edited_project")
@@ -69,6 +70,7 @@ export default function EditProject({ navigation, screenProps }) {
 
     return (
         <View style={g.body}>
+            <NavbarStack navigation={navigation} loc={"Edit Project"}></NavbarStack> 
             <DefaultText>Editing {project.name} </DefaultText>
             <StatusBar style="auto" />
             <View>

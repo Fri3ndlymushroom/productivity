@@ -4,7 +4,7 @@ import g, { p } from '../styles/global'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { secondsToFormatedString, secondsToShortTimeString, secondsToDateString } from '../js/timerfunctions';
 import { copyObject } from "../js/functions"
-
+import NavbarStack from '../components/NavbarStack'
 
 
 export default function EditLog({ navigation, screenProps }) {
@@ -166,6 +166,7 @@ export default function EditLog({ navigation, screenProps }) {
 
     return (
         <View style={g.body}>
+            <NavbarStack navigation={navigation} loc={"Edit Log"}></NavbarStack>
             <View>
                 {dateTimeProps.open && (
                     <RNDateTimePicker
@@ -239,16 +240,16 @@ const s = StyleSheet.create({
         justifyContent: "space-between",
         margin: 10,
     },
-    timeCorrectorButton:{
+    timeCorrectorButton: {
         padding: 10,
         backgroundColor: p.bg2,
         borderRadius: p.br
     },
-    button:{
-       paddingHorizontal:10,
-       paddingVertical: 5,
-       backgroundColor: p.bg2,
-       borderRadius: p.br,
-       margin: 5
+    button: {
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        backgroundColor: p.bg2,
+        borderRadius: p.br,
+        margin: 5
     }
 });

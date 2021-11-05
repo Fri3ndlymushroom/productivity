@@ -24,7 +24,7 @@ export default function Navbar({navigation, loc, children}) {
                     <Icon name={'arrow-left'} size={16} color={'white'} />
                     </TouchableOpacity>
                 <Text style={s.navbarTitle}>{loc}</Text>
-                {children}
+                {children?children: <View></View>}
             </View>
         </View>
     )

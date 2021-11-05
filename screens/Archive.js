@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, TextInput, Button, Text, View } from "react-native"
 import g, { p } from '../styles/global'
 import { copyObject } from '../js/functions';
+import NavbarStack from '../components/NavbarStack'
 
 export default function Archive({ navigation, screenProps }) {
 
@@ -25,6 +26,7 @@ export default function Archive({ navigation, screenProps }) {
 
     return (
         <View style={g.body}>
+            <NavbarStack navigation={navigation} loc={"Archive"}></NavbarStack> 
             {
                 archived.map((project) => {
                     return (
