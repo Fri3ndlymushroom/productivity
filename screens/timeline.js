@@ -109,7 +109,7 @@ export default function Timeline({ navigation, screenProps }) {
                     onContentSizeChange={() => this.timelineScrollView.scrollToEnd({ animated: true })}
 
                 >
-                    <View key="timelineTopMargin" style={s.timelineTopMargin}></View>
+                    <View key="timelineTopMargin" style={g.navbarTopMargin}></View>
                     {
                         screenProps.data.reversed_daily_logs.map((dayData, i) => {
                             if (dayData.day !== Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24))
@@ -126,8 +126,3 @@ export default function Timeline({ navigation, screenProps }) {
     );
 }
 
-const s = StyleSheet.create({
-    timelineTopMargin: {
-        height: 100
-    }
-})

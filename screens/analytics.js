@@ -46,7 +46,8 @@ export default function Analytics({ navigation, screenProps }) {
         <View style={g.body}>
             <Navbar {...{ navigation }} location={"Analytics"} />
             <ScrollView>
-            <GeneralCharts analysedData={analysedData} />
+                <View style={g.navbarTopMargin}></View>
+                <GeneralCharts analysedData={analysedData} />
                 <VictoryPie
                     colorScale={analysedData.distribution_chart.colors}
                     data={analysedData.distribution_chart.data}

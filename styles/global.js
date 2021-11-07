@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
         color: p.text__main,
         backgroundColor: p.bg2,
         borderRadius: p.br
+    },
+    navbarTopMargin:{
+        height: 100,
     }
 });
 
