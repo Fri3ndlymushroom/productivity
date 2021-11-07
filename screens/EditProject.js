@@ -53,6 +53,7 @@ export default function EditProject({ navigation, screenProps }) {
         navigation.pop()
     }
 
+    
     const deleteProject = () =>{
         let copy = copyObject(screenProps.data)
         let index = copy.projects.findIndex((project) => project.pid === pid)

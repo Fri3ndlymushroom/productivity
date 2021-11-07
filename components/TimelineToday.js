@@ -159,7 +159,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                 })
 
                                 anotherCard =
-                                    <View style={[s.projectCard, g.shadow]} key="StartAnother">
+                                    <View style={[s.projectCard, g.shadow]} key="Start Project">
 
                                         <View style={[s.logo, color.c]}>
                                             <Svg
@@ -177,7 +177,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
 
                                         <TouchableOpacity style={[s.startButton, color.c]} onPress={() => setProjectSelectionOpen(true)}>
                                             <Icon name={'play'} size={12} color={'white'} />
-                                            <Text style={s.buttonText}>StartAnother</Text>
+                                            <Text style={s.buttonText}>Start Project</Text>
                                         </TouchableOpacity>
                                     </View>
                             }
