@@ -5,6 +5,7 @@ import g, { p } from "../styles/global"
 import { copyObject } from '../js/functions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { formatSeconds } from '../js/timerfunctions';
+import Navbar from '../components/NavbarDrawer';
 
 export default function Settings({ navigation, screenProps }) {
 
@@ -43,6 +44,7 @@ export default function Settings({ navigation, screenProps }) {
 
     return (
         <View style={g.body} >
+            <Navbar {...{ navigation }} location={"Settings"} />
             <View>
                 {dateTimeProps.open && (
                     <RNDateTimePicker

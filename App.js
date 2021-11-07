@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import RootNavigator from './routes/draw'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StyleSheet } from 'react-native';
 import { dummyData, defaultSettings } from './data';
 import { v4 as uuidv4 } from 'uuid';
 import { copyObject } from './js/functions';
+import { p } from './styles/global';
 
 export default function App() {
 
@@ -164,6 +166,7 @@ export default function App() {
         <RootNavigator screenProps={{ ...{ data, setData, settings, setSettings } }} />
     );
 }
+
 
 // packages:
 // react-navigation

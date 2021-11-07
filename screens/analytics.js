@@ -6,7 +6,7 @@ import { DefaultText } from '../components/Components'
 import getAnalytics from "../js/analysis"
 import { VictoryPie } from 'victory-native';
 import GeneralCharts from "../components/GeneralCharts"
-
+import Navbar from '../components/NavbarDrawer';
 let config = {
 
     backgroundColor: "white",
@@ -44,6 +44,7 @@ export default function Analytics({ navigation, screenProps }) {
 
     return (
         <View style={g.body}>
+            <Navbar {...{ navigation }} location={"Analytics"} />
             <ScrollView>
             <GeneralCharts analysedData={analysedData} />
                 <VictoryPie
