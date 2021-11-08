@@ -24,8 +24,10 @@ export default function Settings({ navigation, screenProps }) {
     }
 
     const dateTimePickerOnChange = (event, value) => {
+        if(!value) return
         let seconds = value.getTime() / 1000
         let copy = copyObject(newSettings)
+
 
         switch (dateTimeProps.target) {
             case "daily_goal":
