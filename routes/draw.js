@@ -6,17 +6,25 @@ import TimelineStack from "./homeStack";
 import SettingsStack from "./settingsStack";
 
 
-const RootDrawNavigator = createDrawerNavigator({
-    Analytics: {
-        screen: AnalyticsStack,
-    },
-    Timeline: {
-        screen: TimelineStack,
-    },
+const RootDrawNavigator = createDrawerNavigator(
+    {
+        Timeline: {
+            screen: TimelineStack,
 
-    Settings: {
-        screen: SettingsStack
+        },
+        Analytics: {
+            screen: AnalyticsStack,
+        },
+
+        Settings: {
+            screen: SettingsStack,
+        },
+
+    },
+    {
+        edgeWidth: 0
     }
-})
+
+)
 
 export default createAppContainer(RootDrawNavigator)
