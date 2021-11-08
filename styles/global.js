@@ -75,6 +75,12 @@ const styles = StyleSheet.create({
     },
     navbarTopMargin:{
         height: 100,
+    },
+    button:{
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        backgroundColor: p.bg2,
+        borderRadius: p.br
     }
 });
 
