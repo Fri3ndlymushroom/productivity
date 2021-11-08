@@ -7,7 +7,7 @@ import EditLog from "../screens/EditLogs"
 import EditProject from "../screens/EditProject"
 import Archive from "../screens/Archive";
 
-import { headerStyle } from "../styles/global"
+import {p, headerStyle } from "../styles/global"
 
 const navigationOptions = {
 

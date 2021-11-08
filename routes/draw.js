@@ -7,12 +7,11 @@ import SettingsStack from "./settingsStack";
 
 
 const RootDrawNavigator = createDrawerNavigator({
-    Timeline: {
-        screen: TimelineStack,
-    },
-
     Analytics: {
         screen: AnalyticsStack,
+    },
+    Timeline: {
+        screen: TimelineStack,
     },
 
     Settings: {

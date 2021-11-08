@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {View} from "react-native"
 import RootNavigator from './routes/draw'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet } from 'react-native';
@@ -163,9 +164,19 @@ export default function App() {
 
 
     return (
+        <View style={s.root}>
         <RootNavigator screenProps={{ ...{ data, setData, settings, setSettings } }} />
+        </View>
+
     );
 }
+const s = StyleSheet.create({
+    root:{
+        flex: 1,
+        backgroundColor: p.bg1
+    }
+})
+
 
 
 // packages:

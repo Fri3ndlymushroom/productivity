@@ -106,7 +106,8 @@ export default function EditProject({ navigation, screenProps }) {
                     <TouchableOpacity onPress={() => deleteProject()} style={g.button}>
                         <Text style={g.text}>Delete</Text>
                     </TouchableOpacity>
-                </TouchableOpacity>}
+                </TouchableOpacity>
+            }
         </>
     );
 }
