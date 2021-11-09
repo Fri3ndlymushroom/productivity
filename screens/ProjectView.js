@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View, Button, TouchableOpacity, Dimension
 import g, { p } from "../styles/global"
 import { secondsToShortDateTimeString, secondsToTimeString, secondsToDayString, secondsToShortTimeString, formatSeconds } from '../js/timerfunctions';
 import { v4 as uuidv4 } from 'uuid';
-import { VictoryBar, VictoryLabel, VictoryChart } from 'victory-native';
+import { VictoryBar, VictoryLabel, VictoryChart, VictoryAxis } from 'victory-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NavbarStack from '../components/NavbarStack'
 
@@ -55,7 +55,7 @@ export default function ProjectView({ navigation, screenProps }) {
                     })
             }
             x++
-            relevant.push({ x: formatSeconds((i-1)*60*60*24, "EEE"), y: sum/60/60, l: secondsToShortTimeString(sum) })
+            relevant.push({ x: formatSeconds((i - 1) * 60 * 60 * 24, "EEE"), y: sum / 60 / 60, l: secondsToShortTimeString(sum) })
         }
 
 
@@ -79,10 +79,30 @@ export default function ProjectView({ navigation, screenProps }) {
 
                 <View style={s.projectHeaderContainer}>
                     <VictoryChart
-                        style={{parent: {
-                            border: "1px solid #ffffff"
-                          },}}
                     >
+                        <VictoryAxis
+                            tickLabelComponent={<VictoryLabel dy={0} dx={0} angle={0} />}
+                            style={{
+                                axis: {
+                                    stroke: p.bg2  //CHANGE COLOR OF X-AXIS
+                                },
+                                tickLabels: {
+                                    fill: p.text__dim //CHANGE COLOR OF X-AXIS LABELS
+                                }
+                            }}
+                        />
+                        <VictoryAxis
+                            dependentAxis
+                            tickFormat={(y) => y}
+                            style={{
+                                axis: {
+                                    stroke: p.bg2  //CHANGE COLOR OF Y-AXIS
+                                },
+                                tickLabels: {
+                                    fill: p.text__dim //CHANGE COLOR OF Y-AXIS LABELS
+                                }
+                            }}
+                        />
 
                         <VictoryBar
                             style={{
