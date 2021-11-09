@@ -116,10 +116,10 @@ export default function ProjectView({ navigation, screenProps }) {
                                 onLoad: { duration: 1000 }
                             }}
                             cornerRadius={{
-                                topLeft: 2,
-                                topRight: 2,
-                                bottomLeft: 2,
-                                bottomRight: 2,
+                                topLeft: 7,
+                                topRight: 7,
+                                bottomLeft: 7,
+                                bottomRight: 7,
                             }}
                         />
                     </VictoryChart>
