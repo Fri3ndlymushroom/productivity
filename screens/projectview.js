@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, TouchableOpacity, Dimensions } from 'react-native'
 import g, { p } from "../styles/global"
-import { secondsToShortTimeString, secondsToTimeString, secondsToDateString } from '../js/timerfunctions';
+import { secondsToShortDateTimeString, secondsToTimeString, secondsToDayString, secondsToShortTimeString, formatSeconds } from '../js/timerfunctions';
 import { v4 as uuidv4 } from 'uuid';
-import { VictoryBar } from 'victory-native';
+import { VictoryBar, VictoryLabel, VictoryChart } from 'victory-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NavbarStack from '../components/NavbarStack'
 
@@ -55,11 +55,12 @@ export default function ProjectView({ navigation, screenProps }) {
                     })
             }
             x++
-            relevant.push({ x: x, y: sum })
+            relevant.push({ x: formatSeconds((i-1)*60*60*24, "EEE"), y: sum/60/60, l: secondsToShortTimeString(sum) })
         }
 
 
-        return relevant
+
+        return relevant.slice(Math.max(relevant.length - 7, 1))
     }
 
 
@@ -74,18 +75,34 @@ export default function ProjectView({ navigation, screenProps }) {
                 </TouchableOpacity>
             </NavbarStack>
             <ScrollView>
+                <View style={g.navbarTopMargin}></View>
 
                 <View style={s.projectHeaderContainer}>
+                    <VictoryChart
+                        style={{parent: {
+                            border: "1px solid #ffffff"
+                          },}}
+                    >
 
-                    <VictoryBar
-                        style={{
-                            data: { fill: projectData.color }
-                        }}
-                        data={
-                            getBarData()
-                        }
-
-                    />
+                        <VictoryBar
+                            style={{
+                                data: { fill: projectData.color }
+                            }}
+                            data={
+                                getBarData()
+                            }
+                            animate={{
+                                duration: 2000,
+                                onLoad: { duration: 1000 }
+                            }}
+                            cornerRadius={{
+                                topLeft: 2,
+                                topRight: 2,
+                                bottomLeft: 2,
+                                bottomRight: 2,
+                            }}
+                        />
+                    </VictoryChart>
 
 
 
@@ -103,7 +120,7 @@ export default function ProjectView({ navigation, screenProps }) {
                             let card = (
 
                                 <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
-                                    <Text style={g.text}>{secondsToShortTimeString(log.start)} - {log.end ? secondsToShortTimeString(log.end) : "running"}</Text>
+                                    <Text style={g.text}>{secondsToShortDateTimeString(log.start)} - {log.end ? secondsToShortDateTimeString(log.end) : "running"}</Text>
                                     <Text style={s.totalTime}>{secondsToTimeString(log.duration)}</Text>
                                 </TouchableOpacity>
 
@@ -112,7 +129,8 @@ export default function ProjectView({ navigation, screenProps }) {
                             if (lastDay !== log.day) {
                                 logs = (
                                     <View key={"projectViewLog" + log.start}>
-                                        <Text style={g.dayTitle}>{secondsToDateString(log.start)}</Text>
+                                        <View style={s.dayTopMargin}></View>
+                                        <Text style={g.dayTitle}>{secondsToDayString(log.start)}</Text>
                                         {card}
                                     </View>
                                 )
@@ -173,6 +191,9 @@ const s = StyleSheet.create({
         width: Dimensions.get("window").width,
         paddingHorizontal: 60,
         alignItems: "center"
+    },
+    dayTopMargin: {
+        height: 20
     }
 })
 
