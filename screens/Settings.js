@@ -60,6 +60,11 @@ export default function Settings({ navigation, screenProps }) {
                     />
                 )}
             </View>
+            {/* backups */}
+            <TouchableOpacity onPress={()=> navigation.navigate("Backups")} style={s.backupsButton}>
+                <Text style={s.backupsHeader}>Backups</Text>
+                <Text style={s.backupsInfo}>Pro Feature</Text>
+            </TouchableOpacity>
 
             {/* daily goal */}
             <TouchableOpacity style={s.settingsCard}
@@ -121,5 +126,19 @@ const s = StyleSheet.create({
         shadowRadius: 3.84,
 
         elevation: 5,
+    },
+    backupsButton: {
+        height: 200,
+        width: 300,
+        padding: 30,
+        backgroundColor: p.bg2,
+        borderRadius: p.br
+    },
+    backupsHeader:{
+        fontSize: 16,
+        color: p.text__main
+    },
+    backupsInfo:{
+        color:p.text__dim
     }
 })

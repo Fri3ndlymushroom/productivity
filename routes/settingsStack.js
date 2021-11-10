@@ -3,6 +3,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import {headerStyle} from "../styles/global"
 
 import Settings from "../screens/Settings";
+import Backups from "../screens/Backups"
 
 const navigationOptions = {
 
@@ -17,6 +18,10 @@ const navigationOptions = {
 const screens = {
     Settings: {
         screen: Settings,
+        navigationOptions: navigationOptions
+    },
+    Backups: {
+        screen: Backups,
         navigationOptions: navigationOptions
     }
 }
