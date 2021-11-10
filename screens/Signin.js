@@ -9,7 +9,7 @@ import NavbarStack from '../components/NavbarStack'
 export default function Signin({ navigation }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [signType, setSignType] = useState("login")
+    const [signType, setSignType] = useState("Log In")
 
 
     const handleSignUp = () => {
@@ -28,58 +28,30 @@ export default function Signin({ navigation }) {
         <View style={g.body}>
             <NavbarStack navigation={navigation} loc={"Sign Up"}></NavbarStack>
             <View syle={s.signinSection}>
-                <View style={s.signinWindow}>
-                    {
-                        (signType === "login") &&
-                        <>
-                            <Text style={g.text}>LogIn</Text>
-                            <TextInput
-                                placeholder="Email"
-                                value={email}
-                                onChangeText={text => setEmail(text)}
-                            />
-                            <TextInput
-                                placeholder="Password"
-                                value={password}
-                                onChangeText={text => setPassword(text)}
-                            />
-                            <TouchableOpacity onPress={() => handleLogIn()}>
-                                <Text>Submit</Text>
-                            </TouchableOpacity>
-                        </>
-                    }
-                </View>
-                <View style={s.signinWindow}>
-                    {
-                        (signType === "signup") &&
-                        <>
-                            <Text style={g.text}>Sign Up</Text>
-                            
-                            <TextInput
-                                placeholder="Email"
-                                value={email}
-                                onChangeText={text => setEmail(text)}
-                            />
-                            <TextInput
-                                placeholder="Password"
-                                value={password}
-                                onChangeText={text => setPassword(text)}
-                            />
-                            <TouchableOpacity onPress={() => handleSignUp()}>
-                                <Text>Submit</Text>
-                            </TouchableOpacity>
-                        </>
-                    }
+                <View syle={s.signinSelection}>
+                    <TouchableOpacity onPress={() => setSignType("Log In")}>
+                        <Text>Log In</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setSignType("Sign Up")}>
+                        <Text>Sign Up</Text>
+                    </TouchableOpacity>
+                    <Text style={g.text}>{signType}</Text>
+                    <TextInput
+                        placeholder="Email"
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                    />
+                    <TextInput
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                    />
+                    <TouchableOpacity onPress={() => (signType === "Log In") ? handleLogIn() : handleSignUp()}>
+                        <Text>Submit</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-            <View syle={s.signinSelection}>
-                <TouchableOpacity onPress={()=>setSignType("login")}>
-                    <Text>Log In</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>setSignType("signup")}>
-                    <Text>Sign Up</Text>
-                </TouchableOpacity>
-            </View>
+
         </View >
     )
 }
