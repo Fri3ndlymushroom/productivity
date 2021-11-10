@@ -4,6 +4,7 @@ import {headerStyle} from "../styles/global"
 
 import Settings from "../screens/Settings";
 import Backups from "../screens/Backups"
+import Signin from "../screens/Signin"
 
 const navigationOptions = {
 
@@ -18,6 +19,10 @@ const navigationOptions = {
 const screens = {
     Settings: {
         screen: Settings,
+        navigationOptions: navigationOptions
+    },
+    Signin:{
+        screen: Signin,
         navigationOptions: navigationOptions
     },
     Backups: {
