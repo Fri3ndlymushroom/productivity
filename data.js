@@ -1,5 +1,6 @@
 
 export let dummyData = {
+    lastbackup: 0,
     timer: {
         running: false,
         start: 0,
@@ -17,7 +18,7 @@ export let dummyData = {
             name: "HyperTyper",
             pid: "P_82d0c204-bfae-4f11-aafc-5bcd8a1a670a",
             logs: [],
-            color:"#3DD6BA",
+            color: "#3DD6BA",
         }
     ],
     all_logs: [
@@ -49,7 +50,7 @@ export let dummyData = {
             start: 1634159144,
             end: 1634159244,
             duration: 100,
-            color:"#3DD6BA",
+            color: "#3DD6BA",
         },
     ],
     daily_logs: []
