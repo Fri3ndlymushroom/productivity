@@ -7,7 +7,7 @@ import { dummyData, defaultSettings } from './data';
 import { v4 as uuidv4 } from 'uuid';
 import { copyObject } from './js/functions';
 import { p } from './styles/global';
-import { checkIfBackup } from './js/backupsystem';
+import { checkForBackup } from './js/backupsystem';
 
 export default function App() {
 
@@ -117,7 +117,7 @@ export default function App() {
         dataCopy.projects.forEach((project) => {
             project.logs = dataCopy.all_logs.filter((log) => log.pid === project.pid)
         })
-        let madeBackup = checkIfBackup(dataCopy, dataCopy.lastbackup)
+        dataCopy.lastbackup = await checkForBackup(dataCopy, dataCopy.lastbackup)
 
         setRefactoredData(dataCopy)
 

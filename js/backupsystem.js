@@ -1,24 +1,68 @@
+
 import { auth, db } from '../js/firebase'
 
 
-export const checkIfBackup =async (data, last)=>{
+export const checkForBackup =async (data, last)=>{
+
+    data = simplifyData(data)
     
     let uid = auth.currentUser.uid ? auth.currentUser.uid : undefined
 
 
-    if (!uid)return false
-    let userDoc;
-    console.log(last)
+    if (!uid)return last
 
-    await db.collection("backups").doc(uid).get().then(doc=>{
-        userDoc = doc.data()
-    })
+    console.log(last, uid)
 
-    let lastFireStoreBackup = userDoc? userDoc.lastbackup : 0
     
+    let newBackupTime = Math.round(new Date().getTime() / 1000)
 
-    if(lastFireStoreBackup - Math.round(new Date().getTime() / 1000) > 86400){
-        console.log(makebackup)
+    if((newBackupTime - last) > 86400){
+
+        await db.collection("backups").doc(uid).set({
+            lastbackup: newBackupTime
+        }, {merge: true})
+
+        await db.collection("backups").doc(uid).collection("user_backups").doc(newBackupTime.toString(10)).set({
+            data: data
+        })
+        
+        console.log("makebackup")
+        return newBackupTime
     }
 
+
+    return last
+}
+
+
+
+const simplifyData = (data) =>{
+    let simplified = {
+        projects: [],
+        all_logs: []
+    }
+
+    simplified.projects = data.projects.map((project)=>{
+        return {
+            name: project.name,
+            pid: project.pid,
+            color: project.color,
+            logs: []
+        }
+    })
+
+    simplified.all_logs = data.all_logs.map((log)=>{
+        return {
+            color: log.color,
+            day: log.day,
+            duration: log.duration,
+            end: log.end ? log.end : (Math.round(new Date().getTime() / 1000 )),
+            lid: log.lid,
+            pid: log.pid,
+            project: log.project,
+            start: log.start
+        }
+    })
+
+    return simplified
 }
