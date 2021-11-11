@@ -33,7 +33,6 @@ export const checkForBackup = async (data, last) => {
             data: data
         })
 
-        console.log("makebackup")
         return newBackupTime
     }
 

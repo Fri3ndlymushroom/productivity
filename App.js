@@ -49,7 +49,6 @@ export default function App() {
         let dataCopy = JSON.parse(JSON.stringify(newData))
 
         dataCopy.lastbackup = await checkForBackup(dataCopy, dataCopy.lastbackup)
-        console.log(dataCopy.lastbackup)
 
 
         await AsyncStorage.setItem('@data', JSON.stringify(dataCopy))
