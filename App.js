@@ -46,11 +46,13 @@ export default function App() {
 
 
     const setData = async (newData) => {
-
-
-
-        await AsyncStorage.setItem('@data', JSON.stringify(newData))
         let dataCopy = JSON.parse(JSON.stringify(newData))
+
+        dataCopy.lastbackup = await checkForBackup(dataCopy, dataCopy.lastbackup)
+        console.log(dataCopy.lastbackup)
+
+
+        await AsyncStorage.setItem('@data', JSON.stringify(dataCopy))
 
         // colors
 
@@ -117,7 +119,7 @@ export default function App() {
         dataCopy.projects.forEach((project) => {
             project.logs = dataCopy.all_logs.filter((log) => log.pid === project.pid)
         })
-        dataCopy.lastbackup = await checkForBackup(dataCopy, dataCopy.lastbackup)
+
 
         setRefactoredData(dataCopy)
 
@@ -139,6 +141,7 @@ export default function App() {
                 console.error(err)
             }
         }
+
 
 
         getdbData()
