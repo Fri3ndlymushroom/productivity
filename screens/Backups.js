@@ -3,18 +3,19 @@ import { View, Text, Button, TouchableOpacity, ScrollView, StyleSheet } from 're
 import g, { p } from "../styles/global"
 import NavbarStack from '../components/NavbarStack'
 import { auth, db } from '../js/firebase'
+import {secondsToShortDateString} from "../js/timerfunctions"
 
 
-
-export default function Backups({ navigation }) {
+export default function Backups({ navigation, screenProps }) {
 
 
 
     const [backups, setBackups] = useState([])
+    const [popup, setPopup] = useState({open: false, backup: 0})
 
     useEffect(() => {
-        const getBackups = async() =>{
-            await db.collection("backups").doc(auth.currentUser.uid).get().then((doc)=>{
+        const getBackups = async () => {
+            await db.collection("backups").doc(auth.currentUser.uid).get().then((doc) => {
                 setBackups(doc.data().backupTimestamps)
             })
         }
@@ -22,29 +23,65 @@ export default function Backups({ navigation }) {
     }, [])
 
 
-
+    const downloadBackup = async (backupid) =>{        
+        await db.collection("backups").doc(auth.currentUser.uid).collection("user_backups").doc(backupid.toString(10)).get().then(doc =>{
+            screenProps.setData(doc.data().data)
+        }).catch(err=>{
+            console.error(err)
+        })
+    }
 
     return (
-        <View style={g.body}>
-            <NavbarStack navigation={navigation} loc={"Backups"}></NavbarStack>
-            <ScrollView style={s.backups}>
-            {
-                backups.map((backup)=>{
-                    return <Text style={g.text} key={backup}>{backup}</Text>
-                })
-            }
+        <>
+            <View style={g.body}>
+                <NavbarStack navigation={navigation} loc={"Backups"}></NavbarStack>
+                <ScrollView style={s.backups}>
+                    {
+                        backups.map((backup) => {
+                            return (
+                                <TouchableOpacity key={backup} onPress={()=>setPopup({open: true, backup: backup })}>
+                                    <Text style={g.text} >{secondsToShortDateString(backup)}</Text>
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
 
-            </ScrollView>
-        </View>
+
+                </ScrollView>
+            </View>
+            {
+                popup.open &&
+                <TouchableOpacity onPress={() => setPopup({open: false})} style={s.popup}>
+                    <Text style={g.text}>Do you really want to download the backup from the {secondsToShortDateString(popup.backup)}?</Text>
+                    <TouchableOpacity onPress={() => {downloadBackup(popup.backup); setPopup({open:false})}} style={g.button}>
+                        <Text style={g.text}>Download Backup</Text>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            }
+        </>
     )
 }
 
 const s = StyleSheet.create({
-    backups:{
+    backups: {
         marginTop: 100,
         height: 200,
         backgroundColor: p.bg2,
         borderRadius: p.br,
         width: "80%"
+    },
+    popup: {
+        zIndex: 10,
+        elevation: (Platform.OS === 'android') ? 10 : 0,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        backgroundColor: "#00000099",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        justifyContent: 'center',
     }
 })

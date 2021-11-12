@@ -24,6 +24,7 @@ export default function Signin({ navigation }) {
     }
 
 
+    
     return (
         <View style={g.body}>
             <NavbarStack navigation={navigation} loc={"Sign Up"}></NavbarStack>
