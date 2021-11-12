@@ -49,16 +49,12 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
         }
 
 
-
-
-
-
-
-
-
-
         const half = sorted.length / 2;
         let halfed = [sorted.slice(0, Math.ceil(half)), sorted.slice(-Math.floor(half))]
+        
+        if (sorted.length === 1){
+            halfed = [[sorted[0]], []]
+        }
 
         setRelevantData(halfed)
     }, [projects])
