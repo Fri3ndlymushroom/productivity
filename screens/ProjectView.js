@@ -66,8 +66,6 @@ export default function ProjectView({ navigation, screenProps }) {
         }
 
         let short = relevant.slice(0, 7)
-
-        console.log(short)
         return short
     }
 
