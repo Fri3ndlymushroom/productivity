@@ -58,6 +58,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
 
         setRelevantData(halfed)
     }, [projects])
+    
 
 
 

@@ -39,28 +39,36 @@ export default function ProjectView({ navigation, screenProps }) {
         let relevant = []
 
 
+        if (screenProps.data.daily_logs.length > 0) {
+            let boundaries = { end: screenProps.data.daily_logs[0].day, start: screenProps.data.daily_logs[screenProps.data.daily_logs.length - 1].day }
+            let x = 0
+            for (let i = boundaries.start; i <= boundaries.end; i++) {
+                let sum = 0
+                let index = screenProps.data.daily_logs.findIndex((day) => day.day === i)
 
-        let boundaries = { end: screenProps.data.daily_logs[0].day, start: screenProps.data.daily_logs[screenProps.data.daily_logs.length - 1].day }
-        let x = 0
-        for (let i = boundaries.start; i <= boundaries.end; i++) {
-            let sum = 0
-            let index = screenProps.data.daily_logs.findIndex((day) => day.day === i)
-
-            if (index >= 0) {
-                let day = screenProps.data.daily_logs[index]
-                let project = day.projects.find((project) => project.pid === pid)
-                if (project)
-                    project.logs.forEach((log) => {
-                        sum += log.duration
-                    })
+                if (index >= 0) {
+                    let day = screenProps.data.daily_logs[index]
+                    let project = day.projects.find((project) => project.pid === pid)
+                    if (project)
+                        project.logs.forEach((log) => {
+                            sum += log.duration
+                        })
+                }
+                relevant.push({ x: formatSeconds((i - 1) * 60 * 60 * 24, "EEE"), y: sum / 60 / 60, l: secondsToShortTimeString(sum) })
             }
-            x++
-            relevant.push({ x: formatSeconds((i - 1) * 60 * 60 * 24, "EEE"), y: sum / 60 / 60, l: secondsToShortTimeString(sum) })
+        } 
+
+        while (relevant.length < 7) {
+            let existing = relevant.length
+            let day = Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24) - existing - 1
+
+            relevant.splice(0, 0, { x: formatSeconds((day - 2) * 60 * 60 * 24, "EEE"), y: 0, l: "0min" })
         }
 
+        let short = relevant.slice(0, 7)
 
-
-        return relevant.slice(Math.max(relevant.length - 7, 1))
+        console.log(short)
+        return short
     }
 
 
