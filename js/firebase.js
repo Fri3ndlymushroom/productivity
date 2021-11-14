@@ -6,18 +6,19 @@ import "firebase/auth"
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCV8PVK9t12Uvn6P_52Hbj7oUz2ZzDsKAA",
-  authDomain: "productivity-c25db.firebaseapp.com",
-  projectId: "productivity-c25db",
-  storageBucket: "productivity-c25db.appspot.com",
-  messagingSenderId: "463334890779",
-  appId: "1:463334890779:web:5066be54fc913e8a30c7be",
-  measurementId: "G-WL2RMVXJPD"
+    apiKey: "AIzaSyCV8PVK9t12Uvn6P_52Hbj7oUz2ZzDsKAA",
+    authDomain: "productivity-c25db.firebaseapp.com",
+    projectId: "productivity-c25db",
+    storageBucket: "productivity-c25db.appspot.com",
+    messagingSenderId: "463334890779",
+    appId: "1:463334890779:web:5066be54fc913e8a30c7be",
+    measurementId: "G-WL2RMVXJPD"
 };
 
 // Initialize Firebase
 
-firebase.initializeApp(firebaseConfig);
+if (firebase.apps.length === 0)
+    firebase.initializeApp(firebaseConfig);
 
 
 export const db = firebase.firestore();

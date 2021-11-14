@@ -6,7 +6,7 @@ export const checkForBackup = async (data, last) => {
 
     data = simplifyData(data)
 
-    let uid = auth.currentUser.uid ? auth.currentUser.uid : undefined
+    let uid = auth.currentUser ? auth.currentUser.uid : undefined
 
 
     if (!uid) return last
