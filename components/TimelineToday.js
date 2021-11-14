@@ -12,9 +12,19 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
     let day = Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24)
 
     useEffect(() => {
+
+
+
+
+
+
+
+
+
+
+
+
         let relevant = []
-
-
         projects.forEach((project) => {
             let relevantLogs = project.logs.filter((log) => log.day === day)
             let total_duration = relevantLogs.reduce((sum, log) => sum + log.duration, 0)
@@ -22,7 +32,19 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
 
             let inLastDays = project.logs.filter((log) => day - log.day > -7).reduce((sum, log) => sum + log.duration, 0)
 
+            // daily average
+            let days = []
+            let sum = 0
 
+            project.logs.forEach((log)=>{
+                if(days.filter((day)=> day === log.day).length === 0)
+                    days.push(log.day)
+                sum += log.duration
+            })
+            let average = sum / days.length
+            average = average === 0? 1: average
+            let fracOfAverage = 100/average*total_duration
+            
             if (!project.archived)
                 relevant.push({
                     name: project.name,
@@ -30,7 +52,8 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                     running: running,
                     total_duration: total_duration,
                     color: project.color,
-                    last_seven_days: inLastDays
+                    last_seven_days: inLastDays,
+                    frac_of_acerage: fracOfAverage
                 })
         })
 
@@ -51,14 +74,14 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
 
         const half = sorted.length / 2;
         let halfed = [sorted.slice(0, Math.ceil(half)), sorted.slice(-Math.floor(half))]
-        
-        if (sorted.length === 1){
+
+        if (sorted.length === 1) {
             halfed = [[sorted[0]], []]
         }
 
         setRelevantData(halfed)
     }, [projects])
-    
+
 
 
 
@@ -238,7 +261,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                                 </View>
                                                 <View>
                                                     <Text style={s.projectCardTextMain}>{project.name}</Text>
-                                                    <Text style={s.projectCardTextSec}>Some stat</Text>
+                                                    <Text style={s.projectCardTextSec}>{Math.round(project.frac_of_acerage)}% of daily average</Text>
                                                 </View>
                                             </View>
                                             <TouchableOpacity style={[s.startButton, color.c]} onPress={() => startProject(project.pid)}>
