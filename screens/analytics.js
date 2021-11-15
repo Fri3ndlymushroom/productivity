@@ -8,6 +8,7 @@ import { VictoryPie } from 'victory-native';
 import GeneralCharts from "../components/GeneralCharts"
 import Navbar from '../components/NavbarDrawer';
 import TimePeriodAnalysis from '../components/TimePeriodAnalysis';
+import BestDayOfWeek from '../components/BestDayOfWeek';
 let config = {
 
     backgroundColor: "white",
@@ -61,7 +62,7 @@ export default function Analytics({ navigation, screenProps }) {
                         />
                     </View>
                     <View style={[s.infoGridItem, s.infoGridItem2]}>
-                        <Text>Text</Text>
+                        <BestDayOfWeek data={screenProps.data}/>
                     </View>
                     <View style={[s.infoGridItem, s.infoGridItem3]}>
                         <TimePeriodAnalysis data={screenProps.data} settings={screenProps.settings}/>
