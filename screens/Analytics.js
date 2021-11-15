@@ -7,6 +7,7 @@ import getAnalytics from "../js/analysis"
 import { VictoryPie } from 'victory-native';
 import GeneralCharts from "../components/GeneralCharts"
 import Navbar from '../components/NavbarDrawer';
+import TimePeriodAnalysis from '../components/TimePeriodAnalysis';
 let config = {
 
     backgroundColor: "white",
@@ -63,7 +64,7 @@ export default function Analytics({ navigation, screenProps }) {
                         <Text>Text</Text>
                     </View>
                     <View style={[s.infoGridItem, s.infoGridItem3]}>
-                        <Text>Text</Text>
+                        <TimePeriodAnalysis data={screenProps.data} settings={screenProps.settings}/>
                     </View>
                     <View style={[s.infoGridItem, s.infoGridItem4]}>
                         <Text>Text</Text>
@@ -114,9 +115,9 @@ const s = StyleSheet.create({
         height: 100
     },
     infoGridItem3:{
-        height: 120,
+        height: 170,
     },
     infoGridItem4:{
-        height: 130
+        height: 80
     }
 })
