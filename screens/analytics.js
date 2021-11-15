@@ -47,29 +47,33 @@ export default function Analytics({ navigation, screenProps }) {
             <Navbar {...{ navigation }} location={"Analytics"} />
             <ScrollView>
                 <View style={g.navbarTopMargin}></View>
-                <GeneralCharts analysedData={analysedData} />
+                {/* info grid */}
                 <View style={s.infoGrid}>
-                    <View style={[s.infoGridItem]}>
+                    <View style={[s.infoGridItem, s.infoGridItem1]}>
                         <VictoryPie
                             colorScale={analysedData.distribution_chart.colors}
                             data={analysedData.distribution_chart.data}
-                            width={250}
-                            height={250}
-                            labelRadius={({ innerRadius }) => innerRadius + 30 }
+                            width={150}
+                            height={150}
+                            radius={60}
+                            labelRadius={({ innerRadius }) => innerRadius + 30}
                         />
                     </View>
-                    <View style={[s.infoGridItem, s.statsParent]}>
-                        <Text style={s.statsText}>
-                            stat
-                        </Text>
-                        <Text style={s.statsText}>
-                            stat
-                        </Text>
-                        <Text style={s.statsText}>
-                            stat
-                        </Text>
+                    <View style={[s.infoGridItem, s.infoGridItem2]}>
+                        <Text>Text</Text>
                     </View>
+                    <View style={[s.infoGridItem, s.infoGridItem3]}>
+                        <Text>Text</Text>
+                    </View>
+                    <View style={[s.infoGridItem, s.infoGridItem4]}>
+                        <Text>Text</Text>
+                    </View>
+
                 </View>
+
+                {/* general chart */}
+                <GeneralCharts analysedData={analysedData} />
+
 
             </ScrollView>
         </View>
@@ -80,20 +84,39 @@ export default function Analytics({ navigation, screenProps }) {
 const s = StyleSheet.create({
     infoGrid: {
         display: "flex",
-        flexDirection: 'row',
-        flexWrap: 'wrap'
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        position: "relative",
+        maxHeight: 300,
+        alignContent: "center"
+        
     },
     infoGridItem: {
-        width: '45%',
+        maxWidth: '45%',
+        width: 150,
         margin: "2.5%",
         alignContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: p.bg2,
+        borderRadius: p.br
     },
-    statsParent:{
+    statsParent: {
         display: "flex",
     },
-    statsText:{
+    statsText: {
         color: p.text__main,
         margin: 30
+    },
+    infoGridItem1:{
+        height: 150,
+    },
+    infoGridItem2:{
+        height: 100
+    },
+    infoGridItem3:{
+        height: 120,
+    },
+    infoGridItem4:{
+        height: 130
     }
 })

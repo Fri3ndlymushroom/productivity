@@ -14,19 +14,7 @@ export default function GeneralCharts({ analysedData }) {
 
     return (
         <View style={s.generalChartsContainer}>
-            <View style={s.generalChartsButtonContainer}>
-                <TouchableOpacity style={s.generalChartsButton} onPress={()=>setSelectedChart("bar")}>
-                    <Text style={g.text}>Bar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={()=>setSelectedChart("line")}>
-                    <Text style={g.text}>Line</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={()=>setSelectedChart("area")}>
-                    <Text style={g.text}>Area</Text>
-                </TouchableOpacity>
 
-
-            </View>
             <View style={s.generalChartsView}>
                 {
                     selectedChart === "bar" &&
@@ -76,6 +64,19 @@ export default function GeneralCharts({ analysedData }) {
                     </VictoryStack>
                 }
             </View>
+            <View style={s.generalChartsButtonContainer}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={()=>setSelectedChart("bar")}>
+                    <Text style={g.text}>Bar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={s.generalChartsButton} onPress={()=>setSelectedChart("line")}>
+                    <Text style={g.text}>Line</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={s.generalChartsButton} onPress={()=>setSelectedChart("area")}>
+                    <Text style={g.text}>Area</Text>
+                </TouchableOpacity>
+
+
+            </View>
         </View>
     )
 }
@@ -85,7 +86,7 @@ const s = StyleSheet.create({
     generalChartsButtonContainer:{
         display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-end",
+        justifyContent: "space-evenly",
         width: "100%",
     },
     generalChartsButton:{
