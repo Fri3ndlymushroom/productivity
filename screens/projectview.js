@@ -49,14 +49,19 @@ export default function ProjectView({ navigation, screenProps }) {
                 if (index >= 0) {
                     let day = screenProps.data.daily_logs[index]
                     let project = day.projects.find((project) => project.pid === pid)
+
+
                     if (project)
                         project.logs.forEach((log) => {
                             sum += log.duration
                         })
                 }
-                relevant.push({ x: formatSeconds((i - 1) * 60 * 60 * 24, "EEE"), y: sum / 60 / 60, l: secondsToShortTimeString(sum) })
+                relevant.push({ x: formatSeconds((i) * 60 * 60 * 24, "EEE"), y: sum / 60 / 60, l: secondsToShortTimeString(sum) })
             }
         } 
+
+        console.log(relevant)
+
 
         while (relevant.length < 7) {
             let existing = relevant.length
@@ -65,7 +70,12 @@ export default function ProjectView({ navigation, screenProps }) {
             relevant.splice(0, 0, { x: formatSeconds((day - 2) * 60 * 60 * 24, "EEE"), y: 0, l: "0min" })
         }
 
-        let short = relevant.slice(0, 7)
+
+        let short = relevant.slice(Math.max(relevant.length - 7, 1))
+
+
+
+
         return short
     }
 
