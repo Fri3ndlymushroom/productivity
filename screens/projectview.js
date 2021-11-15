@@ -40,7 +40,7 @@ export default function ProjectView({ navigation, screenProps }) {
 
 
         if (screenProps.data.daily_logs.length > 0) {
-            let boundaries = { end: screenProps.data.daily_logs[0].day, start: screenProps.data.daily_logs[screenProps.data.daily_logs.length - 1].day }
+            let boundaries = { end: Math.floor(( Math.round(new Date().getTime() / 1000) - screenProps.settings.start_of_day) / 60 / 60 / 24), start: screenProps.data.daily_logs[screenProps.data.daily_logs.length - 1].day }
             let x = 0
             for (let i = boundaries.start; i <= boundaries.end; i++) {
                 let sum = 0
@@ -60,7 +60,6 @@ export default function ProjectView({ navigation, screenProps }) {
             }
         } 
 
-        console.log(relevant)
 
 
         while (relevant.length < 7) {
