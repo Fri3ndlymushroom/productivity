@@ -50,19 +50,18 @@ export default function TimePeriodAnalysis({ data, settings }) {
             data.projects.forEach((project) => {
                 let relevant = project.logs.filter((log) => (log.day >= element.start && log.day <= element.end))
                 let sum = relevant.reduce((sum, log) => sum + log.duration, 0)
-                element.list.push({ project: project.name, duration: sum })
+
+                let style = StyleSheet.create({
+                    style:{
+                        color: project.color
+                    }
+                })
+                element.list.push({ project: project.name, duration: sum , style: style.style})
+
             })
         })
         return period
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -84,7 +83,7 @@ export default function TimePeriodAnalysis({ data, settings }) {
                                         period.list.map((project) => {
                                             return (
                                                 <View style={s.cardColumn} key={period.card + project.project}>
-                                                    <Text style={s.cardProjectTitle}>{project.project}</Text>
+                                                    <Text style={[s.cardProjectTitle, project.style]}>{project.project}</Text>
                                                     <Text style={s.cardProjectDuration}>{secondsToShortTimeString(project.duration)}</Text>
                                                 </View>
                                             )

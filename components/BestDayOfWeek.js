@@ -38,8 +38,6 @@ export default function BestDayOfWeek({ data }) {
             day.style = styles[day.day]
         })
 
-        console.log(days)
-
         return days
     }
 
@@ -53,6 +51,7 @@ export default function BestDayOfWeek({ data }) {
         </View>
     )
 }
+
 
 const s = StyleSheet.create({
     container:{
