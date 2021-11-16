@@ -81,7 +81,16 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         backgroundColor: p.bg2,
         borderRadius: p.br
-    }
+    },
+    logoWrapper: {
+        height: 38,
+        width: 38,
+        borderRadius: p.br,
+        backgroundColor: p.bg1,
+        display: "flex",
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
 
 export default styles

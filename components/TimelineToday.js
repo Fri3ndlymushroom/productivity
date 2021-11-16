@@ -183,7 +183,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                 anotherCard =
                                     <View style={[s.projectCard, g.shadow]} key="Start Project">
 
-                                        <View style={[s.logo, color.c]}>
+                                        <View style={[g.logoWrapper, color.c]}>
                                             <ProjectIcons figure={"add"}/> 
                                         </View>
 
@@ -210,7 +210,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                             key={"today" + project.pid}
                                         >
                                             <View>
-                                                <View style={[s.logo]}>
+                                                <View style={[g.logoWrapper]}>
                                                 <ProjectIcons figure={project.icon}/>
                                                 </View>
                                                 <Text style={s.projectCardTextMain}>{project.name}</Text>
@@ -228,7 +228,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                             key={"today" + project.pid}
                                         >
                                             <View>
-                                                <View style={[s.logo, color.c]}>
+                                                <View style={[g.logoWrapper, color.c]}>
                                                     <ProjectIcons figure={project.icon}/>
                                                 </View>
                                                 <View>
@@ -294,15 +294,7 @@ const s = StyleSheet.create({
         padding: 10,
         borderRadius: p.br
     },
-    logo: {
-        height: 38,
-        width: 38,
-        borderRadius: p.br,
-        backgroundColor: p.bg2,
-        display: "flex",
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+    
     buttonText: {
         textAlign: "center",
         color: p.text__main
