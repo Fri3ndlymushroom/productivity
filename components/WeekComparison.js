@@ -42,7 +42,7 @@ export default function WeekComparison({ data, settings }) {
 
         weekComparison.comparison.risingStyle = StyleSheet.create({
             style: {
-                backgroundColor: weekComparison.comparison.rising ? "green" : "red",
+                backgroundColor: weekComparison.comparison.rising ? "#48C645" : "#EC2964",
                 transform: [{ rotate: weekComparison.comparison.rising ? "0deg" : "180deg"}]
             }
         })
