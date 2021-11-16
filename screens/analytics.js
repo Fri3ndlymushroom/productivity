@@ -61,7 +61,13 @@ export default function Analytics({ navigation, screenProps }) {
                             width={150}
                             height={150}
                             radius={60}
-                            labelRadius={({ innerRadius }) => innerRadius + 30}
+                            cornerRadius={4}
+                            innerRadius={40}
+                            style={{
+                                labels: {
+                                    fill: "#00000000"
+                                }
+                            }}
                         />
                     </View>
                     <View style={[s.infoGridItem, s.infoGridItem2]}>
