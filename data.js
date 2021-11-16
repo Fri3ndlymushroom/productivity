@@ -13,12 +13,14 @@ export let dummyData = {
             pid: "P_399966c6-ba0d-48ae-be0f-700e4157fbb0",
             logs: [],
             color: "#EC2964",
+            icon: "cube"
         },
         {
             name: "HyperTyper",
             pid: "P_82d0c204-bfae-4f11-aafc-5bcd8a1a670a",
             logs: [],
             color: "#3DD6BA",
+            icon: "cube"
         }
     ],
     all_logs: [

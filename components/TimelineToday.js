@@ -5,6 +5,7 @@ import { VictoryPie } from 'victory-native'
 import { secondsToShortTimeString, secondsToDayString, formatSeconds, secondsToTimeString } from '../js/timerfunctions'
 import Svg, { Path } from "react-native-svg"
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ProjectIcons from './ProjectIcons'
 
 export default function TimelineToday({ setProjectSelectionOpen, goal, stopProject, projects, startProject, navigation }) {
     const [relevantData, setRelevantData] = useState([])
@@ -53,7 +54,8 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                     total_duration: total_duration,
                     color: project.color,
                     last_seven_days: inLastDays,
-                    frac_of_acerage: fracOfAverage
+                    frac_of_acerage: fracOfAverage,
+                    icon: project.icon
                 })
         })
 
@@ -182,17 +184,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                     <View style={[s.projectCard, g.shadow]} key="Start Project">
 
                                         <View style={[s.logo, color.c]}>
-                                            <Svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width={23}
-                                                height={23}
-                                                fill="none"
-                                            >
-                                                <Path
-                                                    stroke="#fff"
-                                                    d="M11.63 21.981L1.04 17.48a.1.1 0 01-.061-.092V5.529a.1.1 0 01.139-.092l10.474 4.452a.1.1 0 00.078 0l10.613-4.512M11.63 21.981v-9.056m0 9.056l10.591-4.502a.1.1 0 00.06-.092V5.377m0 0L11.669.865a.1.1 0 00-.075 0L4.021 3.867"
-                                                />
-                                            </Svg>
+                                            <ProjectIcons figure={"add"}/> 
                                         </View>
 
                                         <TouchableOpacity style={[s.startButton, color.c]} onPress={() => setProjectSelectionOpen(true)}>
@@ -219,17 +211,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                         >
                                             <View>
                                                 <View style={[s.logo]}>
-                                                    <Svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width={23}
-                                                        height={23}
-                                                        fill="none"
-                                                    >
-                                                        <Path
-                                                            stroke="#fff"
-                                                            d="M11.63 21.981L1.04 17.48a.1.1 0 01-.061-.092V5.529a.1.1 0 01.139-.092l10.474 4.452a.1.1 0 00.078 0l10.613-4.512M11.63 21.981v-9.056m0 9.056l10.591-4.502a.1.1 0 00.06-.092V5.377m0 0L11.669.865a.1.1 0 00-.075 0L4.021 3.867"
-                                                        />
-                                                    </Svg>
+                                                <ProjectIcons figure={project.icon}/>
                                                 </View>
                                                 <Text style={s.projectCardTextMain}>{project.name}</Text>
                                             </View>
@@ -247,17 +229,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                         >
                                             <View>
                                                 <View style={[s.logo, color.c]}>
-                                                    <Svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width={23}
-                                                        height={23}
-                                                        fill="none"
-                                                    >
-                                                        <Path
-                                                            stroke="#fff"
-                                                            d="M11.63 21.981L1.04 17.48a.1.1 0 01-.061-.092V5.529a.1.1 0 01.139-.092l10.474 4.452a.1.1 0 00.078 0l10.613-4.512M11.63 21.981v-9.056m0 9.056l10.591-4.502a.1.1 0 00.06-.092V5.377m0 0L11.669.865a.1.1 0 00-.075 0L4.021 3.867"
-                                                        />
-                                                    </Svg>
+                                                    <ProjectIcons figure={project.icon}/>
                                                 </View>
                                                 <View>
                                                     <Text style={s.projectCardTextMain}>{project.name}</Text>
@@ -327,6 +299,7 @@ const s = StyleSheet.create({
         width: 38,
         borderRadius: p.br,
         backgroundColor: p.bg2,
+        display: "flex",
         alignItems: 'center',
         justifyContent: 'center',
     },
