@@ -5,9 +5,11 @@ import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea, Victo
 import g, { p } from '../styles/global';
 
 
-export default function GeneralCharts({ analysedData }) {
+export default function GeneralCharts({ analysedData, setSelectedTime }) {
 
     const [selectedChart, setSelectedChart] = useState("bar")
+
+
 
 
 
@@ -17,8 +19,8 @@ export default function GeneralCharts({ analysedData }) {
 
             <View style={s.generalChartsView}>
                 <VictoryChart
-                width={300}
-                padding={30}
+                    width={300}
+                    padding={30}
                 >
                     <VictoryAxis
                         tickLabelComponent={<VictoryLabel dy={0} dx={0} angle={0} />}
@@ -101,8 +103,17 @@ export default function GeneralCharts({ analysedData }) {
                 <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedChart("area")}>
                     <Text style={g.text}>Area</Text>
                 </TouchableOpacity>
-
-
+            </View>
+            <View style={s.generalChartsButtonContainer}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() =>setSelectedTime({time: 604800,gap: 86400}) }>
+                    <Text style={g.text}>Week</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({time: 2592000, gap: 86400})}>
+                    <Text style={g.text}>Month</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({time: 31536000,gap: 2628000,})}>
+                    <Text style={g.text}>Year</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -128,7 +139,7 @@ const s = StyleSheet.create({
         width: 300,
         borderRadius: p.br
     },
-    generalChartsContainer:{
+    generalChartsContainer: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center"

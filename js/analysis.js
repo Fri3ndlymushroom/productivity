@@ -11,10 +11,7 @@ const getAnalytics = (data, settings) => {
         },
         distribution_chart: getPieChartData(data)
 
-        
-
     }
-
     return chartsData
 }
 export default getAnalytics;
@@ -25,7 +22,6 @@ const getPieChartData = (data) =>{
     let dataObj = {}
     let colors = []
 
-    
     data.all_logs.forEach((log)=>{
         if(!dataObj[log.project])dataObj[log.project] = 0
         dataObj[log.project] += log.duration
@@ -226,6 +222,8 @@ const filterBarDataByTime = (data, settings) => {
         let time = (Math.ceil(now / settings.gap) - settings.time / settings.gap) + i
         classified[time] = []
     }
+
+
 
     filtered.forEach((log) => {
         let time = Math.floor(log.start / settings.gap)

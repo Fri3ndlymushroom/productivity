@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useState}from 'react';
 import { Text, View, Dimensions, ScrollView, StyleSheet } from 'react-native';
 import g, { p } from '../styles/global'
 import { DefaultText } from '../components/Components'
@@ -9,6 +9,7 @@ import GeneralCharts from "../components/GeneralCharts"
 import Navbar from '../components/NavbarDrawer';
 import TimePeriodAnalysis from '../components/TimePeriodAnalysis';
 import BestDayOfWeek from '../components/BestDayOfWeek';
+import WeekComparison from '../components/WeekComparison';
 let config = {
 
     backgroundColor: "white",
@@ -30,14 +31,16 @@ let config = {
 
 export default function Analytics({ navigation, screenProps }) {
 
-
+    const [selectedTime, setSelectedTime] = useState({
+        time: 31536000, 
+        gap: 2628000,
+    })
     const settings = {
         general_chart: {
-            time: 604800, // week
-            gap: 86400,
+            time: selectedTime.time, // week
+            gap: selectedTime.gap,
             view: "bar"
         }
-
     }
 
 
@@ -68,13 +71,13 @@ export default function Analytics({ navigation, screenProps }) {
                         <TimePeriodAnalysis data={screenProps.data} settings={screenProps.settings}/>
                     </View>
                     <View style={[s.infoGridItem, s.infoGridItem4]}>
-                        <Text>Text</Text>
+                       <WeekComparison data={screenProps.data} settings={screenProps.settings}/>
                     </View>
 
                 </View>
 
                 {/* general chart */}
-                <GeneralCharts analysedData={analysedData} />
+                <GeneralCharts analysedData={analysedData}  setSelectedTime={setSelectedTime}/>
 
 
             </ScrollView>
