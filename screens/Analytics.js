@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState}from 'react';
+import React, { useState } from 'react';
 import { Text, View, Dimensions, ScrollView, StyleSheet } from 'react-native';
 import g, { p } from '../styles/global'
 import { DefaultText } from '../components/Components'
@@ -32,7 +32,7 @@ let config = {
 export default function Analytics({ navigation, screenProps }) {
 
     const [selectedTime, setSelectedTime] = useState({
-        time: 31536000, 
+        time: 31536000,
         gap: 2628000,
     })
 
@@ -49,6 +49,8 @@ export default function Analytics({ navigation, screenProps }) {
     let analysedData = getAnalytics(screenProps.data, settings)
 
 
+    let allTime = Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration / 60 / 60, 0))
+
     return (
         <View style={g.body}>
             <Navbar {...{ navigation }} location={"Analytics"} />
@@ -57,6 +59,7 @@ export default function Analytics({ navigation, screenProps }) {
                 {/* info grid */}
                 <View style={s.infoGrid}>
                     <View style={[s.infoGridItem, s.infoGridItem1]}>
+                        <Text style={s.allTime}>{allTime}h</Text>
                         <VictoryPie
                             colorScale={analysedData.distribution_chart.colors}
                             data={analysedData.distribution_chart.data}
@@ -73,19 +76,19 @@ export default function Analytics({ navigation, screenProps }) {
                         />
                     </View>
                     <View style={[s.infoGridItem, s.infoGridItem2]}>
-                        <BestDayOfWeek data={screenProps.data}/>
+                        <BestDayOfWeek data={screenProps.data} />
                     </View>
                     <View style={[s.infoGridItem, s.infoGridItem3]}>
-                        <TimePeriodAnalysis data={screenProps.data} settings={screenProps.settings}/>
+                        <TimePeriodAnalysis data={screenProps.data} settings={screenProps.settings} />
                     </View>
                     <View style={[s.infoGridItem, s.infoGridItem4]}>
-                       <WeekComparison data={screenProps.data} settings={screenProps.settings}/>
+                        <WeekComparison data={screenProps.data} settings={screenProps.settings} />
                     </View>
 
                 </View>
 
                 {/* general chart */}
-                <GeneralCharts analysedData={analysedData}  setSelectedTime={setSelectedTime}/>
+                <GeneralCharts analysedData={analysedData} setSelectedTime={setSelectedTime} />
 
 
             </ScrollView>
@@ -95,6 +98,11 @@ export default function Analytics({ navigation, screenProps }) {
 
 
 const s = StyleSheet.create({
+    allTime: {
+        position: "absolute",
+        color: p.text__main,
+        top: "45%"
+    },
     infoGrid: {
         display: "flex",
         flexDirection: 'column',
@@ -102,7 +110,7 @@ const s = StyleSheet.create({
         position: "relative",
         maxHeight: 300,
         alignContent: "center"
-        
+
     },
     infoGridItem: {
         maxWidth: '45%',
@@ -120,16 +128,16 @@ const s = StyleSheet.create({
         color: p.text__main,
         margin: 30
     },
-    infoGridItem1:{
+    infoGridItem1: {
         height: 150,
     },
-    infoGridItem2:{
+    infoGridItem2: {
         height: 100
     },
-    infoGridItem3:{
+    infoGridItem3: {
         height: 170,
     },
-    infoGridItem4:{
+    infoGridItem4: {
         height: 80
     }
 })

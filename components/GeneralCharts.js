@@ -42,7 +42,7 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                                 stroke: p.bg2  //CHANGE COLOR OF Y-AXIS
                             },
                             tickLabels: {
-                                fill: p.text__dim , //CHANGE COLOR OF X-AXIS LABELS
+                                fill: p.text__dim, //CHANGE COLOR OF X-AXIS LABELS
                                 fontSize: 10
                             }
                         }}
@@ -75,25 +75,21 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                     }
                     {
                         selectedChart === "line" &&
-                        <VictoryChart>
-                            {
-                                analysedData.general_chart.line.data.map((data, i) => {
-                                    let colors = [p.hl, "white", "gray"]
+                            analysedData.general_chart.line.data.map((data, i) => {
+                                let colors = [p.hl, "white", "gray"]
 
-                                    
-                                    return (<VictoryLine
-                                        key={"general_chart-line" + i}
-                                        data={data}
-                                        interpolation="natural"
-                                        animate={{
-                                            duration: 2000,
-                                            onLoad: { duration: 1000 }
-                                        }}
-                                        style={{ data: { stroke: colors[i] } }}
-                                    />)
-                                })
-                            }
-                        </VictoryChart>
+
+                                return (<VictoryLine
+                                    key={"general_chart-line" + i}
+                                    data={data}
+                                    interpolation="natural"
+                                    animate={{
+                                        duration: 2000,
+                                        onLoad: { duration: 1000 }
+                                    }}
+                                    style={{ data: { stroke: colors[i] } }}
+                                />)
+                            })
                     }
                     {
                         selectedChart === "area" &&
@@ -109,6 +105,7 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                                             duration: 2000,
                                             onLoad: { duration: 1000 }
                                         }}
+                                        interpolation="natural"
                                     />
                                 })
                             }
@@ -128,13 +125,13 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                 </TouchableOpacity>
             </View>
             <View style={s.generalChartsButtonContainer}>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() =>setSelectedTime({time: 604800,gap: 86400}) }>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ time: 604800, gap: 86400 })}>
                     <Text style={g.text}>Week</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({time: 2592000, gap: 86400})}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ time: 2592000, gap: 86400 })}>
                     <Text style={g.text}>Month</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({time: 31536000,gap: 2628000,})}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ time: 31536000, gap: 2628000, })}>
                     <Text style={g.text}>Year</Text>
                 </TouchableOpacity>
             </View>
