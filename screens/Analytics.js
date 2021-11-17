@@ -10,6 +10,7 @@ import Navbar from '../components/NavbarDrawer';
 import TimePeriodAnalysis from '../components/TimePeriodAnalysis';
 import BestDayOfWeek from '../components/BestDayOfWeek';
 import WeekComparison from '../components/WeekComparison';
+import {secondsToShortTimeString} from "../js/timerfunctions"
 let config = {
 
     backgroundColor: "white",
@@ -50,6 +51,11 @@ export default function Analytics({ navigation, screenProps }) {
 
 
     let allTime = Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration / 60 / 60, 0))
+    let days = Math.floor(new Date().getTime() / 1000 / 60 / 60 / 24 - screenProps.data.all_logs[screenProps.data.all_logs.length - 1].day)
+    let dailyAverage = secondsToShortTimeString(Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration, 0) / days))
+    console.log(allTime, dailyAverage)
+
+
 
     return (
         <View style={g.body}>
@@ -88,7 +94,7 @@ export default function Analytics({ navigation, screenProps }) {
                 </View>
 
                 {/* general chart */}
-                <GeneralCharts analysedData={analysedData} setSelectedTime={setSelectedTime} />
+                <GeneralCharts dailyAverage={dailyAverage} analysedData={analysedData} setSelectedTime={setSelectedTime} />
 
 
             </ScrollView>

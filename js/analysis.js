@@ -105,8 +105,6 @@ const filterLineDataByTime = (data, settings) => {
         )
     }
 
-    console.log(groupedArr)
-
     let average = []
 
     for (let i = 0; i < amount; i++) {

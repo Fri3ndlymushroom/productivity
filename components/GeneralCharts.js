@@ -6,7 +6,7 @@ import g, { p } from '../styles/global';
 
 
 
-export default function GeneralCharts({ analysedData, setSelectedTime }) {
+export default function GeneralCharts({ analysedData, setSelectedTime, dailyAverage }) {
 
     const [selectedChart, setSelectedChart] = useState("bar")
 
@@ -17,9 +17,14 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
 
     return (
         <View style={s.generalChartsContainer}>
+
             <View style={s.generalChartsView}>
+                <View style={s.dailyAverageContainer}>
+                    <Text style={s.dailyAverageHeader}>Daily Average</Text>
+                    <Text style={s.dailyAverageValue}>{dailyAverage}</Text>
+                </View>
                 <VictoryChart
-                    height={200}
+                    height={250}
                     width={300}
                 >
                     <VictoryAxis
@@ -58,10 +63,10 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                                         key={"general_chart-bar" + i}
                                         data={data}
                                         cornerRadius={{
-                                            topLeft: 7,
-                                            topRight: 7,
-                                            bottomLeft: 7,
-                                            bottomRight: 7,
+                                            topLeft: 2,
+                                            topRight: 2,
+                                            bottomLeft: 2,
+                                            bottomRight: 2,
                                         }}
                                         animate={{
                                             duration: 2000,
@@ -75,21 +80,21 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                     }
                     {
                         selectedChart === "line" &&
-                            analysedData.general_chart.line.data.map((data, i) => {
-                                let colors = [p.hl, "white", "gray"]
+                        analysedData.general_chart.line.data.map((data, i) => {
+                            let colors = [p.hl, "white", "gray"]
 
 
-                                return (<VictoryLine
-                                    key={"general_chart-line" + i}
-                                    data={data}
-                                    interpolation="natural"
-                                    animate={{
-                                        duration: 2000,
-                                        onLoad: { duration: 1000 }
-                                    }}
-                                    style={{ data: { stroke: colors[i] } }}
-                                />)
-                            })
+                            return (<VictoryLine
+                                key={"general_chart-line" + i}
+                                data={data}
+                                interpolation="natural"
+                                animate={{
+                                    duration: 2000,
+                                    onLoad: { duration: 1000 }
+                                }}
+                                style={{ data: { stroke: colors[i] } }}
+                            />)
+                        })
                     }
                     {
                         selectedChart === "area" &&
@@ -163,5 +168,17 @@ const s = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
+    },
+    dailyAverageContainer: {
+        marginTop: 20,
+        marginLeft: 20
+    },
+    dailyAverageHeader:{
+        fontSize: 11,
+        color: p.text__dim
+    },
+    dailyAverageValue:{
+        fontSize: 18,
+        color: p.text__main
     }
 })
