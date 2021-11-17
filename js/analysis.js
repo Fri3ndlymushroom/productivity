@@ -1,6 +1,5 @@
-import { formatSeconds } from "./timerfunctions";
-
-
+import { formatSeconds, secondsToDayString } from "./timerfunctions";
+import { format } from 'date-fns'
 
 
 const getAnalytics = (data, settings) => {
@@ -17,22 +16,22 @@ const getAnalytics = (data, settings) => {
 export default getAnalytics;
 
 
-const getPieChartData = (data) =>{
+const getPieChartData = (data) => {
 
     let dataObj = {}
     let colors = []
 
-    data.all_logs.forEach((log)=>{
-        if(!dataObj[log.project])dataObj[log.project] = 0
+    data.all_logs.forEach((log) => {
+        if (!dataObj[log.project]) dataObj[log.project] = 0
         dataObj[log.project] += log.duration
 
-        if(colors.filter((color)=>color === log.color).length === 0) colors.push(log.color)
+        if (colors.filter((color) => color === log.color).length === 0) colors.push(log.color)
     })
     let dataArr = []
 
-    for(let project in dataObj){
-        let info =dataObj[project]
-        dataArr.push({x: project, y: info})
+    for (let project in dataObj) {
+        let info = dataObj[project]
+        dataArr.push({ x: project, y: info })
     }
 
     let returnObj = {
@@ -51,7 +50,7 @@ const getLineChartData = (data, settings) => {
     return bundeled
 }
 
-const bundleLineChartData = (filtered) =>{
+const bundleLineChartData = (filtered) => {
 
 
     let data = filtered ? filtered : []
@@ -61,57 +60,58 @@ const bundleLineChartData = (filtered) =>{
     }
 
 
-
-    data.forEach((element)=>{
+    data.forEach((element) => {
         let current = []
-        element.forEach((point, i)=>{
-            current.push({x: i, y: point})
+        element.forEach((point, i) => {
+            current.push({ x: point.x, y: point.y })
         })
-        refactored.data.push( current)
+        refactored.data.push(current)
     })
     return refactored
 }
 
-const filterLineDataByTime = (data, settings) =>{
-    if(!data.all_logs[0])return
+const filterLineDataByTime = (data, settings) => {
+    if (!data.all_logs[0]) return
 
 
 
     // average
-    let between = {start: data.all_logs[data.all_logs.length -1].start, end: Math.round(new Date().getTime() / 1000)}
+    let between = { start: data.all_logs[data.all_logs.length - 1].start, end: Math.round(new Date().getTime() / 1000) }
+
 
     let amount = settings.time / settings.gap
 
     let grouped = {}
 
-    for(let i = Math.floor(between.start/settings.gap); i <  Math.ceil(between.end/settings.gap); i++){
+    for (let i = Math.floor(between.start / settings.gap); i < Math.ceil(between.end / settings.gap); i++) {
         grouped[i] = 0
     }
 
-    data.all_logs.forEach((log)=>{
+    data.all_logs.forEach((log) => {
         let unit = Math.floor(log.start / settings.gap)
         grouped[unit] += log.duration
     })
 
+
     let average = []
 
-    for (let i = 0; i < amount; i++){
+    for (let i = 0; i < amount; i++) {
         average.push(0)
     }
 
     let y = 0
     let i = 0
-    for(let element in grouped){
-        average[i]+= grouped[element]
+    for (let element in grouped) {
+        average[i] += grouped[element]
 
         i++
         if (i === amount) i = 0
-        y ++
+        y++
     }
 
     y = Math.ceil(y / amount)
 
-    average.forEach((element, i)=>{
+    average.forEach((element, i) => {
         average[i] = element / y
     })
 
@@ -120,18 +120,38 @@ const filterLineDataByTime = (data, settings) =>{
     let previous = []
     let last = []
 
-    for(let i = 0; i < amount; i++){
+    for (let i = 0; i < amount; i++) {
 
-        let val = grouped[Math.ceil(between.end/settings.gap) - amount + i]
-        last.push( val ? val : 0)
-        
-        val = grouped[Math.ceil(between.end/settings.gap) - amount * 2 + i]
-        previous.push( val ? val : 0)
+        let val = grouped[Math.ceil(between.end / settings.gap) - amount + i]
+        last.push(val ? val : 0)
+
+        val = grouped[Math.ceil(between.end / settings.gap) - amount * 2 + i]
+        previous.push(val ? val : 0)
     }
 
 
     let chartData = [last, previous, average]
-    return (chartData)
+
+
+
+    let legend = []
+    for (let i = 0; i < amount; i++ ){
+        let time = (between.end - settings.time) + settings.gap *  (i +1)
+        legend.push(getSensefulLegend(time, settings.time))
+    }
+
+    let labled = []
+
+    chartData.forEach(line=>{
+        let newLine = []
+        line.forEach((point, i)=>{
+            newLine.push({x: legend[i], y: point})
+        })
+        labled.push(newLine)
+    })
+
+
+    return (labled)
 
 }
 
@@ -156,12 +176,14 @@ const bundleBarChartData = (data) => {
 
     let colors = []
 
+
+
     data.forEach((unit) => {
         // get all present projects
         unit.logs.forEach((log) => {
             if (generalChartData.legend.filter((project) => project === log.project).length === 0) {
                 generalChartData.legend.push(log.project)
-                if(colors.filter((color)=>color === log.color).length === 0){
+                if (colors.filter((color) => color === log.color).length === 0) {
 
                     colors.push(log.color)
                 }
@@ -194,17 +216,18 @@ const bundleBarChartData = (data) => {
         colors: colors
     }
 
-    generalChartData.legend.forEach((project, i)=>{
+    generalChartData.legend.forEach((project, i) => {
         let refactoredProjects = []
-        generalChartData.data.forEach((unit, y)=>{
+        generalChartData.data.forEach((unit, y) => {
+
             refactoredProjects.push({
                 x: generalChartData.labels[y],
                 y: unit[i]
             })
         })
-        refactored.data.push(refactoredProjects)    
+        refactored.data.push(refactoredProjects)
     })
-    
+
     return (refactored)
 }
 
@@ -232,12 +255,24 @@ const filterBarDataByTime = (data, settings) => {
 
     let classifiedArray = []
 
-    
+
 
     for (let unit in classified) {
-        let time = formatSeconds(parseInt(unit) * settings.gap, "dd, MM")
+        let time = getSensefulLegend(parseInt(unit) * settings.gap, settings.time)
         classifiedArray.push({ time: time, logs: classified[unit] })
     }
 
     return classifiedArray
+}
+
+const getSensefulLegend = (seconds, time) => {
+    let d = new Date(seconds * 1000)
+    let f;
+
+    if (time === 604800) f = format(d, "EEE")
+    if (time === 2592000) f = format(d, "d")
+    if (time === 31536000) f = format(d, "MMM")
+
+
+    return f
 }

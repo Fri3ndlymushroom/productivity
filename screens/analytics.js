@@ -35,6 +35,8 @@ export default function Analytics({ navigation, screenProps }) {
         time: 31536000, 
         gap: 2628000,
     })
+
+
     const settings = {
         general_chart: {
             time: selectedTime.time, // week

@@ -5,6 +5,7 @@ import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea, Victo
 import g, { p } from '../styles/global';
 
 
+
 export default function GeneralCharts({ analysedData, setSelectedTime }) {
 
     const [selectedChart, setSelectedChart] = useState("bar")
@@ -16,11 +17,10 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
 
     return (
         <View style={s.generalChartsContainer}>
-
             <View style={s.generalChartsView}>
                 <VictoryChart
+                    height={200}
                     width={300}
-                    padding={30}
                 >
                     <VictoryAxis
                         tickLabelComponent={<VictoryLabel dy={0} dx={0} angle={0} />}
@@ -29,7 +29,8 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                                 stroke: p.bg2  //CHANGE COLOR OF X-AXIS
                             },
                             tickLabels: {
-                                fill: p.text__dim //CHANGE COLOR OF X-AXIS LABELS
+                                fill: p.text__dim, //CHANGE COLOR OF X-AXIS LABELS
+                                fontSize: 10
                             }
                         }}
                     />
@@ -41,7 +42,8 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                                 stroke: p.bg2  //CHANGE COLOR OF Y-AXIS
                             },
                             tickLabels: {
-                                fill: p.text__dim //CHANGE COLOR OF Y-AXIS LABELS
+                                fill: p.text__dim , //CHANGE COLOR OF X-AXIS LABELS
+                                fontSize: 10
                             }
                         }}
                     />
@@ -55,6 +57,16 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                                     return <VictoryBar
                                         key={"general_chart-bar" + i}
                                         data={data}
+                                        cornerRadius={{
+                                            topLeft: 7,
+                                            topRight: 7,
+                                            bottomLeft: 7,
+                                            bottomRight: 7,
+                                        }}
+                                        animate={{
+                                            duration: 2000,
+                                            onLoad: { duration: 1000 }
+                                        }}
                                     />
                                 })
                             }
@@ -70,6 +82,10 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                                         key={"general_chart-line" + i}
                                         data={data}
                                         interpolation="natural"
+                                        animate={{
+                                            duration: 2000,
+                                            onLoad: { duration: 1000 }
+                                        }}
                                     />)
                                 })
                             }
@@ -85,7 +101,10 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                                     return <VictoryArea
                                         key={"general_chart-bar" + i}
                                         data={data}
-
+                                        animate={{
+                                            duration: 2000,
+                                            onLoad: { duration: 1000 }
+                                        }}
                                     />
                                 })
                             }
