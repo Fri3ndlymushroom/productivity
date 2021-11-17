@@ -78,6 +78,9 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                         <VictoryChart>
                             {
                                 analysedData.general_chart.line.data.map((data, i) => {
+                                    let colors = [p.hl, "white", "gray"]
+
+                                    
                                     return (<VictoryLine
                                         key={"general_chart-line" + i}
                                         data={data}
@@ -86,6 +89,7 @@ export default function GeneralCharts({ analysedData, setSelectedTime }) {
                                             duration: 2000,
                                             onLoad: { duration: 1000 }
                                         }}
+                                        style={{ data: { stroke: colors[i] } }}
                                     />)
                                 })
                             }

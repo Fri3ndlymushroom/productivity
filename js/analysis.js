@@ -87,11 +87,25 @@ const filterLineDataByTime = (data, settings) => {
         grouped[i] = 0
     }
 
+
+
     data.all_logs.forEach((log) => {
         let unit = Math.floor(log.start / settings.gap)
         grouped[unit] += log.duration
     })
 
+
+    
+
+    let groupedArr = []
+
+    for(let day in grouped){
+        groupedArr.push(
+            {day: parseInt(day, 10), duration: grouped[day]}
+        )
+    }
+
+    console.log(groupedArr)
 
     let average = []
 
@@ -101,13 +115,15 @@ const filterLineDataByTime = (data, settings) => {
 
     let y = 0
     let i = 0
-    for (let element in grouped) {
-        average[i] += grouped[element]
+    groupedArr.reverse().forEach((element)=>{
+        average[i] += element.duration
 
         i++
         if (i === amount) i = 0
         y++
-    }
+    })
+
+    average.reverse()
 
     y = Math.ceil(y / amount)
 
