@@ -163,7 +163,7 @@ export default function ProjectView({ navigation, screenProps }) {
                             )
                             if (lastDay !== log.day) {
                                 logs = (
-                                    <View key={"projectViewLog" + log.start}>
+                                    <View key={"projectViewLog" + log.lid}>
                                         <View style={s.dayTopMargin}></View>
                                         <Text style={g.dayTitle}>{secondsToDayString(log.start)}</Text>
                                         {card}
@@ -171,7 +171,7 @@ export default function ProjectView({ navigation, screenProps }) {
                                 )
                             } else {
                                 logs = (
-                                    <View key={"projectViewLog" + log.start}>
+                                    <View key={"projectViewLog" + log.lid}>
                                         {card}
                                     </View>
                                 )
