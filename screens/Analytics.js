@@ -53,7 +53,6 @@ export default function Analytics({ navigation, screenProps }) {
     let allTime = Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration / 60 / 60, 0))
     let days = Math.floor(new Date().getTime() / 1000 / 60 / 60 / 24 - screenProps.data.all_logs[screenProps.data.all_logs.length - 1].day)
     let dailyAverage = secondsToShortTimeString(Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration, 0) / days))
-    console.log(allTime, dailyAverage)
 
 
 

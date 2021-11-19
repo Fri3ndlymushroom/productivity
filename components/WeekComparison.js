@@ -65,7 +65,7 @@ export default function WeekComparison({ data, settings }) {
 
             <View style={[s.indicator, getWeekComparison().risingStyle.style]}><Icon name={'arrow-up'} size={24} color={'white'} /></View>
             <View style={s.textContainer}>
-                <Text style={s.percentage}>{getWeekComparison().percentage}%</Text>
+                <Text style={s.percentage}>{Math.round(getWeekComparison().percentage)}%</Text>
                 <Text style={s.description}>compared to last week</Text>
             </View>
         </View>

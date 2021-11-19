@@ -4,6 +4,7 @@ import { auth, db } from '../js/firebase'
 
 export const checkForBackup = async (data, last) => {
 
+
     data = simplifyData(data)
 
     let uid = auth.currentUser ? auth.currentUser.uid : undefined
@@ -29,6 +30,7 @@ export const checkForBackup = async (data, last) => {
             backupTimestamps: backupTimestamps
         }, { merge: true })
 
+
         await db.collection("backups").doc(uid).collection("user_backups").doc(newBackupTime.toString(10)).set({
             data: data
         })
@@ -53,6 +55,7 @@ const simplifyData = (data) => {
             name: project.name,
             pid: project.pid,
             color: project.color,
+            icon: project.icon,
             logs: []
         }
     })

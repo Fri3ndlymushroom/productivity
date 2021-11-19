@@ -81,7 +81,7 @@ const s = StyleSheet.create({
     dayCard: {
         height: 30,
         width: 30,
-        borderRadius: p.br,
+        borderRadius: 1000,
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
