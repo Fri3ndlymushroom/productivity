@@ -154,10 +154,13 @@ const s = StyleSheet.create({
     },
     generalChartsButton: {
         backgroundColor: p.bg2,
-        paddingHorizontal: 10,
+        borderRadius: p.br,
+        width: 80,
+        marginVertical: 5,
         paddingVertical: 5,
-        marginHorizontal: 10,
-        borderRadius: p.br
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
     generalChartsView: {
         backgroundColor: p.bg2,
