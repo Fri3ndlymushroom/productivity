@@ -21,7 +21,7 @@ export const headerStyle = {
 
 const shadow = {
     shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 4},
+    shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 2
@@ -57,9 +57,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     text: {
-        color: p.text__main
+        color: p.text__main,
     },
-    textDim:{
+    buttonText: {
+        textAlign: "center"
+    },
+    textDim: {
         color: p.text__dim
     },
     input: {
@@ -71,14 +74,14 @@ const styles = StyleSheet.create({
         backgroundColor: p.bg2,
         borderRadius: p.br
     },
-    navbarTopMargin:{
+    navbarTopMargin: {
         height: 100,
     },
-    button:{
+    button: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         backgroundColor: p.bg2,
-        borderRadius: p.br
+        borderRadius: p.br,
     },
     logoWrapper: {
         height: 38,
