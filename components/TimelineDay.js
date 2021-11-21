@@ -49,7 +49,8 @@ export default function TimelineDay({ startProject, dayData, navigation }) {
 const s = StyleSheet.create({
     dayContainer: {
         marginBottom: 20,
-        marginHorizontal: 60
+        width: "80%",
+        alignSelf: "center"
     },
     startButton: {
         backgroundColor: "#ffffff20",

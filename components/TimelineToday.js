@@ -256,7 +256,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
 const s = StyleSheet.create({
     // wrappers
     dayTitle: {
-        marginLeft: 65
+        marginLeft: "10%"
     },
     projectCardContainer: {
         display: "flex",
@@ -266,7 +266,7 @@ const s = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         flexWrap: "wrap",
-        marginLeft: 55
+        marginLeft: 30
     },
     // project cards
     projectCard: {

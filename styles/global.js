@@ -27,7 +27,6 @@ const shadow = {
     elevation: 2
 }
 
-
 const styles = StyleSheet.create({
     body: {
         flex: 1,
@@ -36,10 +35,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    
     projectCard: {
         backgroundColor: p.bg2,
-        width: 300,
+        width: "100%",
         margin: 5,
         padding: 10,
         display: "flex",

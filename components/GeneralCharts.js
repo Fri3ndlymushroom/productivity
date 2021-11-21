@@ -164,7 +164,7 @@ const s = StyleSheet.create({
     },
     generalChartsView: {
         backgroundColor: p.bg2,
-        width: 300,
+        width: "80%",
         borderRadius: p.br
     },
     generalChartsContainer: {

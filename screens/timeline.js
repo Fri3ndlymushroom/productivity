@@ -10,19 +10,13 @@ import TimelineToday from "../components/TimelineToday"
 import Navbar from '../components/NavbarDrawer';
 
 export default function Timeline({ navigation, screenProps }) {
-
-
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
-
-
 
     const startProject = (pid) => {
 
         let alreadyRunning = screenProps.data.all_logs.filter((log) => log.running).length > 0
 
         if (!alreadyRunning) {
-
-
             let copy = { ...screenProps.data }
 
             let start = Math.round(new Date().getTime() / 1000)
@@ -128,4 +122,3 @@ export default function Timeline({ navigation, screenProps }) {
         </View>
     );
 }
-

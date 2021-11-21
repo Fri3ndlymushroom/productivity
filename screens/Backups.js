@@ -3,7 +3,7 @@ import { View, Text, Button, TouchableOpacity, ScrollView, StyleSheet } from 're
 import g, { p } from "../styles/global"
 import NavbarStack from '../components/NavbarStack'
 import { auth, db } from '../js/firebase'
-import {secondsToShortDateString} from "../js/timerfunctions"
+import {secondsToShortDateString, secondsToDayString} from "../js/timerfunctions"
 
 
 export default function Backups({ navigation, screenProps }) {
@@ -39,8 +39,9 @@ export default function Backups({ navigation, screenProps }) {
                     {
                         backups.map((backup) => {
                             return (
-                                <TouchableOpacity key={backup} onPress={()=>setPopup({open: true, backup: backup })}>
-                                    <Text style={g.text} >{secondsToShortDateString(backup)}</Text>
+                                <TouchableOpacity style={s.backupCard}key={backup} onPress={()=>setPopup({open: true, backup: backup })}>
+                                    <Text style={g.textDim}>Backup from </Text>
+                                    <Text style={g.text} >{secondsToDayString(backup)}</Text>
                                 </TouchableOpacity>
                             )
                         })
@@ -66,9 +67,9 @@ const s = StyleSheet.create({
     backups: {
         marginTop: 100,
         height: 200,
-        backgroundColor: p.bg2,
         borderRadius: p.br,
-        width: "80%"
+        width: "100%",
+        display: "flex"
     },
     popup: {
         zIndex: 10,
@@ -80,8 +81,16 @@ const s = StyleSheet.create({
         left: 0,
         backgroundColor: "#00000099",
         display: "flex",
-        justifyContent: "space-between",
         alignItems: "center",
         justifyContent: 'center',
+    },
+    backupCard:{
+        marginHorizontal: "10%",
+        marginVertical: 5,
+        padding: 10,
+        borderRadius: p.br,
+        width: "80%",
+        backgroundColor: p.bg2,
+
     }
 })
