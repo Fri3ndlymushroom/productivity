@@ -6,7 +6,7 @@ export const p = {
 
     hl: "#5755D3",
 
-    text__main: "#FFFFFF",
+    text__main: "#c9c9c9",
     text__dim: "#444866",
 
     br: 10

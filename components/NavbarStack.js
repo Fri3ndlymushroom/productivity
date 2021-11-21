@@ -2,10 +2,10 @@ import React from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import ProjectIcons from './ProjectIcons';
 import g, { p } from "../styles/global"
 
-export default function Navbar({navigation, loc, children}) {
+export default function Navbar({ navigation, loc, children }) {
     return (
         <View style={s.navbarContainer}>
             <LinearGradient
@@ -17,25 +17,25 @@ export default function Navbar({navigation, loc, children}) {
                 }}
                 end={{
                     x: 0,
-                    y:1
-                }}/>
+                    y: 1
+                }} />
             <View style={s.navbarWrapper}>
-                <TouchableOpacity onPress={()=>navigation.goBack()}>
-                    <Icon name={'arrow-left'} size={16} color={'white'} />
-                    </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <ProjectIcons figure={"back"} />
+                </TouchableOpacity>
                 <Text style={s.navbarTitle}>{loc}</Text>
-                {children?children: <View></View>}
+                {children ? children : <View></View>}
             </View>
         </View>
     )
 }
 
 const s = StyleSheet.create({
-    navbarTitle:{
+    navbarTitle: {
         color: p.text__main,
         fontSize: 20
     },
-    gradient:{
+    gradient: {
         height: 200,
         width: Dimensions.get("window").width,
     },
@@ -63,7 +63,7 @@ const s = StyleSheet.create({
         color: p.text__main,
         fontSize: 16
     },
-    current:{
+    current: {
         fontSize: 18,
         position: "relative",
         bottom: 3,

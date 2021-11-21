@@ -46,7 +46,7 @@ export default function ProjectView({ navigation, screenProps }) {
 
 
         if (screenProps.data.daily_logs.length > 0) {
-            let boundaries = { end: Math.floor(( Math.round(new Date().getTime() / 1000) - screenProps.settings.start_of_day) / 60 / 60 / 24), start: screenProps.data.daily_logs[screenProps.data.daily_logs.length - 1].day }
+            let boundaries = { end: Math.floor((Math.round(new Date().getTime() / 1000) - screenProps.settings.start_of_day) / 60 / 60 / 24), start: screenProps.data.daily_logs[screenProps.data.daily_logs.length - 1].day }
             let x = 0
             for (let i = boundaries.start; i <= boundaries.end; i++) {
                 let sum = 0
@@ -64,7 +64,7 @@ export default function ProjectView({ navigation, screenProps }) {
                 }
                 relevant.push({ x: formatSeconds((i) * 60 * 60 * 24, "EEE"), y: sum / 60 / 60, l: secondsToShortTimeString(sum) })
             }
-        } 
+        }
 
 
 
@@ -154,45 +154,47 @@ export default function ProjectView({ navigation, screenProps }) {
 
 
                 <View style={s.logs}>
-                    {
-                        projectData.logs.map((log) => {
+                    <View style={s.logsWrapper}>
+                        {
+                            projectData.logs.map((log) => {
 
-                            let logs = null
-                            let card = (
+                                let logs = null
+                                let card = (
 
-                                <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
-                                    <Text style={g.text}>{secondsToShortDateTimeString(log.start)} - {log.end ? secondsToShortDateTimeString(log.end) : "running"}</Text>
-                                    <Text style={s.totalTime}>{secondsToTimeString(log.duration)}</Text>
-                                </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
+                                        <Text style={g.text}>{secondsToShortDateTimeString(log.start)} - {log.end ? secondsToShortDateTimeString(log.end) : "running"}</Text>
+                                        <Text style={s.totalTime}>{secondsToTimeString(log.duration)}</Text>
+                                    </TouchableOpacity>
 
 
-                            )
-                            if (lastDay !== log.day) {
-                                logs = (
-                                    <View key={"projectViewLog" + log.lid}>
-                                        <View style={s.dayTopMargin}></View>
-                                        <Text style={g.dayTitle}>{secondsToDayString(log.start)}</Text>
-                                        {card}
-                                    </View>
                                 )
-                            } else {
-                                logs = (
-                                    <View key={"projectViewLog" + log.lid}>
-                                        {card}
-                                    </View>
+                                if (lastDay !== log.day) {
+                                    logs = (
+                                        <View key={"projectViewLog" + log.lid}>
+                                            <View style={s.dayTopMargin}></View>
+                                            <Text style={g.dayTitle}>{secondsToDayString(log.start)}</Text>
+                                            {card}
+                                        </View>
+                                    )
+                                } else {
+                                    logs = (
+                                        <View key={"projectViewLog" + log.lid}>
+                                            {card}
+                                        </View>
+                                    )
+
+                                }
+
+                                lastDay = log.day
+
+                                return (
+                                    logs
                                 )
 
-                            }
 
-                            lastDay = log.day
-
-                            return (
-                                logs
-                            )
-
-
-                        })
-                    }
+                            })
+                        }
+                    </View>
                 </View>
             </ScrollView>
         </View >
@@ -235,6 +237,9 @@ const s = StyleSheet.create({
     },
     dayTopMargin: {
         height: 20
+    },
+    logsWrapper:{
+        width: Dimensions.get("window").width / 100 * 80
     }
 })
 

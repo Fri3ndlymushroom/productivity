@@ -71,8 +71,9 @@ export default function Analytics({ navigation, screenProps }) {
                             width={150}
                             height={150}
                             radius={60}
-                            cornerRadius={4}
+                            cornerRadius={5}
                             innerRadius={40}
+                            padAngle={2}
                             style={{
                                 labels: {
                                     fill: "#00000000"
