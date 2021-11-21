@@ -49,6 +49,9 @@ export default function Backups({ navigation, screenProps }) {
 
 
                 </ScrollView>
+                <TouchableOpacity onPress={()=>{auth.signOut(); navigation.goBack()}} style={s.logout}>
+                    <Text style={g.text}>Log Out</Text>
+                </TouchableOpacity>
             </View>
             {
                 popup.open &&
@@ -92,5 +95,11 @@ const s = StyleSheet.create({
         width: "80%",
         backgroundColor: p.bg2,
 
+    },
+    logout:{
+        backgroundColor: p.bg2,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: p.br,
     }
 })
