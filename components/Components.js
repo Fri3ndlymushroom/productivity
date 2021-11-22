@@ -15,3 +15,18 @@ export const DefaultText =(props) => {
         </Text>
     );
 }
+
+
+export const Spacer =({height}) => {
+
+    let style = {
+        height: height,
+        width: "100%"
+    }
+
+    return (
+        <View style={style}>
+
+        </View>
+    );
+}

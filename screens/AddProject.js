@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, Button, Text, View, ScrollView } from "react-native"
 import g, { p } from '../styles/global'
-import { DefaultText } from '../components/Components'
+import { DefaultText, Spacer } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
 import ColorPalette from 'react-native-color-palette'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -45,10 +45,10 @@ export default function Home({ navigation, screenProps }) {
     let colors = ['#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9']
 
     return (
-        <View style={g.body}>
+        <View style={[g.body, s.body]}>
             <NavbarStack navigation={navigation} loc={"Create Project"}></NavbarStack>
 
-
+            <Spacer height={200}/>
             <View style={s.projectPreview}>
                 <View style={[g.logoWrapper, colorStyle.style]}>
                     <ProjectIcons figure={selectedIcon} />
@@ -104,13 +104,15 @@ export default function Home({ navigation, screenProps }) {
                     </View>
                 </ScrollView>
             </View>
-
+            <View style={{flex: 1}}></View>
             <TouchableOpacity style={s.button} onPress={() => addProject()} ><Text style={g.text}>Add Project</Text></TouchableOpacity>
+            <Spacer height={50}/>
         </View>
     );
 }
 
 const s = StyleSheet.create({
+
     iconWrapper: {
         display: "flex",
         flexDirection: "row"
@@ -119,10 +121,10 @@ const s = StyleSheet.create({
         fontSize: 16,
     },
     button: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         backgroundColor: p.bg2,
-        borderRadius: p.br
+        borderRadius: p.br,
     },
     projectPreview: {
         width: 300,

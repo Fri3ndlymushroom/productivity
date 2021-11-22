@@ -29,11 +29,11 @@ const shadow = {
 
 const styles = StyleSheet.create({
     body: {
-        flex: 1,
         backgroundColor: p.bg1,
         color: p.text__main,
+        height: "100%",
+        display: "flex",
         alignItems: 'center',
-        justifyContent: 'center',
     },
     projectCard: {
         backgroundColor: p.bg2,
