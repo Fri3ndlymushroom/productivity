@@ -33,7 +33,7 @@ export default function Navbar({ navigation, loc, children }) {
 const s = StyleSheet.create({
     navbarTitle: {
         color: p.text__main,
-        fontSize: 20
+        fontSize: 18
     },
     gradient: {
         height: 200,
@@ -49,11 +49,12 @@ const s = StyleSheet.create({
         justifyContent: "center"
     },
     navbarWrapper: {
-        width: "70%",
+        width: "80%",
         position: "absolute",
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center"
 
     },
     navbarButton: {

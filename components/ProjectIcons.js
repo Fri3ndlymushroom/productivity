@@ -55,8 +55,9 @@ function Add() {
 function Back() {
     return (
         <Svg
-            width={7}
-            height={11}
+            viewBox="0 0 7 11"
+            width={10}
+            height={15}
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
