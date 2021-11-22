@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { formatSeconds } from '../js/timerfunctions';
 import Navbar from '../components/NavbarDrawer';
 import { auth } from "../js/firebase"
+import { Spacer } from '../components/Components';
 
 export default function Settings({ navigation, screenProps }) {
 
@@ -48,6 +49,7 @@ export default function Settings({ navigation, screenProps }) {
     return (
         <View style={g.body} >
             <Navbar {...{ navigation }} location={"Settings"} />
+            <Spacer height={200}/>
             <View>
                 {dateTimeProps.open && (
                     <RNDateTimePicker

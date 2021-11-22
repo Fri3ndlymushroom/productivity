@@ -5,6 +5,7 @@ import { TextInput, } from 'react-native-gesture-handler'
 import { auth } from "../js/firebase"
 import g, { p } from "../styles/global"
 import NavbarStack from '../components/NavbarStack'
+import { Spacer } from '../components/Components'
 
 export default function Signin({ navigation }) {
     const [email, setEmail] = useState("")
@@ -30,30 +31,32 @@ export default function Signin({ navigation }) {
     return (
         <View style={g.body}>
             <NavbarStack navigation={navigation} loc={"Sign Up"}></NavbarStack>
+            <Spacer height={200} />
             <View syle={s.signinSection}>
                 <View style={s.modeSelection}>
-                <TouchableOpacity style={[s.button]} onPress={() => setSignType("Log In")}>
-                    <Text style={[signType==="Log In" ? g.text : g.textDim , g.buttonText]}>Log In</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[s.button]} onPress={() => setSignType("Sign Up")}>
-                    <Text style={[signType==="Sign Up" ? g.text : g.textDim, g.buttonText]}>Sign Up</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={[s.button]} onPress={() => setSignType("Log In")}>
+                        <Text style={[signType === "Log In" ? g.text : g.textDim, g.buttonText]}>Log In</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[s.button]} onPress={() => setSignType("Sign Up")}>
+                        <Text style={[signType === "Sign Up" ? g.text : g.textDim, g.buttonText]}>Sign Up</Text>
+                    </TouchableOpacity>
                 </View>
-
+                <Spacer height={40} />
                 <TextInput
                     style={s.formInput}
                     placeholder="Email"
                     value={email}
                     onChangeText={text => setEmail(text)}
-                    placeholderTextColor={p.text__dim} 
+                    placeholderTextColor={p.text__dim}
                 />
                 <TextInput
                     style={s.formInput}
                     placeholder="Password"
                     value={password}
                     onChangeText={text => setPassword(text)}
-                    placeholderTextColor={p.text__dim} 
+                    placeholderTextColor={p.text__dim}
                 />
+                <Spacer height={200} />
                 <TouchableOpacity style={s.button} onPress={() => (signType === "Log In") ? handleLogIn() : handleSignUp()}>
                     <Text style={[g.text, g.buttonText]}>Submit</Text>
                 </TouchableOpacity>
@@ -77,12 +80,12 @@ const s = StyleSheet.create({
         backgroundColor: p.bg2,
         borderRadius: p.br,
     },
-    modeSelection:{
+    modeSelection: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between"
     },
-    button:{
+    button: {
         paddingHorizontal: 40,
         paddingVertical: 10,
         backgroundColor: p.bg2,
