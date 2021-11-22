@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, Button, Text, View } from "react-native"
+import { StyleSheet, TextInput, Button, Text, View, ScrollView } from "react-native"
 import g, { p } from '../styles/global'
 import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
@@ -42,6 +42,7 @@ export default function Home({ navigation, screenProps }) {
 
 
     let icons = ["cube", "add"]
+    let colors = ['#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9']
 
     return (
         <View style={g.body}>
@@ -57,29 +58,51 @@ export default function Home({ navigation, screenProps }) {
                     onChangeText={setNewProjectName}
                     value={newProjectName} />
             </View>
+            <View style={s.selectionParent}>
+                <ScrollView style={s.selectionScroll}
+                    horizontal={true}
+                >
+                    <View style={s.selectionInner}>
+                        {
+                            colors.map(color => {
+                                let dynamic = {
+                                    backgroundColor: color,
+                                    borderWidth: (color === selectedColor ? 2 : 0),
+                                    borderColor: "white"
+                                }
 
-            <View>
-                {/* https://www.npmjs.com/package/react-native-color-palette */}
-                <ColorPalette
-                    onChange={color => { setSelectedColor(color) }}
-                    defaultColor={'#C0392B'}
-                    colors={['#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9']}
-                    icon={<Icon name={'check'} size={25} color={p.text__main} />}
-                    titleStyles={{ color: "transparent" }}
-                />
+
+                                return (
+                                    <TouchableOpacity key={color} onPress={() => setSelectedColor(color)} style={[s.colorTile, dynamic]}>
+
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </View>
+                </ScrollView>
             </View>
 
-            <View style={s.iconWrapper}>
-                {
-                    icons.map((icon)=>{
-                        return(
-
-                            <TouchableOpacity onPress={()=>setSelectedIcon(icon)} style={g.logoWrapper}>
-                                <ProjectIcons figure={icon}/>
-                            </TouchableOpacity>
-                        )
-                    })
-                }
+            <View style={s.selectionParent}>
+                <ScrollView style={s.selectionScroll}
+                    horizontal={true}
+                >
+                    <View style={s.selectionInner}>
+                        {
+                            icons.map((icon) => {
+                                let dynamic = {
+                                    borderWidth: (icon === selectedIcon ? 2 : 0),
+                                    borderColor: "white"
+                                }
+                                return (
+                                    <TouchableOpacity onPress={() => setSelectedIcon(icon)} style={[s.logoWrapper, dynamic]}>
+                                        <ProjectIcons figure={icon} />
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </View>
+                </ScrollView>
             </View>
 
             <TouchableOpacity style={s.button} onPress={() => addProject()} ><Text style={g.text}>Add Project</Text></TouchableOpacity>
@@ -88,11 +111,11 @@ export default function Home({ navigation, screenProps }) {
 }
 
 const s = StyleSheet.create({
-    iconWrapper:{
+    iconWrapper: {
         display: "flex",
         flexDirection: "row"
-    }, 
-    projectTitle:{
+    },
+    projectTitle: {
         fontSize: 16,
     },
     button: {
@@ -111,5 +134,33 @@ const s = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         padding: 8
+    },
+    colorTile: {
+        width: 50,
+        height: 50,
+        borderRadius: p.br,
+        marginHorizontal: 5
+    },
+    selectionInner: {
+        display: "flex",
+        flexDirection: "row",
+        height: 50,
+    },
+    selectionScroll: {
+        height: 50
+    },
+    selectionParent: {
+        height: 50,
+        marginVertical: 20
+    },
+    logoWrapper:{
+        width: 50,
+        height: 50,
+        backgroundColor: p.bg2,
+        borderRadius: p.br,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginHorizontal: 5
     }
 })
