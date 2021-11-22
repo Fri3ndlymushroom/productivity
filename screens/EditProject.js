@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Text, Button, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, Button, TextInput, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import g, { p } from '../styles/global'
 import ColorPalette from 'react-native-color-palette'
-import { DefaultText } from '../components/Components'
+import { DefaultText, Spacer } from '../components/Components'
 import { copyObject } from '../js/functions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NavbarStack from '../components/NavbarStack'
+import ProjectIcons from '../components/ProjectIcons';
+
 
 export default function EditProject({ navigation, screenProps }) {
     let pid = navigation.getParam("edited_project")
@@ -27,6 +29,12 @@ export default function EditProject({ navigation, screenProps }) {
     const changeProjectColor = (newColor) => {
         let copy = copyObject(project)
         copy.color = newColor
+        setProject(copy)
+    }
+
+    const changeProjectIcon = (newIcon) => {
+        let copy = copyObject(project)
+        copy.icon = newIcon
         setProject(copy)
     }
 
@@ -71,33 +79,75 @@ export default function EditProject({ navigation, screenProps }) {
     }
 
 
+    let icons = ["cube", "add"]
+    let colors = ['#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9']
+
     return (
         <>
             <View style={g.body}>
-
                 <NavbarStack navigation={navigation} loc={"Edit Project"}></NavbarStack>
-                <StatusBar style="auto" />
-                <View>
-                    <Text>Name: </Text>
+                <Spacer height={200} />
+                <View style={s.projectPreview}>
+                    <View style={[g.logoWrapper, { backgroundColor: project.color }]}>
+                        <ProjectIcons figure={project.icon} />
+                    </View>
                     <TextInput
-                        style={g.input}
+                        style={[g.input, s.projectTitle]}
                         onChangeText={changeProjectName}
                         value={project.name} />
                 </View>
-                <View>
-                    {/* https://www.npmjs.com/package/react-native-color-palette */}
-                    <ColorPalette
-                        onChange={changeProjectColor}
-                        defaultColor={project.color}
-                        colors={['#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9']}
-                        title={"Choose a color for your project:"}
-                        icon={<Icon name={'check'} size={25} color={'white'} />}
-                    />
-                </View>
-                <Button title="Save Changes" onPress={() => saveChanges()} />
-                <Button title="Archive Project" onPress={() => archiveProject()} />
-                <Button title="Delete Project" onPress={() => setPopup(true)} />
+                <View style={s.selectionParent}>
+                    <ScrollView style={s.selectionScroll}
+                        horizontal={true}
+                    >
+                        <View style={s.selectionInner}>
+                            {
+                                colors.map(color => {
+                                    let dynamic = {
+                                        backgroundColor: color,
+                                        borderWidth: (color === project.color ? 2 : 0),
+                                        borderColor: "white"
+                                    }
 
+
+                                    return (
+                                        <TouchableOpacity key={color} onPress={() => changeProjectColor(color)} style={[s.colorTile, dynamic]}>
+
+                                        </TouchableOpacity>
+                                    )
+                                })
+                            }
+                        </View>
+                    </ScrollView>
+                </View>
+                <View style={s.selectionParent}>
+                    <ScrollView style={s.selectionScroll}
+                        horizontal={true}
+                    >
+                        <View style={s.selectionInner}>
+                            {
+                                icons.map((icon) => {
+                                    let dynamic = {
+                                        borderWidth: (icon === project.icon ? 2 : 0),
+                                        borderColor: "white"
+                                    }
+                                    return (
+                                        <TouchableOpacity key={icon} onPress={() => changeProjectIcon(icon)} style={[s.logoWrapper, dynamic]}>
+                                            <ProjectIcons figure={icon} />
+                                        </TouchableOpacity>
+                                    )
+                                })
+                            }
+                        </View>
+                    </ScrollView>
+                </View>
+                <View style={{flex: 1}}></View>
+                <View style={s.buttonSection}>
+                    <TouchableOpacity style={s.button} onPress={()=>saveChanges()}><Text style={[g.text, g.buttonText]}>Save Changes</Text></TouchableOpacity>
+                    <TouchableOpacity style={s.button} onPress={()=>archiveProject()}><Text style={[g.text, g.buttonText]}>Archive Project</Text></TouchableOpacity>
+                    <TouchableOpacity style={s.button} onPress={()=>setPopup(true)}><Text style={[g.text, g.buttonText]}>Delete Project</Text></TouchableOpacity>
+                </View>
+                <Spacer height={50}/>
             </View>
             {
                 popup &&
@@ -126,5 +176,59 @@ const s = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         justifyContent: 'center',
-    }
+    },
+    projectPreview: {
+        width: 300,
+        height: 60,
+        backgroundColor: p.bg2,
+        borderRadius: p.br,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        padding: 8
+    },
+    projectTitle: {
+        fontSize: 16,
+    },
+    colorTile: {
+        width: 50,
+        height: 50,
+        borderRadius: p.br,
+        marginHorizontal: 5
+    },
+    selectionInner: {
+        display: "flex",
+        flexDirection: "row",
+        height: 50,
+    },
+    selectionScroll: {
+        height: 50
+    },
+    selectionParent: {
+        height: 50,
+        marginVertical: 20
+    },
+    logoWrapper: {
+        width: 50,
+        height: 50,
+        backgroundColor: p.bg2,
+        borderRadius: p.br,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginHorizontal: 5
+    },
+    buttonSection:{
+        display: "flex",
+        flexDirection: "row",
+        width: "80%"
+    },
+    button: {
+        paddingHorizontal: 5,
+        paddingVertical: 7,
+        marginHorizontal: 5,
+        backgroundColor: p.bg2,
+        borderRadius: p.br,
+    },
 })
