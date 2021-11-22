@@ -4,6 +4,7 @@ import g, { p } from "../styles/global"
 import NavbarStack from '../components/NavbarStack'
 import { auth, db } from '../js/firebase'
 import {secondsToShortDateString, secondsToDayString} from "../js/timerfunctions"
+import { Spacer } from '../components/Components'
 
 
 export default function Backups({ navigation, screenProps }) {
@@ -35,6 +36,7 @@ export default function Backups({ navigation, screenProps }) {
         <>
             <View style={g.body}>
                 <NavbarStack navigation={navigation} loc={"Backups"}></NavbarStack>
+
                 <ScrollView style={s.backups}>
                     {
                         backups.map((backup) => {
@@ -52,6 +54,7 @@ export default function Backups({ navigation, screenProps }) {
                 <TouchableOpacity onPress={()=>{auth.signOut(); navigation.goBack()}} style={s.logout}>
                     <Text style={g.text}>Log Out</Text>
                 </TouchableOpacity>
+                <Spacer height={50}/>
             </View>
             {
                 popup.open &&
@@ -62,6 +65,7 @@ export default function Backups({ navigation, screenProps }) {
                     </TouchableOpacity>
                 </TouchableOpacity>
             }
+
         </>
     )
 }

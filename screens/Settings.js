@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import g, { p } from "../styles/global"
+import g, { p , shadow} from "../styles/global"
 import { copyObject } from '../js/functions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { formatSeconds } from '../js/timerfunctions';
@@ -120,22 +120,15 @@ const s = StyleSheet.create({
         flexDirection: "row",
         borderRadius: p.br,
         justifyContent: "space-between",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
+        ...g.shadow
     },
     backupsButton: {
         height: 200,
         width: 300,
         padding: 30,
         backgroundColor: p.bg2,
-        borderRadius: p.br
+        borderRadius: p.br,
+        ...g.shadow
     },
     backupsHeader:{
         fontSize: 16,
