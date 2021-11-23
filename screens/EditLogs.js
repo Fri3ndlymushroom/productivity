@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Button, Text, View, TouchableOpacity, StyleSheet } from "react-native"
 import g, { p } from '../styles/global'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { secondsToFormatedString, secondsToShortTimeString, secondsToDateString } from '../js/timerfunctions';
+import { secondsToFormatedString, secondsToShortTimeString, secondsToDayString, secondsToTimeString, formatSeconds } from '../js/timerfunctions';
 import { copyObject } from "../js/functions"
 import NavbarStack from '../components/NavbarStack'
+import { Spacer } from '../components/Components';
+import ProjectIcons from "../components/ProjectIcons"
 
 
 export default function EditLog({ navigation, screenProps }) {
@@ -21,6 +23,9 @@ export default function EditLog({ navigation, screenProps }) {
     })
 
     let day = Math.floor(log.start / 24 / 60 / 60) * 24 * 60 * 60
+
+    let project = screenProps.data.projects.filter((project) => project.pid === log.pid)[0]
+
 
     useEffect(() => {
         setTimes({
@@ -167,6 +172,18 @@ export default function EditLog({ navigation, screenProps }) {
     return (
         <View style={g.body}>
             <NavbarStack navigation={navigation} loc={"Edit Log"}></NavbarStack>
+            <Spacer height={150} />
+
+
+            <View style={s.projectPreview}>
+                <View style={[g.logoWrapper, { backgroundColor: log.color }]}>
+                    <ProjectIcons figure={project.icon} />
+                </View>
+                <Text style={{ color: p.text__main, fontSize: 18, margin: 5 }}>{log.project}</Text>
+                <View style={{ flex: 1 }}></View>
+                <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{secondsToTimeString(log.duration)}</Text>
+            </View>
+
             <View>
                 {dateTimeProps.open && (
                     <RNDateTimePicker
@@ -182,57 +199,86 @@ export default function EditLog({ navigation, screenProps }) {
             </View>
 
 
-            <Text style={g.text}>{secondsToFormatedString(log.duration)}</Text>
-
-            <TouchableOpacity style={s.timeCorrectorButton} onPress={() => setDateTimeProps({
+            <TouchableOpacity style={s.datePickerButton} onPress={() => setDateTimeProps({
                 target: "date",
                 value: log.start,
                 mode: "date",
                 open: true
-            })}><Text style={g.text}>Date: {secondsToDateString(log.start)}</Text></TouchableOpacity>
-
-
-
-            <View style={s.timeCorrector}>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveStartOfLog(-600)}><Text style={g.text}>-</Text></TouchableOpacity>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => setDateTimeProps({
-                    target: "start",
-                    value: log.start,
-                    mode: "time",
-                    open: true
-                })}>
-                    <Text style={g.text}>{secondsToShortTimeString(log.start)}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveStartOfLog(600)}><Text style={g.text}>+</Text></TouchableOpacity>
+            })}><Text style={{
+                color: p.text__main,
+                fontSize: 18
+            }}>{secondsToDayString(log.start)}</Text></TouchableOpacity>
+            <View style={s.timeEditorWrapper}>
+                <View style={s.timeEditorParent}>
+                    <View style={s.timeEditorButtonWrapper}>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(3600)}><Text style={g.text}>^</Text></TouchableOpacity>
+                        <View style={{ flex: 1 }}></View>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(300)}><Text style={g.text}>^</Text></TouchableOpacity>
+                    </View>
+                    <TouchableOpacity
+                        style={s.timeEditorViewWrapper}
+                        onPress={() => setDateTimeProps({
+                            target: "start",
+                            value: log.start,
+                            mode: "time",
+                            open: true
+                        })}
+                    >
+                        <Text style={s.timeEditorText}>{formatSeconds(log.start, "HH:mm").split(":")[0]}</Text>
+                        <Text style={s.timeEditorText}>:</Text>
+                        <Text style={s.timeEditorText}>{formatSeconds(log.start, "HH:mm").split(":")[1]}</Text>
+                    </TouchableOpacity>
+                    <View style={s.timeEditorButtonWrapper}>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-3600)}><Text style={g.text}>v</Text></TouchableOpacity>
+                        <View style={{ flex: 1 }}></View>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-300)}><Text style={g.text}>v</Text></TouchableOpacity>
+                    </View>
+                </View>
+                <Text style={g.text}>-</Text>
+                <View style={s.timeEditorParent}>
+                    <View style={s.timeEditorButtonWrapper}>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(3600)}><Text style={g.text}>^</Text></TouchableOpacity>
+                        <View style={{ flex: 1 }}></View>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(300)}><Text style={g.text}>^</Text></TouchableOpacity>
+                    </View>
+                    <TouchableOpacity
+                        style={s.timeEditorViewWrapper}
+                        onPress={() => setDateTimeProps({
+                            target: "end",
+                            value: log.end,
+                            mode: "time",
+                            open: true
+                        })}
+                    >
+                        <Text style={s.timeEditorText}>{formatSeconds(log.end, "HH:mm").split(":")[0]}</Text>
+                        <Text style={s.timeEditorText}>:</Text>
+                        <Text style={s.timeEditorText}>{formatSeconds(log.end, "HH:mm").split(":")[1]}</Text>
+                    </TouchableOpacity>
+                    <View style={s.timeEditorButtonWrapper}>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-3600)}><Text style={g.text}>v</Text></TouchableOpacity>
+                        <View style={{ flex: 1 }}></View>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-300)}><Text style={g.text}>v</Text></TouchableOpacity>
+                    </View>
+                </View>
             </View>
 
 
-            <View style={s.timeCorrector}>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveEndOfLog(-600)}><Text style={g.text}>-</Text></TouchableOpacity>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => setDateTimeProps({
-                    target: "end",
-                    value: log.end,
-                    mode: "time",
-                    open: true
-                })}>
-                    <Text style={g.text}>{log.end ? secondsToShortTimeString(log.end) : "running"}</Text>
+            <View style={{ flex: 1 }}></View>
+            <View style={s.buttonSection}>
+                <TouchableOpacity style={s.button} onPress={() => saveChanges()}>
+                    <Text style={g.text}>Save</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.timeCorrectorButton} onPress={() => moveEndOfLog(600)}><Text style={g.text}>+</Text></TouchableOpacity>
+
+                <TouchableOpacity style={s.button} onPress={() => deleteLog()}>
+                    <Text style={g.text}>Delete</Text>
+                </TouchableOpacity>
             </View>
-
-
-            <TouchableOpacity style={s.button} onPress={() => saveChanges()}>
-                <Text style={g.text}>Save Changes</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={s.button} onPress={() => deleteLog()}>
-                <Text style={g.text}>Delete Log</Text>
-            </TouchableOpacity>
-
+            <Spacer height={50} />
         </View>
     );
 }
 const s = StyleSheet.create({
+
     timeCorrector: {
         display: "flex",
         flexDirection: "row",
@@ -250,6 +296,58 @@ const s = StyleSheet.create({
         paddingVertical: 5,
         backgroundColor: p.bg2,
         borderRadius: p.br,
-        margin: 5
+        margin: 5,
+        width: 120,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    buttonSection: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    projectPreview: {
+        width: 300,
+        height: 60,
+        backgroundColor: p.bg2,
+        borderRadius: p.br,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        padding: 8
+    },
+    datePickerButton: {
+        padding: 10,
+        borderRadius: p.br
+    },
+    timeEditorButton: {
+        paddingHorizontal: 5,
+        paddingVertical: 20
+    },
+    timeEditorParent: {
+        width: "30%"
+    },
+    timeEditorButtonWrapper: {
+        display: "flex",
+        flexDirection: "row"
+    },
+    timeEditorViewWrapper: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    timeEditorWrapper: {
+        display: "flex",
+        flexDirection: "row",
+        width: "60%",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    timeEditorText:{
+        color: p.text__main,
+        fontSize: 16,
+        fontWeight: "bold"
     }
 });
