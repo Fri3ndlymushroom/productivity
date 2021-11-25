@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient';
+//import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ProjectIcons from './ProjectIcons';
 import g, { p } from "../styles/global"
@@ -8,6 +8,7 @@ import g, { p } from "../styles/global"
 export default function Navbar({ navigation, loc, children }) {
     return (
         <View style={s.navbarContainer}>
+            {/*  
             <LinearGradient
                 style={s.gradient}
                 colors={[p.bg1, "#00000000"]}
@@ -19,6 +20,7 @@ export default function Navbar({ navigation, loc, children }) {
                     x: 0,
                     y: 1
                 }} />
+                */}
             <View style={s.navbarWrapper}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <ProjectIcons figure={"back"} />

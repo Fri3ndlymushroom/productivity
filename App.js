@@ -8,8 +8,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { copyObject } from './js/functions';
 import { p } from './styles/global';
 import { checkForBackup } from './js/backupsystem';
+//import Purchases from "react-native-purchases"
 
 export default function App() {
+
+    /*
+    useEffect(()=>{
+        Purchases.setDebugLogsEnabled(true);
+        Purchases.setup("VkfyHFYebTtUjltygIAtpJfCPxgAQnNr")
+    }, [])
+    */
 
 
     const [data, setRefactoredData] = useState({
