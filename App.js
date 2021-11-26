@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {View} from "react-native"
 import RootNavigator from './routes/draw'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import { StyleSheet } from 'react-native';
 import { dummyData, defaultSettings } from './data';
 import { v4 as uuidv4 } from 'uuid';
