@@ -47,8 +47,6 @@ export default function Settings({ navigation, screenProps }) {
     }
 
 
-    let hasPro = false
-
     return (
         <View style={g.body} >
             <Navbar {...{ navigation }} location={"Settings"} />
@@ -67,7 +65,7 @@ export default function Settings({ navigation, screenProps }) {
                 )}
             </View>
             {/* backups */}
-            <TouchableOpacity onPress={()=> auth.currentUser ? (hasPro ? navigation.navigate("Backups"): navigation.navigate("Pro")) :navigation.navigate("Signin") } style={s.backupsButton}>
+            <TouchableOpacity onPress={()=> auth.currentUser ? (screenProps.isPro ? navigation.navigate("Backups"): navigation.navigate("Pro")) :navigation.navigate("Signin") } style={s.backupsButton}>
                 <Text style={s.backupsHeader}>Backups</Text>
                 <Text style={s.backupsInfo}>Pro Feature</Text>
             </TouchableOpacity>

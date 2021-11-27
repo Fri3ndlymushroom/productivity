@@ -12,13 +12,25 @@ import Purchases from "react-native-purchases"
 
 export default function App() {
 
+    const [isPro, setIsPro] = useState(false)
+
     
     useEffect(()=>{
         Purchases.setDebugLogsEnabled(true);
         Purchases.setup("VkfyHFYebTtUjltygIAtpJfCPxgAQnNr")
     }, [])
     
+    useEffect(() => {
+        const getPurchaserInfo = async () =>{
+            const purchaserInfo = await Purchases.getPurchaserInfo()
 
+            if(typeof purchaserInfo.entitlements.active["pro"] !== "undefined"){
+                setIsPro(true)
+            }
+        }
+
+        getPurchaserInfo()
+    }, [])
 
     const [data, setRefactoredData] = useState({
         timer: {
@@ -178,7 +190,7 @@ export default function App() {
 
     return (
         <View style={s.root}>
-        <RootNavigator screenProps={{ ...{ data, setData, settings, setSettings } }} />
+        <RootNavigator screenProps={{ ...{ data, setData, settings, setSettings, isPro, setIsPro } }} />
         </View>
 
     );
