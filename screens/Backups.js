@@ -6,6 +6,7 @@ import auth from "@react-native-firebase/auth"
 import firestore from "@react-native-firebase/firestore"
 import {secondsToShortDateString, secondsToDayString} from "../js/timerfunctions"
 import { Spacer } from '../components/Components'
+import { doBackup } from '../js/backupsystem'
 
 
 export default function Backups({ navigation, screenProps }) {
@@ -35,11 +36,19 @@ export default function Backups({ navigation, screenProps }) {
         })
     }
 
+
+
+
+
+
     return (
         <>
             <View style={g.body}>
                 <NavbarStack navigation={navigation} loc={"Backups"}></NavbarStack>
-
+                <Spacer height={150}/>
+                <TouchableOpacity onPress={()=>doBackup(Math.round(new Date().getTime() / 1000))} style={s.button}>
+                    <Text style={g.text}>Start Manual Backup</Text>
+                </TouchableOpacity>
                 <ScrollView style={s.backups}>
                     {
                         backups.map((backup) => {
@@ -54,7 +63,7 @@ export default function Backups({ navigation, screenProps }) {
 
 
                 </ScrollView>
-                <TouchableOpacity onPress={()=>{auth().signOut(); navigation.goBack()}} style={s.logout}>
+                <TouchableOpacity onPress={()=>{auth().signOut(); navigation.goBack()}} style={s.button}>
                     <Text style={g.text}>Log Out</Text>
                 </TouchableOpacity>
                 <Spacer height={50}/>
@@ -75,7 +84,7 @@ export default function Backups({ navigation, screenProps }) {
 
 const s = StyleSheet.create({
     backups: {
-        marginTop: 100,
+        marginTop: 30,
         height: 200,
         borderRadius: p.br,
         width: "100%",
@@ -103,7 +112,7 @@ const s = StyleSheet.create({
         backgroundColor: p.bg2,
 
     },
-    logout:{
+    button:{
         backgroundColor: p.bg2,
         paddingHorizontal: 15,
         paddingVertical: 10,

@@ -17,30 +17,37 @@ export const checkForBackup = async (data, last) => {
 
     if ((newBackupTime - last) > 86400) {
 
-        let backupTimestamps = []
-
-        await firestore().collection("backups").doc(uid).get().then((doc) => {
-            if (doc.exists) {
-                backupTimestamps = doc.data().backupTimestamps
-            }
-        })
-
-        backupTimestamps.push(newBackupTime)
-
-        await firestore().collection("backups").doc(uid).set({
-            backupTimestamps: backupTimestamps
-        }, { merge: true })
-
-
-        await firestore().collection("backups").doc(uid).collection("user_backups").doc(newBackupTime.toString(10)).set({
-            data: data
-        })
+        await doBackup(newBackupTime)
 
         return newBackupTime
     }
 
 
     return last
+}
+
+export const doBackup = async (time) =>{
+
+    let uid = auth().currentUser ? auth().currentUser.uid : undefined
+
+    let backupTimestamps = []
+
+    await firestore().collection("backups").doc(uid).get().then((doc) => {
+        if (doc.exists) {
+            backupTimestamps = doc.data().backupTimestamps
+        }
+    })
+
+    backupTimestamps.push(time)
+
+    await firestore().collection("backups").doc(uid).set({
+        backupTimestamps: backupTimestamps
+    }, { merge: true })
+
+
+    await firestore().collection("backups").doc(uid).collection("user_backups").doc(time.toString(10)).set({
+        data: data
+    })
 }
 
 

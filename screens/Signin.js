@@ -55,6 +55,7 @@ export default function Signin({ navigation }) {
                     value={password}
                     onChangeText={text => setPassword(text)}
                     placeholderTextColor={p.text__dim}
+                    secureTextEntry={true}
                 />
                 <Spacer height={200} />
                 <TouchableOpacity style={s.button} onPress={() => (signType === "Log In") ? handleLogIn() : handleSignUp()}>

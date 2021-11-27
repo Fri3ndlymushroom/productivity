@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View} from "react-native"
+import { View } from "react-native"
 import RootNavigator from './routes/draw'
 import AsyncStorage from '@react-native-community/async-storage';
 import { StyleSheet } from 'react-native';
@@ -14,17 +14,17 @@ export default function App() {
 
     const [isPro, setIsPro] = useState(true)
 
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         Purchases.setDebugLogsEnabled(true);
         Purchases.setup("VkfyHFYebTtUjltygIAtpJfCPxgAQnNr")
     }, [])
-    
+
     useEffect(() => {
-        const getPurchaserInfo = async () =>{
+        const getPurchaserInfo = async () => {
             const purchaserInfo = await Purchases.getPurchaserInfo()
 
-            if(typeof purchaserInfo.entitlements.active["pro"] !== "undefined"){
+            if (typeof purchaserInfo.entitlements.active["pro"] !== "undefined") {
                 setIsPro(true)
             }
         }
@@ -189,14 +189,14 @@ export default function App() {
 
 
     return (
-        <View style={s.root}>
-        <RootNavigator screenProps={{ ...{ data, setData, settings, setSettings, isPro, setIsPro } }} />
-        </View>
 
+        <View style={s.root}>
+            <RootNavigator screenProps={{ ...{ data, setData, settings, setSettings, isPro, setIsPro } }} />
+        </View>
     );
 }
 const s = StyleSheet.create({
-    root:{
+    root: {
         flex: 1,
         backgroundColor: p.bg1
     }
