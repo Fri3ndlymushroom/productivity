@@ -2,6 +2,8 @@ import React from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 //import { LinearGradient } from 'expo-linear-gradient';
 
+import LinearGradient from 'react-native-linear-gradient'
+
 import g, { p } from "../styles/global"
 
 export default function Navbar({ navigation, location }) {
@@ -15,18 +17,16 @@ export default function Navbar({ navigation, location }) {
     return (
 
         <View style={s.navbarContainer}>
-            {/* <LinearGradient
-                pointerEvents="none"
-                style={s.gradient}
+
+
+            <LinearGradient
                 colors={[p.bg1, "#00000000"]}
-                start={{
-                    x: 0,
-                    y: 0.5
-                }}
-                end={{
-                    x: 0,
-                    y: 1
-                }} /> */}
+                style={s.gradient}
+                start={{ x: 0.5, y: 0.5}}
+            >
+            </LinearGradient>
+
+
             <View style={s.navbarWrapper}>
                 {
                     navOptions.map((navOption) => {
