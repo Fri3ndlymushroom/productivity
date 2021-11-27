@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "463334890779",
+    "project_id": "productivity-c25db",
+    "storage_bucket": "productivity-c25db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463334890779:android:34a21e9475ca93f030c7be",
+        "android_client_info": {
+          "package_name": "com.thetaproductivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463334890779-hmtejacch91ldn2uh70rgo92bkcf3uog.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfoAOwr0qrJQzE9dVmchZbBf5jt4lgjDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463334890779-hmtejacch91ldn2uh70rgo92bkcf3uog.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

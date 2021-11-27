@@ -6,7 +6,7 @@ import { copyObject } from '../js/functions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { formatSeconds } from '../js/timerfunctions';
 import Navbar from '../components/NavbarDrawer';
-import { auth } from "../js/firebase"
+import auth from "@react-native-firebase/auth"
 import { Spacer } from '../components/Components';
 
 export default function Settings({ navigation, screenProps }) {
@@ -65,7 +65,7 @@ export default function Settings({ navigation, screenProps }) {
                 )}
             </View>
             {/* backups */}
-            <TouchableOpacity onPress={()=> auth.currentUser ? (screenProps.isPro ? navigation.navigate("Backups"): navigation.navigate("Pro")) :navigation.navigate("Signin") } style={s.backupsButton}>
+            <TouchableOpacity onPress={()=> auth().currentUser ? (screenProps.isPro ? navigation.navigate("Backups"): navigation.navigate("Pro")) :navigation.navigate("Signin") } style={s.backupsButton}>
                 <Text style={s.backupsHeader}>Backups</Text>
                 <Text style={s.backupsInfo}>Pro Feature</Text>
             </TouchableOpacity>

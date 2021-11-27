@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native'
 import { TextInput, } from 'react-native-gesture-handler'
-import { auth } from "../js/firebase"
+import auth from "@react-native-firebase/auth"
 import g, { p } from "../styles/global"
 import NavbarStack from '../components/NavbarStack'
 import { Spacer } from '../components/Components'
@@ -14,13 +14,13 @@ export default function Signin({ navigation }) {
 
 
     const handleSignUp = () => {
-        auth.createUserWithEmailAndPassword(email, password).then(userCredentials => {
+        auth().createUserWithEmailAndPassword(email, password).then(userCredentials => {
             const user = userCredentials.user
             navigation.goBack()
         }).catch(error => alert(error.message))
     }
     const handleLogIn = () => {
-        auth.signInWithEmailAndPassword(email, password).then(userCredentials => {
+        auth().signInWithEmailAndPassword(email, password).then(userCredentials => {
             const user = userCredentials.user
             navigation.goBack()
         }).catch(error => alert(error.message))

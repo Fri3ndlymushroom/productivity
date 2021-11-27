@@ -12,7 +12,7 @@ import Purchases from "react-native-purchases"
 
 export default function App() {
 
-    const [isPro, setIsPro] = useState(false)
+    const [isPro, setIsPro] = useState(true)
 
     
     useEffect(()=>{

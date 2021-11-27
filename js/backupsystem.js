@@ -1,5 +1,6 @@
 
-import { auth, db } from '../js/firebase'
+import auth from "@react-native-firebase/auth"
+import firestore from "@react-native-firebase/firestore"
 
 
 export const checkForBackup = async (data, last) => {
@@ -7,7 +8,7 @@ export const checkForBackup = async (data, last) => {
 
     data = simplifyData(data)
 
-    let uid = auth.currentUser ? auth.currentUser.uid : undefined
+    let uid = auth().currentUser ? auth().currentUser.uid : undefined
 
 
     if (!uid) return last
@@ -18,7 +19,7 @@ export const checkForBackup = async (data, last) => {
 
         let backupTimestamps = []
 
-        await db.collection("backups").doc(uid).get().then((doc) => {
+        await firestore().collection("backups").doc(uid).get().then((doc) => {
             if (doc.exists) {
                 backupTimestamps = doc.data().backupTimestamps
             }
@@ -26,12 +27,12 @@ export const checkForBackup = async (data, last) => {
 
         backupTimestamps.push(newBackupTime)
 
-        await db.collection("backups").doc(uid).set({
+        await firestore().collection("backups").doc(uid).set({
             backupTimestamps: backupTimestamps
         }, { merge: true })
 
 
-        await db.collection("backups").doc(uid).collection("user_backups").doc(newBackupTime.toString(10)).set({
+        await firestore().collection("backups").doc(uid).collection("user_backups").doc(newBackupTime.toString(10)).set({
             data: data
         })
 

@@ -1,7 +1,5 @@
 import React from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
-//import { LinearGradient } from 'expo-linear-gradient';
-
 import LinearGradient from 'react-native-linear-gradient'
 
 import g, { p } from "../styles/global"

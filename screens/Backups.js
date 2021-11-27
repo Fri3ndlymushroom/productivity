@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Button, TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
 import g, { p } from "../styles/global"
 import NavbarStack from '../components/NavbarStack'
-import { auth, db } from '../js/firebase'
+import auth from "@react-native-firebase/auth"
+import firestore from "@react-native-firebase/firestore"
 import {secondsToShortDateString, secondsToDayString} from "../js/timerfunctions"
 import { Spacer } from '../components/Components'
 
@@ -16,8 +17,10 @@ export default function Backups({ navigation, screenProps }) {
 
     useEffect(() => {
         const getBackups = async () => {
-            await db.collection("backups").doc(auth.currentUser.uid).get().then((doc) => {
+            await firestore().collection("backups").doc(auth().currentUser.uid).get().then((doc) => {
                 setBackups(doc.data().backupTimestamps)
+            }).catch(e=>{
+                console.error(e)
             })
         }
         getBackups()
@@ -25,10 +28,10 @@ export default function Backups({ navigation, screenProps }) {
 
 
     const downloadBackup = async (backupid) =>{        
-        await db.collection("backups").doc(auth.currentUser.uid).collection("user_backups").doc(backupid.toString(10)).get().then(doc =>{
+        await firestore().collection("backups").doc(auth().currentUser.uid).collection("user_backups").doc(backupid.toString(10)).get().then(doc =>{
             screenProps.setData(doc.data().data)
-        }).catch(err=>{
-            console.error(err)
+        }).catch(e=>{
+            console.error(e)
         })
     }
 
@@ -51,7 +54,7 @@ export default function Backups({ navigation, screenProps }) {
 
 
                 </ScrollView>
-                <TouchableOpacity onPress={()=>{auth.signOut(); navigation.goBack()}} style={s.logout}>
+                <TouchableOpacity onPress={()=>{auth().signOut(); navigation.goBack()}} style={s.logout}>
                     <Text style={g.text}>Log Out</Text>
                 </TouchableOpacity>
                 <Spacer height={50}/>
