@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import g, { p } from "../styles/global"
-import { secondsToShortTimeString, formatSeconds } from "../js/timerfunctions"
+import { formatSeconds } from "../js/timerfunctions"
 
 export default function BestDayOfWeek({ data }) {
 

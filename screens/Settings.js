@@ -84,7 +84,7 @@ export default function Settings({ navigation, screenProps }) {
                 }
             >
                 <Text style={g.text}>Set Daily Goal</Text>
-                <Text style={g.text}>{formatSeconds(newSettings.daily_goal, "H mm")}</Text>
+                <Text style={g.text}>{formatSeconds(newSettings.daily_goal, "HH'hrs' mm'min'")}</Text>
             </TouchableOpacity>
 
             {/* start of day */}
@@ -101,7 +101,7 @@ export default function Settings({ navigation, screenProps }) {
                 }
             >
                 <Text style={g.text}>Set Start Of Day</Text>
-                <Text style={g.text}>{formatSeconds(newSettings.start_of_day, "H mm")}</Text>
+                <Text style={g.text}>{formatSeconds(newSettings.start_of_day, "HH:mm")}</Text>
             </TouchableOpacity>
 
 

@@ -1,4 +1,4 @@
-import { formatSeconds, secondsToDayString } from "./timerfunctions";
+import { formatSeconds } from "./timerfunctions";
 import { format } from 'date-fns'
 
 

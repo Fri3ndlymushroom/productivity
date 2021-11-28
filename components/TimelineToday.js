@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ScrollView, View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import g, { p } from "../styles/global"
 import { VictoryPie } from 'victory-native'
-import { secondsToShortTimeString, secondsToDayString, formatSeconds, secondsToTimeString } from '../js/timerfunctions'
+import { formatSeconds } from '../js/timerfunctions'
 import Svg, { Path } from "react-native-svg"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ProjectIcons from './ProjectIcons'
@@ -90,7 +90,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
 
     return (
         <View>
-            <Text key={"dayLabel"} style={[g.dayTitle, s.dayTitle]}>{secondsToDayString(day * 24 * 60 * 60)}</Text>
+            <Text key={"dayLabel"} style={[g.dayTitle, s.dayTitle]}>{formatSeconds(day * 24 * 60 * 60, "EEE, d MMM")}</Text>
             <ScrollView
                 horizontal={true}
             >
@@ -141,7 +141,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                             }}
 
                                         />
-                                        <Text style={s.InfoCardGoalTextMain}>{secondsToShortTimeString(diff)}</Text>
+                                        <Text style={s.InfoCardGoalTextMain}>{formatSeconds(diff, "HH'h' mm'min'")}</Text>
                                         <Text style={s.InfoCardGoalTextSec}>Remaining to reach your daily goal</Text>
                                         <Text style={s.InfoCardGoalTextPerc}>{perc}%</Text>
                                     </View>
@@ -238,7 +238,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                             </View>
                                             <TouchableOpacity style={[s.startButton, color.c]} onPress={() => startProject(project.pid)}>
                                                 <Icon name={'play'} size={12} color={'white'} />
-                                                <Text style={s.buttonText}>{secondsToShortTimeString(project.total_duration)} </Text>
+                                                <Text style={s.buttonText}>{formatSeconds(project.total_duration, "HH'h' mm'min'")} </Text>
                                             </TouchableOpacity>
                                         </TouchableOpacity>)
                             })

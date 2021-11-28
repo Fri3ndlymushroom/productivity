@@ -10,7 +10,7 @@ import Navbar from '../components/NavbarDrawer';
 import TimePeriodAnalysis from '../components/TimePeriodAnalysis';
 import BestDayOfWeek from '../components/BestDayOfWeek';
 import WeekComparison from '../components/WeekComparison';
-import {secondsToShortTimeString} from "../js/timerfunctions"
+import {formatSeconds} from "../js/timerfunctions"
 let config = {
 
     backgroundColor: "white",
@@ -52,7 +52,7 @@ export default function Analytics({ navigation, screenProps }) {
 
     let allTime = Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration / 60 / 60, 0))
     let days = Math.floor(new Date().getTime() / 1000 / 60 / 60 / 24 - screenProps.data.all_logs[screenProps.data.all_logs.length - 1].day)
-    let dailyAverage = secondsToShortTimeString(Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration, 0) / days))
+    let dailyAverage = formatSeconds(Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration, 0) / days), "HH'h' mm'min'")
 
 
 

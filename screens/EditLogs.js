@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Button, Text, View, TouchableOpacity, StyleSheet } from "react-native"
 import g, { p } from '../styles/global'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { secondsToFormatedString, secondsToShortTimeString, secondsToDayString, secondsToTimeString, formatSeconds } from '../js/timerfunctions';
+import { formatSeconds } from '../js/timerfunctions';
 import { copyObject } from "../js/functions"
 import NavbarStack from '../components/NavbarStack'
 import { Spacer } from '../components/Components';
 import ProjectIcons from "../components/ProjectIcons"
+import { format } from 'date-fns';
 
 
 export default function EditLog({ navigation, screenProps }) {
@@ -181,7 +182,7 @@ export default function EditLog({ navigation, screenProps }) {
                 </View>
                 <Text style={{ color: p.text__main, fontSize: 18, margin: 5 }}>{log.project}</Text>
                 <View style={{ flex: 1 }}></View>
-                <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{secondsToTimeString(log.duration)}</Text>
+                <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{format(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
             </View>
 
             <View>
@@ -207,7 +208,7 @@ export default function EditLog({ navigation, screenProps }) {
             })}><Text style={{
                 color: p.text__main,
                 fontSize: 18
-            }}>{secondsToDayString(log.start)}</Text></TouchableOpacity>
+            }}>{formatSeconds(log.start, "EEE, d MMM")}</Text></TouchableOpacity>
             <View style={s.timeEditorWrapper}>
                 <View style={s.timeEditorParent}>
                     <View style={s.timeEditorButtonWrapper}>

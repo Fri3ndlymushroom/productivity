@@ -4,7 +4,7 @@ import g, { p } from "../styles/global"
 import NavbarStack from '../components/NavbarStack'
 import auth from "@react-native-firebase/auth"
 import firestore from "@react-native-firebase/firestore"
-import {secondsToShortDateString, secondsToDayString} from "../js/timerfunctions"
+import {formatSeconds} from "../js/timerfunctions"
 import { Spacer } from '../components/Components'
 import { doBackup } from '../js/backupsystem'
 
@@ -29,10 +29,7 @@ export default function Backups({ navigation, screenProps }) {
 
 
     const downloadBackup = async (backupid) =>{    
-        
-        console.log(backupid)
-
-
+    
 
         await firestore().collection("backups").doc(auth().currentUser.uid).collection("user_backups").doc(backupid.toString(10)).get().then(doc =>{
             screenProps.setData(doc.data().data)
@@ -60,7 +57,7 @@ export default function Backups({ navigation, screenProps }) {
                             return (
                                 <TouchableOpacity style={s.backupCard}key={backup} onPress={()=>setPopup({open: true, backup: backup })}>
                                     <Text style={g.textDim}>Backup from </Text>
-                                    <Text style={g.text} >{secondsToDayString(backup)}</Text>
+                                    <Text style={g.text} >{formatSeconds(backup, "EEE, d MMM")}</Text>
                                 </TouchableOpacity>
                             )
                         })
@@ -76,7 +73,7 @@ export default function Backups({ navigation, screenProps }) {
             {
                 popup.open &&
                 <TouchableOpacity onPress={() => setPopup({open: false})} style={s.popup}>
-                    <Text style={g.text}>Do you really want to download the backup from the {secondsToShortDateString(popup.backup)}?</Text>
+                    <Text style={g.text}>Do you really want to download the backup from the {formatSeconds(popup.backup, 'dd, MM, yy')}?</Text>
                     <TouchableOpacity onPress={() => {downloadBackup(popup.backup); setPopup({open:false})}} style={g.button}>
                         <Text style={g.text}>Download Backup</Text>
                     </TouchableOpacity>
@@ -103,6 +100,7 @@ const s = StyleSheet.create({
         bottom: 0,
         right: 0,
         left: 0,
+        padding: "10%",
         backgroundColor: "#00000099",
         display: "flex",
         alignItems: "center",

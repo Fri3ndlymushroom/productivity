@@ -25,48 +25,11 @@ export function secondsToFormatedString(seconds) {
 
 export function formatSeconds(seconds, formatstr) {
     let d = new Date(seconds * 1000)
-    let f = format(d, formatstr)
 
-
-    return f
-}
-
-export function secondsToDateString(seconds) {
-    let d = new Date(seconds * 1000)
-    let f = format(d, 'dd, MM, yy')
-
+    const dc = new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000)
+    
+    let f = format(dc, formatstr)
 
     return f
 }
 
-
-export function secondsToShortDateString(seconds) {
-    let d = new Date(seconds * 1000)
-    let f = format(d, 'dd, MM, yy')
-
-    return f
-}
-
-export function secondsToShortDateTimeString(seconds) {
-    let d = new Date(seconds * 1000)
-    let f = format(d, "HH':'mm")
-    return f
-}
-
-export function secondsToShortTimeString(seconds) {
-    let d = new Date(seconds * 1000)
-    let f = format(d, "HH'h' mm'min'")
-    return f
-}
-
-export function secondsToTimeString(seconds) {
-    let d = new Date(seconds * 1000)
-    let f = format(d, "HH'h' mm'min' ss'sek'")
-    return f
-}
-
-export function secondsToDayString(seconds) {
-    let d = new Date(seconds * 1000)
-    let f = format(d, "EEE, d MMM ")
-    return f
-}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, Touchable, View, TouchableOpacity } from 'react-native'
 import g, { p } from "../styles/global"
-import { secondsToFormatedString, secondsToDayString, secondsToTimeString } from '../js/timerfunctions'
+import { formatSeconds } from '../js/timerfunctions'
 
 export default function TimelineDay({ startProject, dayData, navigation }) {
 
@@ -9,7 +9,7 @@ export default function TimelineDay({ startProject, dayData, navigation }) {
 
     return (
         <View style={s.dayContainer} >
-            <Text style={g.dayTitle}>{secondsToDayString(dayData.day * 24 * 60 * 60)}</Text>
+            <Text style={g.dayTitle}>{formatSeconds(dayData.day * 24 * 60 * 60, "EEE, d MMM")}</Text>
             {
                 dayData.projects.map((project) => {
 
@@ -35,7 +35,7 @@ export default function TimelineDay({ startProject, dayData, navigation }) {
                                 </View>
                                 {/* <TouchableOpacity onPress={() => startProject(project.pid)} style={s.startButton}> */}
                                 
-                                <Text style={s.durationText} >{secondsToTimeString(project.total_duration)}</Text>
+                                <Text style={s.durationText} >{formatSeconds(project.total_duration, "HH'h' mm'min' ss'sek'")}</Text>
                                 {/* </TouchableOpacity> */}
                             </TouchableOpacity>
                         )
