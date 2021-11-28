@@ -31,8 +31,10 @@ export default function Signin({ navigation }) {
     return (
         <View style={g.body}>
             <NavbarStack navigation={navigation} loc={"Sign Up"}></NavbarStack>
-            <Spacer height={200} />
+            <Spacer height={100} />
+            <Text style={s.signinInfo}>You need to Log in to use the Backup System so we can backup your data across all devices</Text>
             <View syle={s.signinSection}>
+
                 <View style={s.modeSelection}>
                     <TouchableOpacity style={[s.button]} onPress={() => setSignType("Log In")}>
                         <Text style={[signType === "Log In" ? g.text : g.textDim, g.buttonText]}>Log In</Text>
@@ -49,18 +51,24 @@ export default function Signin({ navigation }) {
                     onChangeText={text => setEmail(text)}
                     placeholderTextColor={p.text__dim}
                 />
-                <TextInput
-                    style={s.formInput}
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    placeholderTextColor={p.text__dim}
-                    secureTextEntry={true}
-                />
+                <View style={s.passwordSubmitWrapper}>
+                    <TextInput
+                        style={[s.formInput, { width: 200 }]}
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                        placeholderTextColor={p.text__dim}
+                        secureTextEntry={true}
+                    />
+                    <TouchableOpacity
+                        style={[{ height: 40, width: 90, marginVertical: 5, backgroundColor: p.bg2, borderRadius: p.br, display: "flex", justifyContent: "center", alignItems: "center" }]}
+                        onPress={() => (signType === "Log In") ? handleLogIn() : handleSignUp()}
+                    >
+                        <Text style={[g.text, g.buttonText]}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
                 <Spacer height={200} />
-                <TouchableOpacity style={s.button} onPress={() => (signType === "Log In") ? handleLogIn() : handleSignUp()}>
-                    <Text style={[g.text, g.buttonText]}>Submit</Text>
-                </TouchableOpacity>
+
 
             </View>
 
@@ -92,4 +100,15 @@ const s = StyleSheet.create({
         backgroundColor: p.bg2,
         borderRadius: p.br,
     },
+    signinInfo: {
+        marginHorizontal: "10%",
+        marginVertical: 20,
+        color: p.text__main,
+        textAlign: "center"
+    },
+    passwordSubmitWrapper: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
+    }
 })

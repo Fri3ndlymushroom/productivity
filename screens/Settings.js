@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import g, { p , shadow} from "../styles/global"
+import g, { p, shadow } from "../styles/global"
 import { copyObject } from '../js/functions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { formatSeconds } from '../js/timerfunctions';
@@ -26,7 +26,7 @@ export default function Settings({ navigation, screenProps }) {
     }
 
     const dateTimePickerOnChange = (event, value) => {
-        if(!value) return
+        if (!value) return
         let seconds = value.getTime() / 1000
         let copy = copyObject(newSettings)
 
@@ -50,7 +50,7 @@ export default function Settings({ navigation, screenProps }) {
     return (
         <View style={g.body} >
             <Navbar {...{ navigation }} location={"Settings"} />
-            <Spacer height={200}/>
+            <Spacer height={150} />
             <View>
                 {dateTimeProps.open && (
                     <RNDateTimePicker
@@ -64,8 +64,19 @@ export default function Settings({ navigation, screenProps }) {
                     />
                 )}
             </View>
+
+            {/* Pro */}
+            {
+                !screenProps.isPro &&
+                <TouchableOpacity onPress={() => navigation.navigate("Pro")} style={s.proButton}>
+                    <Text style={s.backupsHeader}>Theta Pro</Text>
+                    <Text style={s.backupsInfo}>Backups</Text>
+                    <Text style={s.backupsInfo}>Friend List</Text>
+                </TouchableOpacity>
+            }
+
             {/* backups */}
-            <TouchableOpacity onPress={()=> auth().currentUser ? (screenProps.isPro ? navigation.navigate("Backups"): navigation.navigate("Pro")) :navigation.navigate("Signin") } style={s.backupsButton}>
+            <TouchableOpacity onPress={() =>  screenProps.isPro ? ( auth().currentUser ? navigation.navigate("Backups") : navigation.navigate("Signin") ) : navigation.navigate("Pro") } style={s.backupsButton}>
                 <Text style={s.backupsHeader}>Backups</Text>
                 <Text style={s.backupsInfo}>Pro Feature</Text>
             </TouchableOpacity>
@@ -123,19 +134,29 @@ const s = StyleSheet.create({
         justifyContent: "space-between",
         ...g.shadow
     },
-    backupsButton: {
+    proButton: {
         height: 200,
         width: 300,
         padding: 30,
         backgroundColor: p.bg2,
         borderRadius: p.br,
-        ...g.shadow
+        ...g.shadow,
+        margin: 5
     },
-    backupsHeader:{
+    backupsButton:{
+        height: 100,
+        width: 300,
+        padding: 30,
+        backgroundColor: p.bg2,
+        borderRadius: p.br,
+        ...g.shadow,
+        margin: 5
+    },
+    backupsHeader: {
         fontSize: 16,
         color: p.text__main
     },
-    backupsInfo:{
-        color:p.text__dim
+    backupsInfo: {
+        color: p.text__dim
     }
 })
