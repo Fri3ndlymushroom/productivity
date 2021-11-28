@@ -4,7 +4,7 @@ import g, { p } from "../styles/global"
 import NavbarStack from '../components/NavbarStack'
 import auth from "@react-native-firebase/auth"
 import firestore from "@react-native-firebase/firestore"
-import {formatSeconds} from "../js/timerfunctions"
+import { formatSeconds } from "../js/timerfunctions"
 import { Spacer } from '../components/Components'
 import { doBackup } from '../js/backupsystem'
 
@@ -14,13 +14,13 @@ export default function Backups({ navigation, screenProps }) {
 
 
     const [backups, setBackups] = useState([])
-    const [popup, setPopup] = useState({open: false, backup: 0})
+    const [popup, setPopup] = useState({ open: false, backup: 0 })
 
     useEffect(() => {
         const getBackups = async () => {
             await firestore().collection("backups").doc(auth().currentUser.uid).get().then((doc) => {
                 setBackups(doc.data().backupTimestamps)
-            }).catch(e=>{
+            }).catch(e => {
                 console.error(e)
             })
         }
@@ -28,12 +28,12 @@ export default function Backups({ navigation, screenProps }) {
     }, [])
 
 
-    const downloadBackup = async (backupid) =>{    
-    
+    const downloadBackup = async (backupid) => {
 
-        await firestore().collection("backups").doc(auth().currentUser.uid).collection("user_backups").doc(backupid.toString(10)).get().then(doc =>{
+
+        await firestore().collection("backups").doc(auth().currentUser.uid).collection("user_backups").doc(backupid.toString(10)).get().then(doc => {
             screenProps.setData(doc.data().data)
-        }).catch(e=>{
+        }).catch(e => {
             console.error(e)
         })
     }
@@ -47,15 +47,17 @@ export default function Backups({ navigation, screenProps }) {
         <>
             <View style={g.body}>
                 <NavbarStack navigation={navigation} loc={"Backups"}></NavbarStack>
-                <Spacer height={150}/>
-                <TouchableOpacity onPress={()=>doBackup(Math.round(new Date().getTime() / 1000), screenProps.data)} style={s.button}>
-                    <Text style={g.text}>Start Manual Backup</Text>
-                </TouchableOpacity>
-                <ScrollView style={s.backups}>
+                <Spacer height={0} />
+
+                <ScrollView
+                    style={s.backups}
+                >
+                    <Spacer height={100} />
                     {
-                        backups.map((backup) => {
+
+                        backups.reverse().map((backup) => {
                             return (
-                                <TouchableOpacity style={s.backupCard}key={backup} onPress={()=>setPopup({open: true, backup: backup })}>
+                                <TouchableOpacity style={s.backupCard} key={backup} onPress={() => setPopup({ open: true, backup: backup })}>
                                     <Text style={g.textDim}>Backup from </Text>
                                     <Text style={g.text} >{formatSeconds(backup, "EEE, d MMM HH:mm")}</Text>
                                 </TouchableOpacity>
@@ -65,16 +67,17 @@ export default function Backups({ navigation, screenProps }) {
 
 
                 </ScrollView>
-                <TouchableOpacity onPress={()=>{auth().signOut(); navigation.goBack()}} style={s.button}>
-                    <Text style={g.text}>Log Out</Text>
+                <Spacer height={30} />
+                <TouchableOpacity onPress={() => doBackup(Math.round(new Date().getTime() / 1000), screenProps.data)} style={s.button}>
+                    <Text style={g.text}>Start Manual Backup</Text>
                 </TouchableOpacity>
-                <Spacer height={50}/>
+                <Spacer height={30} />
             </View>
             {
                 popup.open &&
-                <TouchableOpacity onPress={() => setPopup({open: false})} style={s.popup}>
+                <TouchableOpacity onPress={() => setPopup({ open: false })} style={s.popup}>
                     <Text style={g.text}>Do you really want to download the backup from the {formatSeconds(popup.backup, 'dd, MM, yy')}?</Text>
-                    <TouchableOpacity onPress={() => {downloadBackup(popup.backup); setPopup({open:false})}} style={s.button}>
+                    <TouchableOpacity onPress={() => { downloadBackup(popup.backup); setPopup({ open: false }) }} style={s.button}>
                         <Text style={g.text}>Download Backup</Text>
                     </TouchableOpacity>
                 </TouchableOpacity>
@@ -106,7 +109,7 @@ const s = StyleSheet.create({
         alignItems: "center",
         justifyContent: 'center',
     },
-    backupCard:{
+    backupCard: {
         marginHorizontal: "10%",
         marginVertical: 5,
         padding: 10,
@@ -115,7 +118,7 @@ const s = StyleSheet.create({
         backgroundColor: p.bg2,
 
     },
-    button:{
+    button: {
         backgroundColor: p.bg2,
         paddingHorizontal: 15,
         paddingVertical: 10,

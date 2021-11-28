@@ -8,6 +8,7 @@ import { formatSeconds } from '../js/timerfunctions';
 import Navbar from '../components/NavbarDrawer';
 import auth from "@react-native-firebase/auth"
 import { Spacer } from '../components/Components';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Settings({ navigation, screenProps }) {
 
@@ -65,6 +66,30 @@ export default function Settings({ navigation, screenProps }) {
                 )}
             </View>
 
+            <TouchableOpacity
+                style={{
+                    height: 70,
+                    width: 300,
+                    padding: 12.5,
+                    backgroundColor: p.bg2,
+                    borderRadius: p.br,
+                    ...g.shadow,
+                    margin: 5,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+
+                }}
+                onPress={()=> navigation.navigate("Signin")}
+            >
+                <View
+                    style={{ height: 45, width: 45, backgroundColor: p.bg1, borderRadius: p.br, marginRight: 12.5 , display: "flex", alignItems: "center", justifyContent: "center"}}
+                >
+                    <Icon name={'user'} size={30} color={'white'} />
+                </View>
+                <Text style={g.text}>{auth().currentUser ? auth().currentUser.email : "not logged in"}</Text>
+            </TouchableOpacity>
+
             {/* Pro */}
             {
                 !screenProps.isPro &&
@@ -76,7 +101,7 @@ export default function Settings({ navigation, screenProps }) {
             }
 
             {/* backups */}
-            <TouchableOpacity onPress={() =>  screenProps.isPro ? ( auth().currentUser ? navigation.navigate("Backups") : navigation.navigate("Signin") ) : navigation.navigate("Pro") } style={s.backupsButton}>
+            <TouchableOpacity onPress={() => screenProps.isPro ? (auth().currentUser ? navigation.navigate("Backups") : navigation.navigate("Signin")) : navigation.navigate("Pro")} style={s.backupsButton}>
                 <Text style={s.backupsHeader}>Backups</Text>
                 <Text style={s.backupsInfo}>Pro Feature</Text>
             </TouchableOpacity>
@@ -143,7 +168,7 @@ const s = StyleSheet.create({
         ...g.shadow,
         margin: 5
     },
-    backupsButton:{
+    backupsButton: {
         height: 100,
         width: 300,
         padding: 30,
