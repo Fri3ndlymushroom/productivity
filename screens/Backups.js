@@ -57,7 +57,7 @@ export default function Backups({ navigation, screenProps }) {
                             return (
                                 <TouchableOpacity style={s.backupCard}key={backup} onPress={()=>setPopup({open: true, backup: backup })}>
                                     <Text style={g.textDim}>Backup from </Text>
-                                    <Text style={g.text} >{formatSeconds(backup, "EEE, d MMM")}</Text>
+                                    <Text style={g.text} >{formatSeconds(backup, "EEE, d MMM HH:mm")}</Text>
                                 </TouchableOpacity>
                             )
                         })
@@ -74,7 +74,7 @@ export default function Backups({ navigation, screenProps }) {
                 popup.open &&
                 <TouchableOpacity onPress={() => setPopup({open: false})} style={s.popup}>
                     <Text style={g.text}>Do you really want to download the backup from the {formatSeconds(popup.backup, 'dd, MM, yy')}?</Text>
-                    <TouchableOpacity onPress={() => {downloadBackup(popup.backup); setPopup({open:false})}} style={g.button}>
+                    <TouchableOpacity onPress={() => {downloadBackup(popup.backup); setPopup({open:false})}} style={s.button}>
                         <Text style={g.text}>Download Backup</Text>
                     </TouchableOpacity>
                 </TouchableOpacity>
