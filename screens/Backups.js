@@ -28,7 +28,12 @@ export default function Backups({ navigation, screenProps }) {
     }, [])
 
 
-    const downloadBackup = async (backupid) =>{        
+    const downloadBackup = async (backupid) =>{    
+        
+        console.log(backupid)
+
+
+
         await firestore().collection("backups").doc(auth().currentUser.uid).collection("user_backups").doc(backupid.toString(10)).get().then(doc =>{
             screenProps.setData(doc.data().data)
         }).catch(e=>{
@@ -46,7 +51,7 @@ export default function Backups({ navigation, screenProps }) {
             <View style={g.body}>
                 <NavbarStack navigation={navigation} loc={"Backups"}></NavbarStack>
                 <Spacer height={150}/>
-                <TouchableOpacity onPress={()=>doBackup(Math.round(new Date().getTime() / 1000))} style={s.button}>
+                <TouchableOpacity onPress={()=>doBackup(Math.round(new Date().getTime() / 1000), screenProps.data)} style={s.button}>
                     <Text style={g.text}>Start Manual Backup</Text>
                 </TouchableOpacity>
                 <ScrollView style={s.backups}>

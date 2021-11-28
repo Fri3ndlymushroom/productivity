@@ -17,7 +17,7 @@ export const checkForBackup = async (data, last) => {
 
     if ((newBackupTime - last) > 86400) {
 
-        await doBackup(newBackupTime)
+        await doBackup(newBackupTime, data)
 
         return newBackupTime
     }
@@ -26,7 +26,9 @@ export const checkForBackup = async (data, last) => {
     return last
 }
 
-export const doBackup = async (time) =>{
+export const doBackup = async (time, data) =>{
+
+    data = simplifyData(data)
 
     let uid = auth().currentUser ? auth().currentUser.uid : undefined
 
