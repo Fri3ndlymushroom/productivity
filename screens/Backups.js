@@ -46,7 +46,7 @@ export default function Backups({ navigation, screenProps }) {
     return (
         <>
             <View style={g.body}>
-                <NavbarStack navigation={navigation} loc={"Backups"}></NavbarStack>
+                <NavbarStack navigation={navigation} loc={"Backups"} ></NavbarStack>
                 <Spacer height={0} />
 
                 <ScrollView

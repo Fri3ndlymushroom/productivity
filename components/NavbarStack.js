@@ -1,28 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ProjectIcons from './ProjectIcons';
 import g, { p } from "../styles/global"
+import SaveChangesPopup from './SaveChangesPopup';
 
-export default function Navbar({ navigation, loc, children }) {
+
+
+export default function Navbar({ navigation, loc, children, saveable, changed, saveChanges }) {
+
+
+    const [popupOpen, setPopupOpen] = useState(false)
+
     return (
-        <View style={s.navbarContainer}>
-            <LinearGradient
-                colors={[p.bg1, "#00000000"]}
-                style={s.gradient}
-                start={{ x: 0.5, y: 0.5}}
-            >
-            </LinearGradient>
-            <View style={s.navbarWrapper}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <ProjectIcons figure={"back"} />
-                </TouchableOpacity>
-                <Text style={s.navbarTitle}>{loc}</Text>
-                {children ? children : <View></View>}
+        <>
+            <View style={s.navbarContainer}>
+                <LinearGradient
+                    colors={[p.bg1, "#00000000"]}
+                    style={s.gradient}
+                    start={{ x: 0.5, y: 0.5 }}
+                >
+                </LinearGradient>
+                <View style={s.navbarWrapper}>
+                    <TouchableOpacity onPress={() => { saveable && changed ? setPopupOpen(true) : navigation.goBack() }}>
+                        <ProjectIcons figure={"back"} />
+                    </TouchableOpacity>
+                    <Text style={s.navbarTitle}>{loc}</Text>
+                    {children ? children : <View></View>}
+                </View>
             </View>
-        </View>
+            {
+                popupOpen &&
+                <SaveChangesPopup setPopupOpen={setPopupOpen} saveChanges={saveChanges} navigation={navigation}  />
+            }
+        </>
     )
+
 }
 
 const s = StyleSheet.create({

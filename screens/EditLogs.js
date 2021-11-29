@@ -172,7 +172,7 @@ export default function EditLog({ navigation, screenProps }) {
 
     return (
         <View style={g.body}>
-            <NavbarStack navigation={navigation} loc={"Edit Log"}></NavbarStack>
+            <NavbarStack navigation={navigation} loc={"Edit Log"} saveable={true} changed={true} saveChanges={saveChanges}></NavbarStack>
             <Spacer height={150} />
 
 

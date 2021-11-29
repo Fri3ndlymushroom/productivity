@@ -1,40 +1,45 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import SaveChangesPopup from './SaveChangesPopup';
 
 import g, { p } from "../styles/global"
 
-export default function Navbar({ navigation, location }) {
+export default function Navbar({ navigation, location, saveable, changed, saveChanges }) {
     const navigate = (loc) => {
         navigation.navigate(loc)
     }
 
     const navOptions = ["Timeline", "Analytics", "Settings"]
-
+    const [popupOpen, setPopupOpen] = useState({open: false, newLoc: ""})
 
     return (
-
-        <View style={s.navbarContainer}>
-
-
-            <LinearGradient
-                colors={[p.bg1, "#00000000"]}
-                style={s.gradient}
-                start={{ x: 0.5, y: 0.5}}
-            >
-            </LinearGradient>
+        <>
+            <View style={s.navbarContainer}>
 
 
-            <View style={s.navbarWrapper}>
-                {
-                    navOptions.map((navOption) => {
-                        let style = [s.navbarText]
-                        if (navOption === location) style.push(s.current)
-                        return <TouchableOpacity key={"location" + navOption} onPress={() => navigate(navOption)} style={s.navbarButton}><Text style={style}>{navOption}</Text></TouchableOpacity>
-                    })}
+                <LinearGradient
+                    colors={[p.bg1, "#00000000"]}
+                    style={s.gradient}
+                    start={{ x: 0.5, y: 0.5 }}
+                >
+                </LinearGradient>
+
+
+                <View style={s.navbarWrapper}>
+                    {
+                        navOptions.map((navOption) => {
+                            let style = [s.navbarText]
+                            if (navOption === location) style.push(s.current)
+                            return <TouchableOpacity key={"location" + navOption} onPress={() => saveable && changed ? setPopupOpen({open: true, newLoc: navOption}) : navigate(navOption)} style={s.navbarButton}><Text style={style}>{navOption}</Text></TouchableOpacity>
+                        })}
+                </View>
             </View>
-        </View>
-
+            {
+                popupOpen.open &&
+                <SaveChangesPopup newLoc={popupOpen.newLoc} setPopupOpen={setPopupOpen} saveChanges={saveChanges} navigation={navigation} />
+            }
+        </>
     )
 }
 

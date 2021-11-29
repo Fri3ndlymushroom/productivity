@@ -50,7 +50,7 @@ export default function Settings({ navigation, screenProps }) {
 
     return (
         <View style={g.body} >
-            <Navbar {...{ navigation }} location={"Settings"} />
+            <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={true} saveChanges={saveChanges}/>
             <Spacer height={150} />
             <View>
                 {dateTimeProps.open && (
@@ -143,6 +143,7 @@ export default function Settings({ navigation, screenProps }) {
 
             <Button title="save" onPress={saveChanges} />
         </View>
+
     )
 }
 
