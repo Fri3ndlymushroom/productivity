@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import g, { p } from "../styles/global"
-import {formatSeconds} from "../js/timerfunctions"
-
+import { formatSeconds } from "../js/timerfunctions"
 export default function TimePeriodAnalysis({ data, settings }) {
 
 
@@ -52,11 +51,11 @@ export default function TimePeriodAnalysis({ data, settings }) {
                 let sum = relevant.reduce((sum, log) => sum + log.duration, 0)
 
                 let style = StyleSheet.create({
-                    style:{
+                    style: {
                         color: project.color
                     }
                 })
-                element.list.push({ project: project.name, duration: sum , style: style.style})
+                element.list.push({ project: project.name, duration: sum, style: style.style })
 
             })
         })
@@ -72,12 +71,14 @@ export default function TimePeriodAnalysis({ data, settings }) {
                 decelerationRate={0}
                 snapToInterval={150} //your element width
                 snapToAlignment={"center"}
+                showsHorizontalScrollIndicator={false}
             >
                 {
-                    getPeriodData().map((period) => {
+                    getPeriodData().map((period, i) => {
                         return (
                             <View key={period.card} style={s.scrollCard}>
                                 <Text style={s.cardTitle}>{period.card}</Text>
+                               
                                 <ScrollView>
                                     {
                                         period.list.map((project) => {
@@ -90,6 +91,7 @@ export default function TimePeriodAnalysis({ data, settings }) {
                                         })
                                     }
                                 </ScrollView>
+                                <DotList tot={getPeriodData().length} current={i} />
                             </View>)
                     })
                 }
@@ -98,27 +100,65 @@ export default function TimePeriodAnalysis({ data, settings }) {
     )
 }
 
+
+
+
+function DotList({ tot, current }) {
+
+    let dotList = []
+
+    for (let i = 0; i < tot; i++) {
+        dotList.push(i === current)
+    }
+    return (
+        <View
+            style={{
+                width: "40%",
+                marginHorizontal: "30%",
+                marginVertical: 10,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+            }}
+        >
+            {
+                dotList.map(dot => {
+                    return (
+                        <View style={{
+                            height: 5,
+                            width: 5,
+                            backgroundColor: dot ? p.text__main : p.text__dim,
+                            borderRadius: 100
+                        }}></View>
+                    )
+                })
+            }
+        </View>
+    )
+}
+
+
 const s = StyleSheet.create({
     scrollCard: {
         width: 150,
         height: 170,
     },
-    cardTitle:{
+    cardTitle: {
         alignSelf: "center",
         fontSize: 20,
         color: p.text__main
     },
-    cardColumn:{
+    cardColumn: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
         margin: 5
     },
-    cardProjectTitle:{
+    cardProjectTitle: {
         color: p.text__main,
         fontSize: 15
     },
-    cardProjectDuration:{
+    cardProjectDuration: {
         color: p.text__dim,
         fontSize: 12
     }
