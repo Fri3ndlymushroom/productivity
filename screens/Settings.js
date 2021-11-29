@@ -9,8 +9,11 @@ import Navbar from '../components/NavbarDrawer';
 import auth from "@react-native-firebase/auth"
 import { Spacer } from '../components/Components';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { G } from 'react-native-svg';
 
 export default function Settings({ navigation, screenProps }) {
+
+    const [changed, setChanged] = useState(false)
 
 
     let [newSettings, setNewSettings] = useState(copyObject(screenProps.settings))
@@ -24,6 +27,7 @@ export default function Settings({ navigation, screenProps }) {
 
     const saveChanges = () => {
         screenProps.setSettings(newSettings)
+        setChanged(false)
     }
 
     const dateTimePickerOnChange = (event, value) => {
@@ -45,12 +49,13 @@ export default function Settings({ navigation, screenProps }) {
 
         setDateTimeProps({ target: "daily_goal", value: 3600, mode: "time", open: false })
         setNewSettings(copy)
+        setChanged(true)
     }
 
 
     return (
         <View style={g.body} >
-            <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={true} saveChanges={saveChanges}/>
+            <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={changed} saveChanges={saveChanges} />
             <Spacer height={150} />
             <View>
                 {dateTimeProps.open && (
@@ -80,10 +85,10 @@ export default function Settings({ navigation, screenProps }) {
                     alignItems: "flex-start",
 
                 }}
-                onPress={()=> navigation.navigate("Signin")}
+                onPress={() => navigation.navigate("Signin")}
             >
                 <View
-                    style={{ height: 45, width: 45, backgroundColor: p.bg1, borderRadius: p.br, marginRight: 12.5 , display: "flex", alignItems: "center", justifyContent: "center"}}
+                    style={{ height: 45, width: 45, backgroundColor: p.bg1, borderRadius: p.br, marginRight: 12.5, display: "flex", alignItems: "center", justifyContent: "center" }}
                 >
                     <Icon name={'user'} size={30} color={'white'} />
                 </View>
@@ -139,9 +144,9 @@ export default function Settings({ navigation, screenProps }) {
                 <Text style={g.text}>Set Start Of Day</Text>
                 <Text style={g.text}>{formatSeconds(newSettings.start_of_day, "HH:mm")}</Text>
             </TouchableOpacity>
-
-
-            <Button title="save" onPress={saveChanges} />
+            <View style={{ flex: 1 }}></View>
+            <TouchableOpacity onPress={saveChanges} style={g.button}><Text style={[g.text, g.buttonText]}>Save Changes</Text></TouchableOpacity>
+            <Spacer height={50} />
         </View>
 
     )

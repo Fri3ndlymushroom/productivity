@@ -17,25 +17,29 @@ export default function EditProject({ navigation, screenProps }) {
 
     let [project, setProject] = useState(screenProps.data.projects[index])
 
-    let [popup, setPopup] = useState(false)
+    const [popup, setPopup] = useState(false)
+    const [changed, setChanged] = useState(false)
 
 
     const changeProjectName = (newName) => {
         let copy = copyObject(project)
         copy.name = newName
         setProject(copy)
+        setChanged(true)
     }
 
     const changeProjectColor = (newColor) => {
         let copy = copyObject(project)
         copy.color = newColor
         setProject(copy)
+        setChanged(true)
     }
 
     const changeProjectIcon = (newIcon) => {
         let copy = copyObject(project)
         copy.icon = newIcon
         setProject(copy)
+        setChanged(true)
     }
 
     const saveChanges = () => {
@@ -43,6 +47,7 @@ export default function EditProject({ navigation, screenProps }) {
         copy.projects[index] = project
         screenProps.setData(copy)
         navigation.pop()
+        setChanged(false)
     }
 
 
@@ -85,7 +90,7 @@ export default function EditProject({ navigation, screenProps }) {
     return (
         <>
             <View style={g.body}>
-                <NavbarStack navigation={navigation} loc={"Edit Project"}></NavbarStack>
+                <NavbarStack navigation={navigation} loc={"Edit Project"} saveable={true} changed={changed} saveChanges={saveChanges}></NavbarStack>
                 <Spacer height={200} />
                 <View style={s.projectPreview}>
                     <View style={[g.logoWrapper, { backgroundColor: project.color }]}>

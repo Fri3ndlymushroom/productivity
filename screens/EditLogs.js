@@ -15,6 +15,8 @@ export default function EditLog({ navigation, screenProps }) {
 
     const [log, setLog] = useState(JSON.parse(JSON.stringify(navigation.getParam("edited_log"))))
     const [times, setTimes] = useState({ start: 0, end: 0 })
+    const [changed, setChanged] = useState(false)
+
 
     const [dateTimeProps, setDateTimeProps] = useState({
         target: "daily_goal",
@@ -46,6 +48,7 @@ export default function EditLog({ navigation, screenProps }) {
         else {
             setDateTimeProps({ target: "daily_goal", value: 3600, mode: "time", open: false })
         }
+        setChanged(true)
     }
 
     const editEndOfLog = (value) => {
@@ -70,6 +73,7 @@ export default function EditLog({ navigation, screenProps }) {
             logCopy.duration = logCopy.end - logCopy.start
             setLog(logCopy)
         }
+        setChanged(true)
     }
 
     const editStartOfLog = (value) => {
@@ -92,6 +96,7 @@ export default function EditLog({ navigation, screenProps }) {
             logCopy.duration = logCopy.end - logCopy.start
             setLog(logCopy)
         }
+        setChanged(true)
     }
 
     const editDateOfLog = (date) => {
@@ -107,7 +112,7 @@ export default function EditLog({ navigation, screenProps }) {
         copy.day = Math.floor((copy.start - screenProps.settings.start_of_day) / 60 / 60 / 24)
         setDateTimeProps({ target: "daily_goal", value: 3600, mode: "time", open: false })
         setLog(copy)
-
+        setChanged(true)
     }
 
     const moveStartOfLog = (start) => {
@@ -127,6 +132,7 @@ export default function EditLog({ navigation, screenProps }) {
             logCopy.duration = logCopy.end - logCopy.start
             setLog(logCopy)
         }
+        setChanged(true)
     }
 
     const moveEndOfLog = (end) => {
@@ -146,6 +152,7 @@ export default function EditLog({ navigation, screenProps }) {
             logCopy.duration = logCopy.end - logCopy.start
             setLog(logCopy)
         }
+        setChanged(true)
     }
 
     const saveChanges = () => {
@@ -155,6 +162,7 @@ export default function EditLog({ navigation, screenProps }) {
         copy.all_logs[index] = log
         screenProps.setData(copy)
         navigation.pop()
+        setChanged(false)
     }
 
 
@@ -172,7 +180,7 @@ export default function EditLog({ navigation, screenProps }) {
 
     return (
         <View style={g.body}>
-            <NavbarStack navigation={navigation} loc={"Edit Log"} saveable={true} changed={true} saveChanges={saveChanges}></NavbarStack>
+            <NavbarStack navigation={navigation} loc={"Edit Log"} saveable={true} changed={changed} saveChanges={saveChanges}></NavbarStack>
             <Spacer height={150} />
 
 
