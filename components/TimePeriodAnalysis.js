@@ -81,9 +81,9 @@ export default function TimePeriodAnalysis({ data, settings }) {
                                
                                 <ScrollView>
                                     {
-                                        period.list.map((project) => {
+                                        period.list.map((project, y) => {
                                             return (
-                                                <View style={s.cardColumn} key={period.card + project.project}>
+                                                <View key={`dot-${i}-${y}`} style={s.cardColumn} key={period.card + project.project}>
                                                     <Text style={[s.cardProjectTitle, project.style]}>{project.project}</Text>
                                                     <Text style={s.cardProjectDuration}>{formatSeconds(project.duration, "HH'h' mm'min'")}</Text>
                                                 </View>

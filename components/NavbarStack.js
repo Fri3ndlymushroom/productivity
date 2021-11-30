@@ -23,7 +23,7 @@ export default function Navbar({ navigation, loc, children, saveable, changed, s
                 >
                 </LinearGradient>
                 <View style={s.navbarWrapper}>
-                    <TouchableOpacity onPress={() => { saveable && changed ? setPopupOpen(true) : navigation.goBack() }}>
+                    <TouchableOpacity style={s.backButton} onPress={() => { saveable && changed ? setPopupOpen(true) : navigation.goBack() }}>
                         <ProjectIcons figure={"back"} />
                     </TouchableOpacity>
                     <Text style={s.navbarTitle}>{loc}</Text>
@@ -42,7 +42,7 @@ export default function Navbar({ navigation, loc, children, saveable, changed, s
 const s = StyleSheet.create({
     navbarTitle: {
         color: p.text__main,
-        fontSize: 18
+        fontSize: 20
     },
     gradient: {
         height: 200,
@@ -78,5 +78,8 @@ const s = StyleSheet.create({
         position: "relative",
         bottom: 3,
         color: p.text__main
+    },
+    backButton:{
+        padding: 10
     }
 })

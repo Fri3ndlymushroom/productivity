@@ -19,7 +19,7 @@ export default function Backups({ navigation, screenProps }) {
     useEffect(() => {
         const getBackups = async () => {
             await firestore().collection("backups").doc(auth().currentUser.uid).get().then((doc) => {
-                setBackups(doc.data().backupTimestamps)
+                setBackups(doc.data() ? doc.data().backupTimestamps : [])
             }).catch(e => {
                 console.error(e)
             })

@@ -67,10 +67,10 @@ const s = StyleSheet.create({
     },
     navbarText: {
         color: p.text__dim,
-        fontSize: 16
+        fontSize: 18
     },
     current: {
-        fontSize: 18,
+        fontSize: 20,
         position: "relative",
         bottom: 3,
         color: p.text__main

@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: p.text__main,
+        fontSize: 16,
     },
     buttonText: {
         textAlign: "center"

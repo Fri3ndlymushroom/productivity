@@ -182,7 +182,7 @@ export default function App() {
                 setData(copy)
             }
 
-        }, 1000)
+        }, 100)
         return () => clearInterval(interval)
     }, [data])
 

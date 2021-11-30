@@ -2,6 +2,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import Svg, { Path } from "react-native-svg"
+import g, { p } from "../styles/global"
 
 export default function ProjectIcons({ figure }) {
     return (
@@ -12,11 +13,16 @@ export default function ProjectIcons({ figure }) {
                 (figure === "add") && <Add />
             }{
                 figure === "back" && <Back />
+            }{
+                figure === "up" && <Up />
+            }{
+                figure === "down" && <Down />
             }
         </>
     )
 }
 
+// https://react-svgr.com/playground/?expandProps=none&native=true
 
 function Cube() {
     return (
@@ -55,16 +61,48 @@ function Add() {
 function Back() {
     return (
         <Svg
-            viewBox="0 0 7 11"
-            width={10}
-            height={15}
+            width={14}
+            height={20}
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-        >
+            viewbox="0 0 14 20">
             <Path
+                scale={2}
                 d="M.407 5.87l4.74 4.31a.5.5 0 00.69-.017l.288-.288a.5.5 0 00-.021-.727L2.42 5.874a.5.5 0 010-.748l3.684-3.274a.5.5 0 00.021-.727L5.837.837a.5.5 0 00-.69-.016L.407 5.13a.5.5 0 000 .74z"
                 fill="#fff"
             />
         </Svg>
     )
 }
+function Up() {
+    return (
+        <Svg
+            width={20}
+            height={14}
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            viewbox="0 0 20 14">
+            <Path
+                scale={2}
+                d="M4.63.407.32 5.147a.5.5 0 0 0 .017.69l.288.288a.5.5 0 0 0 .727-.021L4.626 2.42a.5.5 0 0 1 .748 0l3.274 3.684a.5.5 0 0 0 .727.021l.288-.288a.5.5 0 0 0 .016-.69L5.37.407a.5.5 0 0 0-.74 0Z"
+                fill={p.text__dim}
+            />
+        </Svg>
+    )
+}
+
+const Down = () => (
+    <Svg
+        width={20}
+        height={14}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        viewbox="0 0 20 14"
+    >
+        <Path
+            scale={2}
+            d="m5.37 6.093 4.31-4.74a.5.5 0 0 0-.017-.69L9.375.375a.5.5 0 0 0-.727.021L5.374 4.08a.5.5 0 0 1-.748 0L1.352.396A.5.5 0 0 0 .625.375L.337.663a.5.5 0 0 0-.016.69l4.309 4.74a.5.5 0 0 0 .74 0Z"
+            fill={p.text__dim}
+        />
+    </Svg>
+)

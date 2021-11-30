@@ -92,7 +92,7 @@ export default function ProjectView({ navigation, screenProps }) {
         <View style={g.body}>
             <NavbarStack navigation={navigation} loc={projectName}>
                 <TouchableOpacity style={s.optionsButton} onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }}>
-                    <Icon name={'ellipsis-v'} size={12} color={'white'} />
+                    <Icon name={'ellipsis-v'} size={20} color={'white'} />
                 </TouchableOpacity>
             </NavbarStack>
             <ScrollView>

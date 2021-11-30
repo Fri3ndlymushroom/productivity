@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Text, View, TouchableOpacity, StyleSheet } from "react-native"
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native"
 import g, { p } from '../styles/global'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { formatSeconds } from '../js/timerfunctions';
@@ -7,7 +7,6 @@ import { copyObject } from "../js/functions"
 import NavbarStack from '../components/NavbarStack'
 import { Spacer } from '../components/Components';
 import ProjectIcons from "../components/ProjectIcons"
-import { format } from 'date-fns';
 
 
 export default function EditLog({ navigation, screenProps }) {
@@ -190,7 +189,7 @@ export default function EditLog({ navigation, screenProps }) {
                 </View>
                 <Text style={{ color: p.text__main, fontSize: 18, margin: 5 }}>{log.project}</Text>
                 <View style={{ flex: 1 }}></View>
-                <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{format(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
+                <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{formatSeconds(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
             </View>
 
             <View>
@@ -207,7 +206,6 @@ export default function EditLog({ navigation, screenProps }) {
                 )}
             </View>
 
-
             <TouchableOpacity style={s.datePickerButton} onPress={() => setDateTimeProps({
                 target: "date",
                 value: log.start,
@@ -220,9 +218,9 @@ export default function EditLog({ navigation, screenProps }) {
             <View style={s.timeEditorWrapper}>
                 <View style={s.timeEditorParent}>
                     <View style={s.timeEditorButtonWrapper}>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(3600)}><Text style={g.text}>^</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(3600)}><ProjectIcons figure={"up"}/></TouchableOpacity>
                         <View style={{ flex: 1 }}></View>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(300)}><Text style={g.text}>^</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(300)}><ProjectIcons figure={"up"}/></TouchableOpacity>
                     </View>
                     <TouchableOpacity
                         style={s.timeEditorViewWrapper}
@@ -238,17 +236,17 @@ export default function EditLog({ navigation, screenProps }) {
                         <Text style={s.timeEditorText}>{formatSeconds(log.start, "HH:mm").split(":")[1]}</Text>
                     </TouchableOpacity>
                     <View style={s.timeEditorButtonWrapper}>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-3600)}><Text style={g.text}>v</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-3600)}><ProjectIcons figure={"down"}/></TouchableOpacity>
                         <View style={{ flex: 1 }}></View>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-300)}><Text style={g.text}>v</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-300)}><ProjectIcons figure={"down"}/></TouchableOpacity>
                     </View>
                 </View>
                 <Text style={g.text}>-</Text>
                 <View style={s.timeEditorParent}>
                     <View style={s.timeEditorButtonWrapper}>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(3600)}><Text style={g.text}>^</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(3600)}><ProjectIcons figure={"up"}/></TouchableOpacity>
                         <View style={{ flex: 1 }}></View>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(300)}><Text style={g.text}>^</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(300)}><ProjectIcons figure={"up"}/></TouchableOpacity>
                     </View>
                     <TouchableOpacity
                         style={s.timeEditorViewWrapper}
@@ -264,9 +262,9 @@ export default function EditLog({ navigation, screenProps }) {
                         <Text style={s.timeEditorText}>{formatSeconds(log.end, "HH:mm").split(":")[1]}</Text>
                     </TouchableOpacity>
                     <View style={s.timeEditorButtonWrapper}>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-3600)}><Text style={g.text}>v</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-3600)}><ProjectIcons figure={"down"}/></TouchableOpacity>
                         <View style={{ flex: 1 }}></View>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-300)}><Text style={g.text}>v</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-300)}><ProjectIcons figure={"down"}/></TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -296,17 +294,17 @@ const s = StyleSheet.create({
         margin: 10,
     },
     timeCorrectorButton: {
-        padding: 10,
+        padding:10,
         backgroundColor: p.bg2,
         borderRadius: p.br
     },
     button: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingHorizontal: 5,
+        paddingVertical: 10,
         backgroundColor: p.bg2,
         borderRadius: p.br,
         margin: 5,
-        width: 120,
+        width: 150,
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
@@ -317,7 +315,7 @@ const s = StyleSheet.create({
         justifyContent: "space-between"
     },
     projectPreview: {
-        width: 300,
+        width: "80%",
         height: 60,
         backgroundColor: p.bg2,
         borderRadius: p.br,
@@ -332,8 +330,8 @@ const s = StyleSheet.create({
         borderRadius: p.br
     },
     timeEditorButton: {
-        paddingHorizontal: 5,
-        paddingVertical: 20
+        paddingHorizontal:2,
+        paddingVertical: 30
     },
     timeEditorParent: {
         width: "30%"
@@ -350,13 +348,13 @@ const s = StyleSheet.create({
     timeEditorWrapper: {
         display: "flex",
         flexDirection: "row",
-        width: "60%",
+        width: "80%",
         justifyContent: "space-between",
         alignItems: "center"
     },
     timeEditorText:{
         color: p.text__main,
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: "bold"
     }
 });

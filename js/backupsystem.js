@@ -6,6 +6,7 @@ import firestore from "@react-native-firebase/firestore"
 export const checkForBackup = async (data, last) => {
 
 
+
     data = simplifyData(data)
 
     let uid = auth().currentUser ? auth().currentUser.uid : undefined
@@ -15,15 +16,14 @@ export const checkForBackup = async (data, last) => {
 
     let newBackupTime = Math.round(new Date().getTime() / 1000)
 
-    if ((newBackupTime - last) > 86400) {
+    if ((newBackupTime - last) > 86400 || typeof last === "undefined") {
 
-        await doBackup(newBackupTime, data)
-
+        doBackup(newBackupTime, data)
+        
         return newBackupTime
+    }else{
+        return last
     }
-
-
-    return last
 }
 
 export const doBackup = async (time, data) =>{
