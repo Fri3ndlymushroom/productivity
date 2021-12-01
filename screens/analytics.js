@@ -94,7 +94,7 @@ export default function Analytics({ navigation, screenProps }) {
                 </View>
 
                 {/* general chart */}
-                <GeneralCharts dailyAverage={dailyAverage} analysedData={analysedData} setSelectedTime={setSelectedTime} />
+                <GeneralCharts dailyAverage={dailyAverage} analysedData={analysedData} setSelectedTime={setSelectedTime} data={screenProps.data} settings={settings} />
 
 
             </ScrollView>

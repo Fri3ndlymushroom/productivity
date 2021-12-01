@@ -6,13 +6,11 @@ import g, { p } from '../styles/global';
 
 
 
-export default function GeneralCharts({ analysedData, setSelectedTime, dailyAverage }) {
+export default function GeneralCharts({ analysedData, setSelectedTime, dailyAverage, data, settings }) {
 
     const [selectedChart, setSelectedChart] = useState("bar")
 
-
-
-
+    let chartsData = getChartsData(data, settings)
 
 
     return (
@@ -176,12 +174,98 @@ const s = StyleSheet.create({
         marginTop: 20,
         marginLeft: 20
     },
-    dailyAverageHeader:{
+    dailyAverageHeader: {
         fontSize: 11,
         color: p.text__dim
     },
-    dailyAverageValue:{
+    dailyAverageValue: {
         fontSize: 18,
         color: p.text__main
     }
 })
+
+
+
+
+
+
+import { eachMonthOfInterval, eachWeekOfInterval, eachDayOfInterval, eachYearOfInterval, sub } from "date-fns"
+
+
+
+const getChartsData = (data, settings) => {
+    //console.log(settings)
+    let start = new Date(2021, 3, 4)
+    let end = new Date()
+
+
+    let frame = getTimeFrame(start, end)
+
+}
+
+
+const getTimeFrame = (start, end) => {
+
+    let distance = Math.round((end.getTime() - start.getTime()) / 1000)
+
+
+    if (distance <= 604800) {
+        // Week
+
+        var labelFormat = "EEEEEE"
+        var frame = eachDayOfInterval({
+            start: sub(start, { days: 1 }),
+            end: end
+        })
+    } else if (distance <= 2678400) {
+        // Month
+        var labelFormat = "dd"
+        var frame = eachDayOfInterval({
+            start: sub(start, { days: 1 }),
+            end: end
+        })
+    } else if (distance <= 31536000) {
+        // Year
+        var labelFormat = "LLL"
+        var frame = eachMonthOfInterval({
+            start: sub(start, { months: 1 }),
+            end: end
+        })
+    } else {
+        // More
+        var labelFormat = "yyyy"
+        var frame = eachYearOfInterval({
+            start: sub(start, { years: 1 }),
+            end: end
+        })
+    }
+
+    let string = frame.map(date => date.toString())
+
+
+   
+
+    let info = {
+        label_format: labelFormat,
+        frames: frame.map((date, i) => {
+            if(i !== frame.length-1)
+            return {
+                from: date,
+                to: frame[i+1],
+                string: date.toString() +" - "+ frame[i+1].toString() 
+            }
+        })
+    }
+
+    info.frames.pop()
+
+    return info
+}
+
+
+const getUTCDate = (date) => {
+    var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+        date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+
+    return new Date(now_utc);
+}

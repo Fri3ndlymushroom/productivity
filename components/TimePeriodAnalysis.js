@@ -122,9 +122,11 @@ function DotList({ tot, current }) {
             }}
         >
             {
-                dotList.map(dot => {
+                dotList.map((dot, i) => {
                     return (
-                        <View style={{
+                        <View 
+                        key={"dot"+i}
+                        style={{
                             height: 5,
                             width: 5,
                             backgroundColor: dot ? p.text__main : p.text__dim,
