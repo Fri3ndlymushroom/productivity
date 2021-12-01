@@ -47,14 +47,14 @@ export default function Analytics({ navigation, screenProps }) {
     }
 
 
-    let analysedData = getAnalytics(screenProps.data, settings)
+
 
 
     let allTime = Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration / 60 / 60, 0))
     let days = Math.floor(new Date().getTime() / 1000 / 60 / 60 / 24 - screenProps.data.all_logs[screenProps.data.all_logs.length - 1].day)
     let dailyAverage = formatSeconds(Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration, 0) / days), "HH'h' mm'min'")
 
-
+    let pieChartData = getPieChartData(screenProps.data)
 
     return (
         <View style={g.body}>
@@ -66,8 +66,8 @@ export default function Analytics({ navigation, screenProps }) {
                     <View style={[s.infoGridItem, s.infoGridItem1]}>
                         <Text style={s.allTime}>{allTime}h</Text>
                         <VictoryPie
-                            colorScale={analysedData.distribution_chart.colors}
-                            data={analysedData.distribution_chart.data}
+                            colorScale={pieChartData.colors}
+                            data={pieChartData.data}
                             width={150}
                             height={150}
                             radius={60}
@@ -94,7 +94,7 @@ export default function Analytics({ navigation, screenProps }) {
                 </View>
 
                 {/* general chart */}
-                <GeneralCharts dailyAverage={dailyAverage} analysedData={analysedData} setSelectedTime={setSelectedTime} data={screenProps.data} settings={settings} />
+                <GeneralCharts dailyAverage={dailyAverage} data={screenProps.data} />
 
 
             </ScrollView>
@@ -147,3 +147,31 @@ const s = StyleSheet.create({
         height: 80
     }
 })
+
+
+
+const getPieChartData = (data) => {
+
+    let dataObj = {}
+    let colors = []
+
+    data.all_logs.forEach((log) => {
+        if (!dataObj[log.project]) dataObj[log.project] = 0
+        dataObj[log.project] += log.duration
+
+        if (colors.filter((color) => color === log.color).length === 0) colors.push(log.color)
+    })
+    let dataArr = []
+
+    for (let project in dataObj) {
+        let info = dataObj[project]
+        dataArr.push({ x: project, y: info })
+    }
+
+    let returnObj = {
+        data: dataArr,
+        colors: colors
+    }
+
+    return returnObj
+}

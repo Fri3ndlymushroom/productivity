@@ -3,14 +3,19 @@ import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea, VictoryAxis, VictoryLabel } from 'victory-native';
 import g, { p } from '../styles/global';
+import { eachMonthOfInterval, eachWeekOfInterval, eachDayOfInterval, eachYearOfInterval, sub, add, format } from "date-fns"
+import { formatSeconds } from "../js/timerfunctions"
 
 
-
-export default function GeneralCharts({ analysedData, setSelectedTime, dailyAverage, data, settings }) {
+export default function GeneralCharts({ dailyAverage, data }) {
 
     const [selectedChart, setSelectedChart] = useState("bar")
+    const [selectedTime, setSelectedTime] = useState({
+        start: sub(new Date(), {months: 10}), 
+        end:new Date,
+    })
 
-    let chartsData = getChartsData(data, settings)
+    let chartsData = getChartsData(data, selectedTime)
 
 
     return (
@@ -79,7 +84,7 @@ export default function GeneralCharts({ analysedData, setSelectedTime, dailyAver
                     }
                     {
                         selectedChart === "line" &&
-                        analysedData.general_chart.line.data.map((data, i) => {
+                        chartsData.bar.data.map((data, i) => {
                             let colors = [p.hl, "white", "gray"]
 
 
@@ -129,13 +134,13 @@ export default function GeneralCharts({ analysedData, setSelectedTime, dailyAver
                 </TouchableOpacity>
             </View>
             <View style={s.generalChartsButtonContainer}>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ time: 604800, gap: 86400 })}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), {days: 6})})}>
                     <Text style={g.text}>Week</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ time: 2592000, gap: 86400 })}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: add(sub(new Date(), {months: 1}), {days:2})})}>
                     <Text style={g.text}>Month</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: Date(((new Date().getTime() / 1000) - 31536000) * 1000), time: 31536000, gap: 2628000, })}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), {months: 10})})}>
                     <Text style={g.text}>Year</Text>
                 </TouchableOpacity>
             </View>
@@ -190,21 +195,18 @@ const s = StyleSheet.create({
 
 
 
-import { eachMonthOfInterval, eachWeekOfInterval, eachDayOfInterval, eachYearOfInterval, sub, add, format } from "date-fns"
-import { formatSeconds } from "../js/timerfunctions"
 
 
 
 const getChartsData = (data, settings) => {
-    let start = new Date(2021, 3, 4)
-    let end = new Date()
-
+    let start = settings.start
+    let end = settings.end
 
 
 
     let barData = getBarData(data, start, end)
-
-    return { bar: barData }
+    console.log(barData.data)
+    return { bar: barData, line: [] }
 }
 
 const getBarData = (data, start, end) => {
