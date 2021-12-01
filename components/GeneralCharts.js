@@ -53,10 +53,11 @@ export default function GeneralCharts({ analysedData, setSelectedTime, dailyAver
                     {
                         selectedChart === "bar" &&
                         <VictoryStack
-                            colorScale={analysedData.general_chart.bar.colors}
+                            colorScale={chartsData.bar.colors}
                         >
                             {
-                                analysedData.general_chart.bar.data.map((data, i) => {
+                                chartsData.bar.data.map((data, i) => {
+
                                     return <VictoryBar
                                         key={"general_chart-bar" + i}
                                         data={data}
@@ -97,10 +98,10 @@ export default function GeneralCharts({ analysedData, setSelectedTime, dailyAver
                     {
                         selectedChart === "area" &&
                         <VictoryStack
-                            colorScale={analysedData.general_chart.bar.colors}
+                            colorScale={chartsData.bar.colors}
                         >
                             {
-                                analysedData.general_chart.bar.data.map((data, i) => {
+                                chartsData.bar.data.map((data, i) => {
                                     return <VictoryArea
                                         key={"general_chart-bar" + i}
                                         data={data}
@@ -134,7 +135,7 @@ export default function GeneralCharts({ analysedData, setSelectedTime, dailyAver
                 <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ time: 2592000, gap: 86400 })}>
                     <Text style={g.text}>Month</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ time: 31536000, gap: 2628000, })}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: Date(((new Date().getTime() / 1000) - 31536000) * 1000), time: 31536000, gap: 2628000, })}>
                     <Text style={g.text}>Year</Text>
                 </TouchableOpacity>
             </View>
@@ -189,18 +190,52 @@ const s = StyleSheet.create({
 
 
 
-import { eachMonthOfInterval, eachWeekOfInterval, eachDayOfInterval, eachYearOfInterval, sub } from "date-fns"
+import { eachMonthOfInterval, eachWeekOfInterval, eachDayOfInterval, eachYearOfInterval, sub, add, format } from "date-fns"
+import { formatSeconds } from "../js/timerfunctions"
 
 
 
 const getChartsData = (data, settings) => {
-    //console.log(settings)
     let start = new Date(2021, 3, 4)
     let end = new Date()
 
 
-    let frame = getTimeFrame(start, end)
 
+
+    let barData = getBarData(data, start, end)
+
+    return { bar: barData }
+}
+
+const getBarData = (data, start, end) => {
+    let info = getTimeFrame(start, end)
+
+
+    info.frames.forEach((frame, i) => {
+        info.frames[i].logs = data.all_logs.filter((log) => (log.start >= frame.from && log.start < frame.to))
+    })
+
+    let projects = data.projects.map((project) => project.pid)
+    info.colors = data.projects.map((project) => project.color)
+    info.labels = info.frames.map((frame) => format(new Date(frame.from * 1000), info.label_format))
+
+    info.data = info.frames.map((frame) => {
+
+        return projects.map(project => {
+            return { 
+                y: frame.logs.filter(log => log.pid === project).reduce((sum, log) => sum += log.duration, 0),
+                x: format(new Date(frame.from * 1000), info.label_format)
+            }
+        })
+    })
+
+    let turned = projects.map((project, i) => {
+        return (info.data.map((dataPoint) => dataPoint[i]))
+    })
+
+    info.data = turned
+
+    return info
 }
 
 
@@ -212,48 +247,46 @@ const getTimeFrame = (start, end) => {
     if (distance <= 604800) {
         // Week
 
-        var labelFormat = "EEEEEE"
-        var frame = eachDayOfInterval({
+        var labelFormat = "eeeeee"
+        var frames = eachDayOfInterval({
             start: sub(start, { days: 1 }),
-            end: end
+            end: add(end, { days: 1 })
         })
     } else if (distance <= 2678400) {
         // Month
         var labelFormat = "dd"
-        var frame = eachDayOfInterval({
+        var frames = eachDayOfInterval({
             start: sub(start, { days: 1 }),
-            end: end
+            end: add(end, { days: 1 })
         })
     } else if (distance <= 31536000) {
         // Year
         var labelFormat = "LLL"
-        var frame = eachMonthOfInterval({
+        var frames = eachMonthOfInterval({
             start: sub(start, { months: 1 }),
-            end: end
+            end: add(end, { months: 1 })
         })
     } else {
         // More
         var labelFormat = "yyyy"
-        var frame = eachYearOfInterval({
+        var frames = eachYearOfInterval({
             start: sub(start, { years: 1 }),
-            end: end
+            end: add(end, { years: 1 })
         })
     }
 
-    let string = frame.map(date => date.toString())
 
 
-   
 
     let info = {
         label_format: labelFormat,
-        frames: frame.map((date, i) => {
-            if(i !== frame.length-1)
-            return {
-                from: date,
-                to: frame[i+1],
-                string: date.toString() +" - "+ frame[i+1].toString() 
-            }
+        frames: frames.map((date, i) => {
+            if (i !== frames.length - 1)
+                return {
+                    from: date.getTime() / 1000,
+                    to: frames[i + 1].getTime() / 1000,
+                    string: date.toString() + " to " + frames[i + 1].toString()
+                }
         })
     }
 
