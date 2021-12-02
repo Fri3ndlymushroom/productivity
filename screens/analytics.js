@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Text, View, Dimensions, ScrollView, StyleSheet } from 'react-native';
 import g, { p } from '../styles/global'
 import { DefaultText } from '../components/Components'
-import getAnalytics from "../js/analysis"
 import { VictoryPie } from 'victory-native';
 import GeneralCharts from "../components/GeneralCharts"
 import Navbar from '../components/NavbarDrawer';
@@ -31,23 +30,6 @@ let config = {
 
 
 export default function Analytics({ navigation, screenProps }) {
-
-    const [selectedTime, setSelectedTime] = useState({
-        time: 31536000,
-        gap: 2628000,
-    })
-
-
-    const settings = {
-        general_chart: {
-            time: selectedTime.time, // week
-            gap: selectedTime.gap,
-            view: "bar"
-        }
-    }
-
-
-
 
 
     let allTime = Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration / 60 / 60, 0))
