@@ -11,8 +11,8 @@ export default function GeneralCharts({ dailyAverage, data }) {
 
     const [selectedChart, setSelectedChart] = useState("bar")
     const [selectedTime, setSelectedTime] = useState({
-        start: sub(new Date(), {months: 10}), 
-        end:new Date,
+        start: sub(new Date(), { months: 10 }),
+        end: new Date,
     })
 
     let chartsData = getChartsData(data, selectedTime)
@@ -84,8 +84,8 @@ export default function GeneralCharts({ dailyAverage, data }) {
                     }
                     {
                         selectedChart === "line" &&
-                        chartsData.bar.data.map((data, i) => {
-                            let colors = [p.hl, "white", "gray"]
+                        chartsData.line.data.map((data, i) => {
+                            let colors = ["gray", "white", p.hl]
 
 
                             return (<VictoryLine
@@ -134,13 +134,13 @@ export default function GeneralCharts({ dailyAverage, data }) {
                 </TouchableOpacity>
             </View>
             <View style={s.generalChartsButtonContainer}>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), {days: 6})})}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), { days: 6 }) })}>
                     <Text style={g.text}>Week</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: add(sub(new Date(), {months: 1}), {days:2})})}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: add(sub(new Date(), { months: 1 }), { days: 2 }) })}>
                     <Text style={g.text}>Month</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), {months: 10})})}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), { months: 10 }) })}>
                     <Text style={g.text}>Year</Text>
                 </TouchableOpacity>
             </View>
@@ -205,8 +205,73 @@ const getChartsData = (data, settings) => {
 
 
     let barData = getBarData(data, start, end)
-    console.log(barData.data)
-    return { bar: barData, line: [] }
+    let lineData = getLineData(data, start, end)
+    return { bar: barData, line: lineData }
+}
+
+const getLineData = (data, start, end) => {
+    let distance = Math.round((end.getTime() - start.getTime()) / 1000)
+    let currentStart = start
+    let currentEnd = end
+    let lastStart = sub(start, { seconds: distance })
+    let lastEnd = sub(end, { seconds: distance })
+    let averageStart = new Date(2021, 1, 1)
+    let averageEnd = currentEnd
+
+    let currentInfo = getTimeFrame(currentStart, currentEnd)
+    let lastInfo = getTimeFrame(lastStart, lastEnd)
+    let averageInfo = getTimeFrame(averageStart, averageEnd)
+
+    let currentLine = currentInfo.frames.map((frame) => {
+        return (
+            {
+                x: format(new Date(frame.from * 1000), currentInfo.label_format),
+                y: data.all_logs.filter((log) => (log.start >= frame.from && log.start < frame.to)).reduce((sum, log) => sum += log.duration, 0)
+            }
+        )
+    })
+
+    let lastLine = lastInfo.frames.map((frame) => {
+        return (
+            {
+                x: format(new Date(frame.from * 1000), lastInfo.label_format),
+                y: data.all_logs.filter((log) => (log.start >= frame.from && log.start < frame.to)).reduce((sum, log) => sum += log.duration, 0)
+            }
+        )
+    })
+
+    let grouped = averageInfo.frames.map((frame, i) => {
+        return (
+            {
+                x: format(new Date(frame.from * 1000), lastInfo.label_format),
+                y: data.all_logs.filter((log) => (log.start >= frame.from && log.start < frame.to)).reduce((sum, log) => sum += log.duration, 0)
+            }
+        )
+    })
+
+
+    let averageLine = currentLine.map(point=>{
+        return{
+            x: point.x,
+            y: 0
+        }
+    })
+
+
+    grouped.forEach((frame, i) => {
+        averageLine[i].y += frame.y
+        if (i === currentInfo.frames.length - 1) i = 0
+    })
+
+
+
+
+    data = [averageLine, lastLine, currentLine]
+
+    return {
+        data: data
+    }
+
 }
 
 const getBarData = (data, start, end) => {
@@ -224,7 +289,7 @@ const getBarData = (data, start, end) => {
     info.data = info.frames.map((frame) => {
 
         return projects.map(project => {
-            return { 
+            return {
                 y: frame.logs.filter(log => log.pid === project).reduce((sum, log) => sum += log.duration, 0),
                 x: format(new Date(frame.from * 1000), info.label_format)
             }
