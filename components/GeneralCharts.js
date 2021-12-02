@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea, VictoryAxis, VictoryLabel } from 'victory-native';
 import g, { p } from '../styles/global';
-import { eachMonthOfInterval, eachWeekOfInterval, eachDayOfInterval, eachYearOfInterval, sub, add, format } from "date-fns"
+import { eachMonthOfInterval, eachWeekOfInterval, eachDayOfInterval, eachYearOfInterval, sub, add, format, fromUnixTime } from "date-fns"
 import { formatSeconds } from "../js/timerfunctions"
 
 
@@ -134,7 +134,7 @@ export default function GeneralCharts({ dailyAverage, data }) {
                 </TouchableOpacity>
             </View>
             <View style={s.generalChartsButtonContainer}>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), { days: 6 }) })}>
+                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), { days: 5 }) })}>
                     <Text style={g.text}>Week</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: add(sub(new Date(), { months: 1 }), { days: 2 }) })}>
@@ -210,17 +210,19 @@ const getChartsData = (data, settings) => {
 }
 
 const getLineData = (data, start, end) => {
-    let distance = Math.round((end.getTime() - start.getTime()) / 1000)
+
     let currentStart = start
     let currentEnd = end
+    let currentInfo = getTimeFrame(currentStart, currentEnd)
+
+    let distance = Math.round(currentInfo.frames[currentInfo.frames.length-1].to - currentInfo.frames[0].from)
     let lastStart = sub(start, { seconds: distance })
     let lastEnd = sub(end, { seconds: distance })
-    let averageStart = new Date(2021, 1, 1)
-    let averageEnd = currentEnd
-
-    let currentInfo = getTimeFrame(currentStart, currentEnd)
     let lastInfo = getTimeFrame(lastStart, lastEnd)
-    let averageInfo = getTimeFrame(averageStart, averageEnd)
+
+    let averageStart = fromUnixTime(data.all_logs[data.all_logs.length-1].start)
+    let averageEnd =  new Date()
+    let averageInfo = getTimeFrame(averageStart, averageEnd, "w")
 
     let currentLine = currentInfo.frames.map((frame) => {
         return (
@@ -250,6 +252,8 @@ const getLineData = (data, start, end) => {
     })
 
 
+
+
     let averageLine = currentLine.map(point=>{
         return{
             x: point.x,
@@ -257,14 +261,14 @@ const getLineData = (data, start, end) => {
         }
     })
 
-
-    grouped.forEach((frame, i) => {
-        averageLine[i].y += frame.y
-        if (i === currentInfo.frames.length - 1) i = 0
+    let i = currentInfo.frames.length - 1
+    grouped.reverse().forEach((frame) => {
+        averageLine[i].y += frame.y / averageInfo.frames.length
+        if (i === 0) i = currentInfo.frames.length - 1
+        else i--
     })
 
-
-
+    
 
     data = [averageLine, lastLine, currentLine]
 
@@ -306,27 +310,26 @@ const getBarData = (data, start, end) => {
 }
 
 
-const getTimeFrame = (start, end) => {
+const getTimeFrame = (start, end, format="") => {
 
     let distance = Math.round((end.getTime() - start.getTime()) / 1000)
 
 
-    if (distance <= 604800) {
+    if ((distance <= 604800 && format === "") || format==="w") {
         // Week
-
         var labelFormat = "eeeeee"
         var frames = eachDayOfInterval({
             start: sub(start, { days: 1 }),
             end: add(end, { days: 1 })
         })
-    } else if (distance <= 2678400) {
+    } else if ((distance <= 2678400&& format === "") || format==="m") {
         // Month
         var labelFormat = "dd"
         var frames = eachDayOfInterval({
             start: sub(start, { days: 1 }),
             end: add(end, { days: 1 })
         })
-    } else if (distance <= 31536000) {
+    } else if ((distance <= 31536000&& format === "") || format==="y") {
         // Year
         var labelFormat = "LLL"
         var frames = eachMonthOfInterval({
@@ -334,7 +337,7 @@ const getTimeFrame = (start, end) => {
             end: add(end, { months: 1 })
         })
     } else {
-        // More
+        // Lifetime
         var labelFormat = "yyyy"
         var frames = eachYearOfInterval({
             start: sub(start, { years: 1 }),
