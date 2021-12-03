@@ -1,4 +1,4 @@
-import { intervalToDuration, format } from 'date-fns'
+import { intervalToDuration, format, secondsToHours } from 'date-fns'
 
 
 
@@ -23,7 +23,7 @@ export function secondsToFormatedString(seconds) {
 
 
 
-export function formatSeconds(seconds, formatstr) {
+export const  formatSeconds = (seconds, formatstr) => {
     let d = new Date(seconds * 1000)
 
     const dc = new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000)
@@ -33,3 +33,13 @@ export function formatSeconds(seconds, formatstr) {
     return f
 }
 
+
+export const secondsToDuration = (sec, format={h: true, m: true, s: true, b: [":", ":"]}) =>{
+    let hours   = Math.floor(sec / 3600)
+    let minutes = Math.floor((sec - (hours * 3600)) / 60)
+    let seconds = sec - (hours * 3600) - (minutes * 60)
+
+    let str = `${format.h ? hours+format.b[0] : ""}${format.m ?minutes + format.b[1] : ""}${format.s ? seconds : ""}`
+
+    return str
+}

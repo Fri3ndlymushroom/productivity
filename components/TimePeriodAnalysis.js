@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import g, { p } from "../styles/global"
-import { formatSeconds } from "../js/timerfunctions"
+import { formatSeconds, secondsToDuration } from "../js/timerfunctions"
 export default function TimePeriodAnalysis({ data, settings }) {
 
 
@@ -85,7 +85,7 @@ export default function TimePeriodAnalysis({ data, settings }) {
                                             return (
                                                 <View key={`dot-${i}-${y}`} style={s.cardColumn} key={period.card + project.project}>
                                                     <Text style={[s.cardProjectTitle, project.style]}>{project.project}</Text>
-                                                    <Text style={s.cardProjectDuration}>{formatSeconds(project.duration, "HH'h' mm'min'")}</Text>
+                                                    <Text style={s.cardProjectDuration}>{secondsToDuration(project.duration, {h: true, m: true, b: ["hrs ", "min "]})}</Text>
                                                 </View>
                                             )
                                         })
@@ -99,6 +99,7 @@ export default function TimePeriodAnalysis({ data, settings }) {
         </View>
     )
 }
+
 
 
 
