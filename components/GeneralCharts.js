@@ -10,10 +10,13 @@ import { formatSeconds } from "../js/timerfunctions"
 export default function GeneralCharts({ dailyAverage, data }) {
 
     const [selectedChart, setSelectedChart] = useState("bar")
+    const [selectedTimeButton, setSelectedTimeButton] = useState("m")
+
     const [selectedTime, setSelectedTime] = useState({
         start: sub(new Date(), { months: 10 }),
         end: new Date,
     })
+
 
     let chartsData = getChartsData(data, selectedTime)
 
@@ -124,24 +127,39 @@ export default function GeneralCharts({ dailyAverage, data }) {
             </View>
             <View style={s.generalChartsButtonContainer}>
                 <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedChart("bar")}>
-                    <Text style={g.text}>Bar</Text>
+                    <Text style={[g.textDim, selectedChart === "bar" ? s.selectedButtonText : {}]}>Bar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedChart("line")}>
-                    <Text style={g.text}>Line</Text>
+                    <Text style={[g.textDim, selectedChart === "line" ? s.selectedButtonText : {}]}>Line</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedChart("area")}>
-                    <Text style={g.text}>Area</Text>
+                    <Text style={[g.textDim, selectedChart === "area" ? s.selectedButtonText : {}]}>Area</Text>
                 </TouchableOpacity>
             </View>
             <View style={s.generalChartsButtonContainer}>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), { days: 5 }) })}>
-                    <Text style={g.text}>Week</Text>
+                <TouchableOpacity
+                    style={s.generalChartsButton}
+                    onPress={() => { setSelectedTime({ end: new Date(), start: sub(new Date(), { days: 5 }) }); setSelectedTimeButton("w") }}
+                >
+                    <Text style={[g.textDim, selectedTimeButton === "w" ? s.selectedButtonText : {}]}>Week</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: add(sub(new Date(), { months: 1 }), { days: 2 }) })}>
-                    <Text style={g.text}>Month</Text>
+                <TouchableOpacity
+                    style={s.generalChartsButton}
+                    onPress={() => { setSelectedTime({ end: new Date(), start: add(sub(new Date(), { months: 1 }), { days: 2 }) }); setSelectedTimeButton("m") }}
+                >
+                    <Text style={[g.textDim, selectedTimeButton === "m" ? s.selectedButtonText : {}]}>Month</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedTime({ end: new Date(), start: sub(new Date(), { months: 10 }) })}>
-                    <Text style={g.text}>Year</Text>
+                <TouchableOpacity
+                    style={s.generalChartsButton}
+                    onPress={() => { setSelectedTime({ end: new Date(), start: sub(new Date(), { months: 10 }) }); setSelectedTimeButton("y") }}
+                >
+                    <Text style={[g.textDim, selectedTimeButton === "y" ? s.selectedButtonText : {}]}>Year</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={s.generalChartsButton}
+                    onPress={() => { setSelectedTime({ end: new Date(), start: fromUnixTime(data.all_logs[data.all_logs.length - 1].start) }); setSelectedTimeButton("l") }}
+                >
+                    <Text style={[g.textDim, selectedTimeButton === "l" ? s.selectedButtonText : {}]}>Lifetime</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -187,6 +205,9 @@ const s = StyleSheet.create({
     dailyAverageValue: {
         fontSize: 18,
         color: p.text__main
+    },
+    selectedButtonText: {
+        color: p.text__main
     }
 })
 
@@ -202,8 +223,6 @@ const getChartsData = (data, settings) => {
     let start = settings.start
     let end = settings.end
 
-
-
     let barData = getBarData(data, start, end)
     let lineData = getLineData(data, start, end)
     return { bar: barData, line: lineData }
@@ -215,13 +234,13 @@ const getLineData = (data, start, end) => {
     let currentEnd = end
     let currentInfo = getTimeFrame(currentStart, currentEnd)
 
-    let distance = Math.round(currentInfo.frames[currentInfo.frames.length-1].to - currentInfo.frames[0].from)
+    let distance = Math.round(currentInfo.frames[currentInfo.frames.length - 1].to - currentInfo.frames[0].from)
     let lastStart = sub(start, { seconds: distance })
     let lastEnd = sub(end, { seconds: distance })
     let lastInfo = getTimeFrame(lastStart, lastEnd)
 
-    let averageStart = fromUnixTime(data.all_logs[data.all_logs.length-1].start)
-    let averageEnd =  new Date()
+    let averageStart = fromUnixTime(data.all_logs[data.all_logs.length - 1].start)
+    let averageEnd = new Date()
     let averageInfo = getTimeFrame(averageStart, averageEnd, "w")
 
     let currentLine = currentInfo.frames.map((frame) => {
@@ -251,11 +270,8 @@ const getLineData = (data, start, end) => {
         )
     })
 
-
-
-
-    let averageLine = currentLine.map(point=>{
-        return{
+    let averageLine = currentLine.map(point => {
+        return {
             x: point.x,
             y: 0
         }
@@ -267,8 +283,6 @@ const getLineData = (data, start, end) => {
         if (i === 0) i = currentInfo.frames.length - 1
         else i--
     })
-
-    
 
     data = [averageLine, lastLine, currentLine]
 
@@ -310,26 +324,26 @@ const getBarData = (data, start, end) => {
 }
 
 
-const getTimeFrame = (start, end, format="") => {
+const getTimeFrame = (start, end, format = "") => {
 
     let distance = Math.round((end.getTime() - start.getTime()) / 1000)
 
 
-    if ((distance <= 604800 && format === "") || format==="w") {
+    if ((distance <= 604800 && format === "") || format === "w") {
         // Week
         var labelFormat = "eeeeee"
         var frames = eachDayOfInterval({
             start: sub(start, { days: 1 }),
             end: add(end, { days: 1 })
         })
-    } else if ((distance <= 2678400&& format === "") || format==="m") {
+    } else if ((distance <= 2678400 && format === "") || format === "m") {
         // Month
         var labelFormat = "dd"
         var frames = eachDayOfInterval({
             start: sub(start, { days: 1 }),
             end: add(end, { days: 1 })
         })
-    } else if ((distance <= 31536000&& format === "") || format==="y") {
+    } else if ((distance <= 31536000 && format === "") || format === "y") {
         // Year
         var labelFormat = "LLL"
         var frames = eachMonthOfInterval({
@@ -363,12 +377,4 @@ const getTimeFrame = (start, end, format="") => {
     info.frames.pop()
 
     return info
-}
-
-
-const getUTCDate = (date) => {
-    var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
-        date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-
-    return new Date(now_utc);
 }
