@@ -13,7 +13,7 @@ export default function GeneralCharts({ dailyAverage, data }) {
     const [selectedTimeButton, setSelectedTimeButton] = useState("m")
 
     const [selectedTime, setSelectedTime] = useState({
-        start: sub(new Date(), { months: 10 }),
+        start: add(sub(new Date(), { months: 1 }), { days: 2 }),
         end: new Date,
     })
 
@@ -34,6 +34,39 @@ export default function GeneralCharts({ dailyAverage, data }) {
                     width={300}
                 >
                     <VictoryAxis
+                        
+                        tickFormat={(y) => {
+
+                            const maxLables = selectedTimeButton === "w"? 7 : (
+                                selectedTimeButton === "m"? 10 : (
+                                    selectedTimeButton === "y"? 6: 10
+                                )
+                            )
+
+                            let relevant = selectedChart === "line" ? chartsData.line.data : chartsData.bar.data
+
+                            let dataLength = relevant[0].length
+
+
+                            let allLables = relevant[0].reduce((arr, point) => {
+                                let array = arr
+                                array.push(point.x)
+                                return array
+                            }, [])
+
+                            let allowedLables = []
+                            for (let i = 1; i < maxLables + 1; i++) {
+                                allowedLables.push(allLables[Math.round(dataLength / maxLables * i) - 1])
+                            }
+
+
+                            if (allowedLables.filter((label) => label === y.toString(10)).length > 0) return y
+                            else return ""
+
+
+                        }}
+
+
                         tickLabelComponent={<VictoryLabel dy={0} dx={0} angle={0} />}
                         style={{
                             axis: {
