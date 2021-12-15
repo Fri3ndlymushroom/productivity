@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea, VictoryAxis, VictoryLabel } from 'victory-native';
+import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea, VictoryAxis, VictoryLabel, VictoryLegend } from 'victory-native';
 import g, { p } from '../styles/global';
-import { eachMonthOfInterval, eachWeekOfInterval, eachDayOfInterval, eachYearOfInterval, sub, add, format, fromUnixTime } from "date-fns"
+import { eachMonthOfInterval, eachDayOfInterval, eachYearOfInterval, sub, add, format, fromUnixTime } from "date-fns"
 import { formatSeconds } from "../js/timerfunctions"
 
 
@@ -33,13 +33,40 @@ export default function GeneralCharts({ dailyAverage, data }) {
                     height={250}
                     width={300}
                 >
+                    {
+                        selectedChart === "line" &&
+                        <VictoryLegend key={"line_legend"} x={30} y={10}
+                            orientation="horizontal"
+                            symbolSpacer={5}
+                            gutter={20}
+                            color={"white"}
+
+                            data={[
+                                {
+                                    name: "Current",
+                                    symbol: { fill: p.hl },
+                                    labels: { fill: p.text__dim }
+                                },
+                                {
+                                    name: "Last",
+                                    symbol: { fill: "white" },
+                                    labels: { fill: p.text__dim }
+                                },
+                                {
+                                    name: "Average",
+                                    symbol: { fill: "gray" },
+                                    labels: { fill: p.text__dim }
+                                }
+                            ]}
+                        />
+                    }
                     <VictoryAxis
-                        
+
                         tickFormat={(y) => {
 
-                            const maxLables = selectedTimeButton === "w"? 7 : (
-                                selectedTimeButton === "m"? 10 : (
-                                    selectedTimeButton === "y"? 6: 10
+                            const maxLables = selectedTimeButton === "w" ? 7 : (
+                                selectedTimeButton === "m" ? 10 : (
+                                    selectedTimeButton === "y" ? 6 : 10
                                 )
                             )
 
@@ -124,16 +151,17 @@ export default function GeneralCharts({ dailyAverage, data }) {
                             let colors = ["gray", "white", p.hl]
 
 
-                            return (<VictoryLine
-                                key={"general_chart-line" + i}
-                                data={data}
-                                interpolation="natural"
-                                animate={{
-                                    duration: 2000,
-                                    onLoad: { duration: 1000 }
-                                }}
-                                style={{ data: { stroke: colors[i] } }}
-                            />)
+                            return (
+                                <VictoryLine
+                                    key={"general_chart-line" + i}
+                                    data={data}
+                                    interpolation="natural"
+                                    animate={{
+                                        duration: 2000,
+                                        onLoad: { duration: 1000 }
+                                    }}
+                                    style={{ data: { stroke: colors[i] } }}
+                                />)
                         })
                     }
                     {
