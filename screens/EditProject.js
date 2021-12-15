@@ -148,9 +148,9 @@ export default function EditProject({ navigation, screenProps }) {
                 </View>
                 <View style={{flex: 1}}></View>
                 <View style={s.buttonSection}>
-                    <TouchableOpacity style={s.button} onPress={()=>saveChanges()}><Text style={[g.text, g.buttonText]}>Save Changes</Text></TouchableOpacity>
-                    <TouchableOpacity style={s.button} onPress={()=>archiveProject()}><Text style={[g.text, g.buttonText]}>Archive Project</Text></TouchableOpacity>
-                    <TouchableOpacity style={s.button} onPress={()=>setPopup(true)}><Text style={[g.text, g.buttonText]}>Delete Project</Text></TouchableOpacity>
+                    <TouchableOpacity style={s.button} onPress={()=>saveChanges()}><Text style={[g.text, g.buttonText]}>Save</Text></TouchableOpacity>
+                    <TouchableOpacity style={s.button} onPress={()=>archiveProject()}><Text style={[g.text, g.buttonText]}>Archive</Text></TouchableOpacity>
+                    <TouchableOpacity style={s.button} onPress={()=>setPopup(true)}><Text style={[g.text, g.buttonText]}>Delete</Text></TouchableOpacity>
                 </View>
                 <Spacer height={50}/>
             </View>
@@ -159,7 +159,7 @@ export default function EditProject({ navigation, screenProps }) {
                 <TouchableOpacity onPress={() => setPopup(false)} style={s.popup}>
                     <Text style={g.text}>Do you really want to delete this project?</Text>
                     <TouchableOpacity onPress={() => deleteProject()} style={g.button}>
-                        <Text style={g.text}>Delete</Text>
+                        <Text style={g.text}>Delete this project permanently</Text>
                     </TouchableOpacity>
                 </TouchableOpacity>
             }
@@ -227,11 +227,13 @@ const s = StyleSheet.create({
     buttonSection:{
         display: "flex",
         flexDirection: "row",
+        justifyContent: "space-between",
         width: "80%"
     },
     button: {
         paddingHorizontal: 5,
-        paddingVertical: 7,
+        paddingVertical: 10,
+        width: 90,
         marginHorizontal: 5,
         backgroundColor: p.bg2,
         borderRadius: p.br,

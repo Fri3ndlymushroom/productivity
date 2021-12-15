@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { View, Text } from 'react-native'
-import Svg, { Path } from "react-native-svg"
+import Svg, { Path, Circle } from "react-native-svg"
 import g, { p } from "../styles/global"
 
 export default function ProjectIcons({ figure }) {
@@ -17,6 +17,8 @@ export default function ProjectIcons({ figure }) {
                 figure === "up" && <Up />
             }{
                 figure === "down" && <Down />
+            }{
+                figure === "dots" && <Dots />
             }
         </>
     )
@@ -106,3 +108,21 @@ const Down = () => (
         />
     </Svg>
 )
+
+
+const Dots = () => {
+    const scale = 1.3
+    return (
+        < Svg width={4 * scale}
+            height={14 * scale}
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            viewbox="0 0 20 14"
+        >
+            <Circle scale={scale} cx={2} cy={2} r={2} fill="#ffffff" />
+            <Circle scale={scale} cx={2} cy={7} r={2} fill="#ffffff" />
+            <Circle scale={scale} cx={2} cy={12} r={2} fill="#ffffff" />
+        </Svg>
+    )
+}
+

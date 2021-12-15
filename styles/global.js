@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 export const p = {
-    bg1: "#191B2A",
-    bg2: "#1C2033",
+    bg1: "#151724",
+    bg2: "#181c2e",
 
     hl: "#5755D3",
 
     text__main: "#c9c9c9",
-    text__dim: "#444866",
+    text__dim: "#383d57",
 
     br: 10
 }
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     },
     button: {
         paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingVertical: 10,
         backgroundColor: p.bg2,
         borderRadius: p.br,
     },

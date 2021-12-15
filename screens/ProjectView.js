@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { VictoryBar, VictoryLabel, VictoryChart, VictoryAxis } from 'victory-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NavbarStack from '../components/NavbarStack'
+import ProjectIcons from '../components/ProjectIcons';
 
 export default function ProjectView({ navigation, screenProps }) {
     let pid = navigation.getParam("projectViewPid")
@@ -92,7 +93,7 @@ export default function ProjectView({ navigation, screenProps }) {
         <View style={g.body}>
             <NavbarStack navigation={navigation} loc={projectName}>
                 <TouchableOpacity style={s.optionsButton} onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }}>
-                    <Icon name={'ellipsis-v'} size={20} color={'white'} />
+                    <ProjectIcons figure={"dots"} />
                 </TouchableOpacity>
             </NavbarStack>
             <ScrollView>
@@ -147,7 +148,7 @@ export default function ProjectView({ navigation, screenProps }) {
 
 
 
-                    <TouchableOpacity style={s.optionsButton} onPress={() => addLog()}>
+                    <TouchableOpacity style={s.button} onPress={() => addLog()}>
                         <Text style={s.buttonText}>Add Log</Text>
                     </TouchableOpacity>
                 </View>
@@ -161,8 +162,8 @@ export default function ProjectView({ navigation, screenProps }) {
                                 let logs = null
                                 let card = (
 
-                                    <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={g.projectCard}>
-                                        <Text style={g.text}>{formatSeconds(log.start,"HH':'mm")} - {log.end ? formatSeconds(log.end, "HH':'mm") : "running"}</Text>
+                                    <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={s.projectCard}>
+                                        <Text style={s.totalTime}>{formatSeconds(log.start, "HH':'mm")} - {log.end ? formatSeconds(log.end, "HH':'mm") : "running"}</Text>
                                         <Text style={s.totalTime}>{formatSeconds(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
                                     </TouchableOpacity>
 
@@ -172,7 +173,7 @@ export default function ProjectView({ navigation, screenProps }) {
                                     logs = (
                                         <View key={"projectViewLog" + log.lid}>
                                             <View style={s.dayTopMargin}></View>
-                                            <Text style={g.dayTitle}>{formatSeconds(log.start, "EEE, d MMM")}</Text>
+                                            <Text style={s.dayTitle}>{formatSeconds(log.start, "EEE, d MMM")}</Text>
                                             {card}
                                         </View>
                                     )
@@ -205,7 +206,7 @@ export default function ProjectView({ navigation, screenProps }) {
 const s = StyleSheet.create({
     totalTime: {
         color: p.text__dim,
-        fontSize: 12,
+        fontSize: 14,
     },
     logs: {
         alignItems: 'center',
@@ -221,8 +222,17 @@ const s = StyleSheet.create({
         borderRadius: p.br,
         //alignSelf: "center",
     },
+    button: {
+        backgroundColor: p.bg2,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        width: 120,
+        borderRadius: p.br,
+    },
     buttonText: {
         color: p.text__main,
+        textAlign: "center",
+        fontSize: 16
     },
     projectHeaderContainer: {
         alignItems: "center"
@@ -238,8 +248,28 @@ const s = StyleSheet.create({
     dayTopMargin: {
         height: 20
     },
-    logsWrapper:{
+    logsWrapper: {
         width: Dimensions.get("window").width / 100 * 80
+    },
+    projectCard: {
+        width: "100%",
+        borderColor: p.bg2,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        margin: 5,
+        padding: 15,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        alignSelf: "center",
+    },
+    dayTitle:{
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: p.br,
+        fontSize: 18,
     }
+
 })
 
