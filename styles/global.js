@@ -12,7 +12,8 @@ export const p = {
     br: 10
 }
 
-
+export const iconNames = ["cube", "triangle", "book", "tube", "square", "sixedge"]
+export const colorPalette = ["#6845f5", "#8645f5", "#a045f5", "#bd45f5", "#ef45f5", "#f545c3", "#f54591", "#f54571", "#f54545", "#f55c45", "#f57745", "#f5a945", "#f5c945", "#f5ef45", "#b7f545", "#8bf545", "#5cf545", "#45f565", "#45f565", "#45f5c0", "#45c9f5", "#45aff5", "#4586f5", "#455ff5", "#4545f5"]
 
 export const headerStyle = {
 

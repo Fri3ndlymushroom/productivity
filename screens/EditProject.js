@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Text, Button, TextInput, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import g, { p } from '../styles/global'
+import g, { p, iconNames, colorPalette } from '../styles/global'
 import ColorPalette from 'react-native-color-palette'
 import { DefaultText, Spacer } from '../components/Components'
 import { copyObject } from '../js/functions';
@@ -84,8 +84,6 @@ export default function EditProject({ navigation, screenProps }) {
    }
 
 
-   let icons = ["cube", "triangle", "book", "tube", "square", "sixedge"]
-   let colors = ['#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9']
 
    return (
       <>
@@ -107,7 +105,7 @@ export default function EditProject({ navigation, screenProps }) {
                >
                   <View style={s.selectionInner}>
                      {
-                        colors.map(color => {
+                        colorPalette.map(color => {
                            let dynamic = {
                               backgroundColor: color,
                               borderWidth: (color === project.color ? 2 : 0),
@@ -131,7 +129,7 @@ export default function EditProject({ navigation, screenProps }) {
                >
                   <View style={s.selectionInner}>
                      {
-                        icons.map((icon) => {
+                        iconNames.map((icon) => {
                            let dynamic = {
                               borderWidth: (icon === project.icon ? 2 : 0),
                               borderColor: "white"
