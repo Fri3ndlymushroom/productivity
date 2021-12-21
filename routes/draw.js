@@ -2,28 +2,28 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
 
 import AnalyticsStack from "./AnalyticsStack";
-import TimelineStack from "./homeStack";
-import SettingsStack from "./settingsStack";
+import TimelineStack from "./HomeStack";
+import SettingsStack from "./SettingsStack";
 
 
 const RootDrawNavigator = createDrawerNavigator(
-    {
-        Timeline: {
-            screen: TimelineStack,
+   {
+      Timeline: {
+         screen: TimelineStack,
 
-        },
-        Analytics: {
-            screen: AnalyticsStack,
-        },
+      },
+      Analytics: {
+         screen: AnalyticsStack,
+      },
 
-        Settings: {
-            screen: SettingsStack,
-        },
+      Settings: {
+         screen: SettingsStack,
+      },
 
-    },
-    {
-        edgeWidth: 0
-    }
+   },
+   {
+      edgeWidth: 0
+   }
 
 )
 
