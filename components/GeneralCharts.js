@@ -19,7 +19,6 @@ export default function GeneralCharts({ dailyAverage, data }) {
 
    let chartsData = getChartsData(data, selectedTime)
 
-
    return (
       <View style={s.generalChartsContainer}>
 
@@ -118,7 +117,8 @@ export default function GeneralCharts({ dailyAverage, data }) {
                   }}
                />
                {
-                  selectedChart === "bar" &&
+
+                  (selectedChart === "bar") &&
                   <VictoryStack
                      colorScale={chartsData.bar.colors}
                   >
@@ -149,18 +149,21 @@ export default function GeneralCharts({ dailyAverage, data }) {
                   chartsData.line.data.map((data, i) => {
                      let colors = ["gray", "white", p.hl]
 
+                     if (data.length > 2) {
+                        return (
+                           <VictoryLine
+                              key={"general_chart-line" + i}
+                              data={data}
+                              interpolation="natural"
+                              animate={{
+                                 duration: 2000,
+                                 onLoad: { duration: 1000 }
+                              }}
+                              style={{ data: { stroke: colors[i] } }}
+                           />
+                        )
+                     }
 
-                     return (
-                        <VictoryLine
-                           key={"general_chart-line" + i}
-                           data={data}
-                           interpolation="natural"
-                           animate={{
-                              duration: 2000,
-                              onLoad: { duration: 1000 }
-                           }}
-                           style={{ data: { stroke: colors[i] } }}
-                        />)
                   })
                }
                {
@@ -279,7 +282,7 @@ const s = StyleSheet.create({
    selectedButtonText: {
       color: p.text__main
    },
-   divider:{
+   divider: {
       height: "80%",
       width: 1,
       backgroundColor: p.bg1 + "50"
