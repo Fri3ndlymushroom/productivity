@@ -58,21 +58,21 @@ export default function Timeline({ navigation, screenProps }) {
             let all = []
 
 
-            while (current < end){
-                all.push({start: current, end: day * 60 * 60 * 24 + 86399})
+            while (current < end) {
+                all.push({ start: current, end: day * 60 * 60 * 24 + 86399 })
                 current += 86400
-                day ++
+                day++
             }
-            if (duration > 0){
-                all.push({start: current, end: end, day: day})
+            if (duration > 0) {
+                all.push({ start: current, end: end, day: day })
             }
 
-            all.forEach((log, i)=>{
-                if(i === 0){
+            all.forEach((log, i) => {
+                if (i === 0) {
                     dataCopy.all_logs[runningIndex].running = false
                     dataCopy.all_logs[runningIndex].end = log.end
                     dataCopy.all_logs[runningIndex].duration = log.end - start
-                }else{
+                } else {
                     dataCopy.all_logs.push({
                         project: project,
                         pid: pid,
@@ -95,29 +95,31 @@ export default function Timeline({ navigation, screenProps }) {
 
     }
     return (
-        <View style={g.body}>
-            <Navbar {...{ navigation }} location={"Timeline"} />
-            {
-                projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
-            }
-            <View>
-                <ScrollView
-                    ref={ref => { this.timelineScrollView = ref }}
-                    onContentSizeChange={() => this.timelineScrollView.scrollToEnd({ animated: true })}
+        <View style={g.bodyWrapper}>
+            <View style={g.body}>
+                <Navbar {...{ navigation }} location={"Timeline"} />
+                {
+                    projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
+                }
+                <View>
+                    <ScrollView
+                        ref={ref => { this.timelineScrollView = ref }}
+                        onContentSizeChange={() => this.timelineScrollView.scrollToEnd({ animated: true })}
 
-                >
-                    <View key="timelineTopMargin" style={g.navbarTopMargin}></View>
-                    {
-                        screenProps.data.reversed_daily_logs.map((dayData, i) => {
-                            if (dayData.day !== Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24))
-                                return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject} {...{ navigation, dayData }} />
-                            else return
-                        })
-                    }
-                    {
-                        <TimelineToday setProjectSelectionOpen={setProjectSelectionOpen} goal={screenProps.settings.daily_goal} stopProject={stopProject} startProject={startProject} projects={screenProps.data.projects} {...{ navigation }} />
-                    }
-                </ScrollView>
+                    >
+                        <View key="timelineTopMargin" style={g.navbarTopMargin}></View>
+                        {
+                            screenProps.data.reversed_daily_logs.map((dayData, i) => {
+                                if (dayData.day !== Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24))
+                                    return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject} {...{ navigation, dayData }} />
+                                else return
+                            })
+                        }
+                        {
+                            <TimelineToday setProjectSelectionOpen={setProjectSelectionOpen} goal={screenProps.settings.daily_goal} stopProject={stopProject} startProject={startProject} projects={screenProps.data.projects} {...{ navigation }} />
+                        }
+                    </ScrollView>
+                </View>
             </View>
         </View>
     );

@@ -45,68 +45,70 @@ export default function Home({ navigation, screenProps }) {
     let colors = ['#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9']
 
     return (
-        <View style={g.body}>
-            <NavbarStack navigation={navigation} loc={"Create Project"}></NavbarStack>
+        <View syle={g.bodyWrapper}>
+            <View style={g.body}>
+                <NavbarStack navigation={navigation} loc={"Create Project"}></NavbarStack>
 
-            <Spacer height={200}/>
-            <View style={s.projectPreview}>
-                <View style={[g.logoWrapper, colorStyle.style]}>
-                    <ProjectIcons figure={selectedIcon} />
+                <Spacer height={200} />
+                <View style={s.projectPreview}>
+                    <View style={[g.logoWrapper, colorStyle.style]}>
+                        <ProjectIcons figure={selectedIcon} />
+                    </View>
+                    <TextInput
+                        style={[g.input, s.projectTitle]}
+                        onChangeText={setNewProjectName}
+                        value={newProjectName} />
                 </View>
-                <TextInput
-                    style={[g.input, s.projectTitle]}
-                    onChangeText={setNewProjectName}
-                    value={newProjectName} />
+                <View style={s.selectionParent}>
+                    <ScrollView style={s.selectionScroll}
+                        horizontal={true}
+                    >
+                        <View style={s.selectionInner}>
+                            {
+                                colors.map(color => {
+                                    let dynamic = {
+                                        backgroundColor: color,
+                                        borderWidth: (color === selectedColor ? 2 : 0),
+                                        borderColor: "white"
+                                    }
+
+
+                                    return (
+                                        <TouchableOpacity key={color} onPress={() => setSelectedColor(color)} style={[s.colorTile, dynamic]}>
+
+                                        </TouchableOpacity>
+                                    )
+                                })
+                            }
+                        </View>
+                    </ScrollView>
+                </View>
+
+                <View style={s.selectionParent}>
+                    <ScrollView style={s.selectionScroll}
+                        horizontal={true}
+                    >
+                        <View style={s.selectionInner}>
+                            {
+                                icons.map((icon) => {
+                                    let dynamic = {
+                                        borderWidth: (icon === selectedIcon ? 2 : 0),
+                                        borderColor: "white"
+                                    }
+                                    return (
+                                        <TouchableOpacity key={icon} onPress={() => setSelectedIcon(icon)} style={[s.logoWrapper, dynamic]}>
+                                            <ProjectIcons figure={icon} />
+                                        </TouchableOpacity>
+                                    )
+                                })
+                            }
+                        </View>
+                    </ScrollView>
+                </View>
+                <View style={{ flex: 1 }}></View>
+                <TouchableOpacity style={s.button} onPress={() => addProject()} ><Text style={g.text}>Add Project</Text></TouchableOpacity>
+                <Spacer height={50} />
             </View>
-            <View style={s.selectionParent}>
-                <ScrollView style={s.selectionScroll}
-                    horizontal={true}
-                >
-                    <View style={s.selectionInner}>
-                        {
-                            colors.map(color => {
-                                let dynamic = {
-                                    backgroundColor: color,
-                                    borderWidth: (color === selectedColor ? 2 : 0),
-                                    borderColor: "white"
-                                }
-
-
-                                return (
-                                    <TouchableOpacity key={color} onPress={() => setSelectedColor(color)} style={[s.colorTile, dynamic]}>
-
-                                    </TouchableOpacity>
-                                )
-                            })
-                        }
-                    </View>
-                </ScrollView>
-            </View>
-
-            <View style={s.selectionParent}>
-                <ScrollView style={s.selectionScroll}
-                    horizontal={true}
-                >
-                    <View style={s.selectionInner}>
-                        {
-                            icons.map((icon) => {
-                                let dynamic = {
-                                    borderWidth: (icon === selectedIcon ? 2 : 0),
-                                    borderColor: "white"
-                                }
-                                return (
-                                    <TouchableOpacity key={icon} onPress={() => setSelectedIcon(icon)} style={[s.logoWrapper, dynamic]}>
-                                        <ProjectIcons figure={icon} />
-                                    </TouchableOpacity>
-                                )
-                            })
-                        }
-                    </View>
-                </ScrollView>
-            </View>
-            <View style={{flex: 1}}></View>
-            <TouchableOpacity style={s.button} onPress={() => addProject()} ><Text style={g.text}>Add Project</Text></TouchableOpacity>
-            <Spacer height={50}/>
         </View>
     );
 }
@@ -155,7 +157,7 @@ const s = StyleSheet.create({
         height: 50,
         marginVertical: 20
     },
-    logoWrapper:{
+    logoWrapper: {
         width: 50,
         height: 50,
         backgroundColor: p.bg2,

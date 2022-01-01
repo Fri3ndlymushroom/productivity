@@ -32,61 +32,65 @@ export default function Signin({ navigation }) {
         <>
             {
                 !auth().currentUser &&
-                <View style={g.body}>
-                    <NavbarStack navigation={navigation} loc={"Sign Up"}></NavbarStack>
-                    <Spacer height={100} />
-                    <Text style={s.signinInfo}>You need to log in to use the backup system so we can backup your data across all devices.</Text>
-                    <View syle={s.signinSection}>
+                <View style={g.bodyWrapper}>
+                    <View style={g.body}>
+                        <NavbarStack navigation={navigation} loc={"Sign Up"}></NavbarStack>
+                        <Spacer height={100} />
+                        <Text style={s.signinInfo}>You need to log in to use the backup system so we can backup your data across all devices.</Text>
+                        <View syle={s.signinSection}>
 
-                        <View style={s.modeSelection}>
-                            <TouchableOpacity style={[s.button]} onPress={() => setSignType("Log In")}>
-                                <Text style={[signType === "Log In" ? g.text : g.textDim, g.buttonText]}>Log In</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[s.button]} onPress={() => setSignType("Sign Up")}>
-                                <Text style={[signType === "Sign Up" ? g.text : g.textDim, g.buttonText]}>Sign Up</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <Spacer height={40} />
-                        <TextInput
-                            style={s.formInput}
-                            placeholder="Email"
-                            value={email}
-                            onChangeText={text => setEmail(text)}
-                            placeholderTextColor={p.text__dim}
-                        />
-                        <View style={s.passwordSubmitWrapper}>
+                            <View style={s.modeSelection}>
+                                <TouchableOpacity style={[s.button]} onPress={() => setSignType("Log In")}>
+                                    <Text style={[signType === "Log In" ? g.text : g.textDim, g.buttonText]}>Log In</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[s.button]} onPress={() => setSignType("Sign Up")}>
+                                    <Text style={[signType === "Sign Up" ? g.text : g.textDim, g.buttonText]}>Sign Up</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <Spacer height={40} />
                             <TextInput
-                                style={[s.formInput, { width: 200 }]}
-                                placeholder="Password"
-                                value={password}
-                                onChangeText={text => setPassword(text)}
+                                style={s.formInput}
+                                placeholder="Email"
+                                value={email}
+                                onChangeText={text => setEmail(text)}
                                 placeholderTextColor={p.text__dim}
-                                secureTextEntry={true}
                             />
-                            <TouchableOpacity
-                                style={[{ height: 40, width: 90, marginVertical: 5, backgroundColor: p.bg2, borderRadius: p.br, display: "flex", justifyContent: "center", alignItems: "center" }]}
-                                onPress={() => (signType === "Log In") ? handleLogIn() : handleSignUp()}
-                            >
-                                <Text style={[g.text, g.buttonText]}>Submit</Text>
-                            </TouchableOpacity>
+                            <View style={s.passwordSubmitWrapper}>
+                                <TextInput
+                                    style={[s.formInput, { width: 200 }]}
+                                    placeholder="Password"
+                                    value={password}
+                                    onChangeText={text => setPassword(text)}
+                                    placeholderTextColor={p.text__dim}
+                                    secureTextEntry={true}
+                                />
+                                <TouchableOpacity
+                                    style={[{ height: 40, width: 90, marginVertical: 5, backgroundColor: p.bg2, borderRadius: p.br, display: "flex", justifyContent: "center", alignItems: "center" }]}
+                                    onPress={() => (signType === "Log In") ? handleLogIn() : handleSignUp()}
+                                >
+                                    <Text style={[g.text, g.buttonText]}>Submit</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <Spacer height={200} />
+
+
                         </View>
-                        <Spacer height={200} />
 
-
-                    </View>
-
-                </View >
+                    </View >
+                </View>
             }
             {
                 auth().currentUser &&
-                <View style={g.body}>
-                    <NavbarStack navigation={navigation} loc={"Sign Up"}></NavbarStack>
-                    <Spacer height={100} />
-                    <Text style={s.signinInfo}>You need to be logged in to use the backup system so we can backup your data across all devices.</Text>
-                    <TouchableOpacity onPress={()=>{auth().signOut(); navigation.goBack()}} style={s.button}>
-                        <Text style={g.text}>Log Out</Text>
-                    </TouchableOpacity>
-                </View >
+                <View style={g.bodyWrapper}>
+                    <View style={g.body}>
+                        <NavbarStack navigation={navigation} loc={"Sign Up"}></NavbarStack>
+                        <Spacer height={100} />
+                        <Text style={s.signinInfo}>You need to be logged in to use the backup system so we can backup your data across all devices.</Text>
+                        <TouchableOpacity onPress={() => { auth().signOut(); navigation.goBack() }} style={s.button}>
+                            <Text style={g.text}>Log Out</Text>
+                        </TouchableOpacity>
+                    </View >
+                </View>
             }
         </>
     )

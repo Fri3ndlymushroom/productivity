@@ -54,101 +54,102 @@ export default function Settings({ navigation, screenProps }) {
 
 
     return (
-        <View style={g.body} >
-            <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={changed} saveChanges={saveChanges} />
-            <Spacer height={150} />
-            <View>
-                {dateTimeProps.open && (
-                    <RNDateTimePicker
-                        testID="dateTimePicker"
-                        mode={dateTimeProps.mode}
-                        is24Hour={true}
-                        display="default"
-                        value={new Date(dateTimeProps.value * 1000)}
-                        onChange={dateTimePickerOnChange}
-                        timeZoneOffsetInMinutes={0}
-                    />
-                )}
-            </View>
-
-            <TouchableOpacity
-                style={{
-                    height: 70,
-                    width: 300,
-                    padding: 12.5,
-                    backgroundColor: p.bg2,
-                    borderRadius: p.br,
-                    ...g.shadow,
-                    margin: 5,
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "flex-start",
-
-                }}
-                onPress={() => navigation.navigate("Signin")}
-            >
-                <View
-                    style={{ height: 45, width: 45, backgroundColor: p.bg1, borderRadius: p.br, marginRight: 12.5, display: "flex", alignItems: "center", justifyContent: "center" }}
-                >
-                    <Icon name={'user'} size={30} color={'white'} />
+        <View style={g.bodyWrapper}>
+            <View style={g.body} >
+                <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={changed} saveChanges={saveChanges} />
+                <Spacer height={150} />
+                <View>
+                    {dateTimeProps.open && (
+                        <RNDateTimePicker
+                            testID="dateTimePicker"
+                            mode={dateTimeProps.mode}
+                            is24Hour={true}
+                            display="default"
+                            value={new Date(dateTimeProps.value * 1000)}
+                            onChange={dateTimePickerOnChange}
+                            timeZoneOffsetInMinutes={0}
+                        />
+                    )}
                 </View>
-                <Text style={g.text}>{auth().currentUser ? auth().currentUser.email : "not logged in"}</Text>
-            </TouchableOpacity>
 
-            {/* Pro */}
-            {
-                !screenProps.isPro &&
-                <TouchableOpacity onPress={() => navigation.navigate("Pro")} style={s.proButton}>
-                    <Text style={s.backupsHeader}>Theta Pro</Text>
-                    <Text style={s.backupsInfo}>Backups</Text>
-                    <Text style={s.backupsInfo}>Friend List</Text>
+                <TouchableOpacity
+                    style={{
+                        height: 70,
+                        width: 300,
+                        padding: 12.5,
+                        backgroundColor: p.bg2,
+                        borderRadius: p.br,
+                        ...g.shadow,
+                        margin: 5,
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "flex-start",
+
+                    }}
+                    onPress={() => navigation.navigate("Signin")}
+                >
+                    <View
+                        style={{ height: 45, width: 45, backgroundColor: p.bg1, borderRadius: p.br, marginRight: 12.5, display: "flex", alignItems: "center", justifyContent: "center" }}
+                    >
+                        <Icon name={'user'} size={30} color={'white'} />
+                    </View>
+                    <Text style={g.text}>{auth().currentUser ? auth().currentUser.email : "not logged in"}</Text>
                 </TouchableOpacity>
-            }
 
-            {/* backups */}
-            <TouchableOpacity onPress={() => screenProps.isPro ? (auth().currentUser ? navigation.navigate("Backups") : navigation.navigate("Signin")) : navigation.navigate("Pro")} style={s.backupsButton}>
-                <Text style={s.backupsHeader}>Backups</Text>
-                <Text style={s.backupsInfo}>Pro Feature</Text>
-            </TouchableOpacity>
-
-            {/* daily goal */}
-            <TouchableOpacity style={s.settingsCard}
-                onPress={() =>
-                    setDateTimeProps(
-                        {
-                            target: "daily_goal",
-                            value: newSettings.daily_goal,
-                            mode: "time",
-                            open: true
-                        }
-                    )
+                {/* Pro */}
+                {
+                    !screenProps.isPro &&
+                    <TouchableOpacity onPress={() => navigation.navigate("Pro")} style={s.proButton}>
+                        <Text style={s.backupsHeader}>Theta Pro</Text>
+                        <Text style={s.backupsInfo}>Backups</Text>
+                        <Text style={s.backupsInfo}>Friend List</Text>
+                    </TouchableOpacity>
                 }
-            >
-                <Text style={g.text}>Set Daily Goal</Text>
-                <Text style={g.text}>{formatSeconds(newSettings.daily_goal, "HH'hrs' mm'min'")}</Text>
-            </TouchableOpacity>
 
-            {/* start of day */}
-            <TouchableOpacity style={s.settingsCard}
-                onPress={() =>
-                    setDateTimeProps(
-                        {
-                            target: "start_of_day",
-                            value: newSettings.start_of_day,
-                            mode: "time",
-                            open: true
-                        }
-                    )
-                }
-            >
-                <Text style={g.text}>Set Start Of Day</Text>
-                <Text style={g.text}>{formatSeconds(newSettings.start_of_day, "HH:mm")}</Text>
-            </TouchableOpacity>
-            <View style={{ flex: 1 }}></View>
-            <TouchableOpacity onPress={saveChanges} style={g.button}><Text style={[g.text, g.buttonText]}>Save Changes</Text></TouchableOpacity>
-            <Spacer height={50} />
+                {/* backups */}
+                <TouchableOpacity onPress={() => screenProps.isPro ? (auth().currentUser ? navigation.navigate("Backups") : navigation.navigate("Signin")) : navigation.navigate("Pro")} style={s.backupsButton}>
+                    <Text style={s.backupsHeader}>Backups</Text>
+                    <Text style={s.backupsInfo}>Pro Feature</Text>
+                </TouchableOpacity>
+
+                {/* daily goal */}
+                <TouchableOpacity style={s.settingsCard}
+                    onPress={() =>
+                        setDateTimeProps(
+                            {
+                                target: "daily_goal",
+                                value: newSettings.daily_goal,
+                                mode: "time",
+                                open: true
+                            }
+                        )
+                    }
+                >
+                    <Text style={g.text}>Set Daily Goal</Text>
+                    <Text style={g.text}>{formatSeconds(newSettings.daily_goal, "HH'hrs' mm'min'")}</Text>
+                </TouchableOpacity>
+
+                {/* start of day */}
+                <TouchableOpacity style={s.settingsCard}
+                    onPress={() =>
+                        setDateTimeProps(
+                            {
+                                target: "start_of_day",
+                                value: newSettings.start_of_day,
+                                mode: "time",
+                                open: true
+                            }
+                        )
+                    }
+                >
+                    <Text style={g.text}>Set Start Of Day</Text>
+                    <Text style={g.text}>{formatSeconds(newSettings.start_of_day, "HH:mm")}</Text>
+                </TouchableOpacity>
+                <View style={{ flex: 1 }}></View>
+                <TouchableOpacity onPress={saveChanges} style={g.button}><Text style={[g.text, g.buttonText]}>Save Changes</Text></TouchableOpacity>
+                <Spacer height={50} />
+            </View>
         </View>
-
     )
 }
 

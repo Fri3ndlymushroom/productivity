@@ -9,7 +9,7 @@ import Navbar from '../components/NavbarDrawer';
 import TimePeriodAnalysis from '../components/TimePeriodAnalysis';
 import BestDayOfWeek from '../components/BestDayOfWeek';
 import WeekComparison from '../components/WeekComparison';
-import {formatSeconds} from "../js/timerfunctions"
+import { formatSeconds } from "../js/timerfunctions"
 let config = {
 
     backgroundColor: "white",
@@ -22,7 +22,7 @@ let config = {
         borderRadius: 16
     },
     propsForDots: {
-        r: "6",  
+        r: "6",
         strokeWidth: "2",
         stroke: "#ffa726"
     }
@@ -39,47 +39,49 @@ export default function Analytics({ navigation, screenProps }) {
     let pieChartData = getPieChartData(screenProps.data)
 
     return (
-        <View style={g.body}>
-            <Navbar {...{ navigation }} location={"Analytics"} />
-            <ScrollView>
-                <View style={g.navbarTopMargin}></View>
-                {/* info grid */}
-                <View style={s.infoGrid}>
-                    <View style={[s.infoGridItem, s.infoGridItem1]}>
-                        <Text style={s.allTime}>{allTime}h</Text>
-                        <VictoryPie
-                            colorScale={pieChartData.colors}
-                            data={pieChartData.data}
-                            width={150}
-                            height={150}
-                            radius={60}
-                            cornerRadius={5}
-                            innerRadius={40}
-                            padAngle={2}
-                            style={{
-                                labels: {
-                                    fill: "#00000000"
-                                }
-                            }}
-                        />
-                    </View>
-                    <View style={[s.infoGridItem, s.infoGridItem2]}>
-                        <BestDayOfWeek data={screenProps.data} />
-                    </View>
-                    <View style={[s.infoGridItem, s.infoGridItem3]}>
-                        <TimePeriodAnalysis data={screenProps.data} settings={screenProps.settings} />
-                    </View>
-                    <View style={[s.infoGridItem, s.infoGridItem4]}>
-                        <WeekComparison data={screenProps.data} settings={screenProps.settings} />
+        <View style={g.bodyWrapper}>
+            <View style={g.body}>
+                <Navbar {...{ navigation }} location={"Analytics"} />
+                <ScrollView>
+                    <View style={g.navbarTopMargin}></View>
+                    {/* info grid */}
+                    <View style={s.infoGrid}>
+                        <View style={[s.infoGridItem, s.infoGridItem1]}>
+                            <Text style={s.allTime}>{allTime}h</Text>
+                            <VictoryPie
+                                colorScale={pieChartData.colors}
+                                data={pieChartData.data}
+                                width={150}
+                                height={150}
+                                radius={60}
+                                cornerRadius={5}
+                                innerRadius={40}
+                                padAngle={2}
+                                style={{
+                                    labels: {
+                                        fill: "#00000000"
+                                    }
+                                }}
+                            />
+                        </View>
+                        <View style={[s.infoGridItem, s.infoGridItem2]}>
+                            <BestDayOfWeek data={screenProps.data} />
+                        </View>
+                        <View style={[s.infoGridItem, s.infoGridItem3]}>
+                            <TimePeriodAnalysis data={screenProps.data} settings={screenProps.settings} />
+                        </View>
+                        <View style={[s.infoGridItem, s.infoGridItem4]}>
+                            <WeekComparison data={screenProps.data} settings={screenProps.settings} />
+                        </View>
+
                     </View>
 
-                </View>
-
-                {/* general chart */}
-                <GeneralCharts dailyAverage={dailyAverage} data={screenProps.data} />
+                    {/* general chart */}
+                    <GeneralCharts dailyAverage={dailyAverage} data={screenProps.data} />
 
 
-            </ScrollView>
+                </ScrollView>
+            </View>
         </View>
     );
 }

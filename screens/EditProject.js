@@ -89,70 +89,72 @@ export default function EditProject({ navigation, screenProps }) {
 
     return (
         <>
-            <View style={g.body}>
-                <NavbarStack navigation={navigation} loc={"Edit Project"} saveable={true} changed={changed} saveChanges={saveChanges}></NavbarStack>
-                <Spacer height={200} />
-                <View style={s.projectPreview}>
-                    <View style={[g.logoWrapper, { backgroundColor: project.color }]}>
-                        <ProjectIcons figure={project.icon} />
+            <View syle={g.bodyWrapper}>
+                <View style={g.body}>
+                    <NavbarStack navigation={navigation} loc={"Edit Project"} saveable={true} changed={changed} saveChanges={saveChanges}></NavbarStack>
+                    <Spacer height={200} />
+                    <View style={s.projectPreview}>
+                        <View style={[g.logoWrapper, { backgroundColor: project.color }]}>
+                            <ProjectIcons figure={project.icon} />
+                        </View>
+                        <TextInput
+                            style={[g.input, s.projectTitle]}
+                            onChangeText={changeProjectName}
+                            value={project.name} />
                     </View>
-                    <TextInput
-                        style={[g.input, s.projectTitle]}
-                        onChangeText={changeProjectName}
-                        value={project.name} />
-                </View>
-                <View style={s.selectionParent}>
-                    <ScrollView style={s.selectionScroll}
-                        horizontal={true}
-                    >
-                        <View style={s.selectionInner}>
-                            {
-                                colors.map(color => {
-                                    let dynamic = {
-                                        backgroundColor: color,
-                                        borderWidth: (color === project.color ? 2 : 0),
-                                        borderColor: "white"
-                                    }
+                    <View style={s.selectionParent}>
+                        <ScrollView style={s.selectionScroll}
+                            horizontal={true}
+                        >
+                            <View style={s.selectionInner}>
+                                {
+                                    colors.map(color => {
+                                        let dynamic = {
+                                            backgroundColor: color,
+                                            borderWidth: (color === project.color ? 2 : 0),
+                                            borderColor: "white"
+                                        }
 
 
-                                    return (
-                                        <TouchableOpacity key={color} onPress={() => changeProjectColor(color)} style={[s.colorTile, dynamic]}>
+                                        return (
+                                            <TouchableOpacity key={color} onPress={() => changeProjectColor(color)} style={[s.colorTile, dynamic]}>
 
-                                        </TouchableOpacity>
-                                    )
-                                })
-                            }
-                        </View>
-                    </ScrollView>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                }
+                            </View>
+                        </ScrollView>
+                    </View>
+                    <View style={s.selectionParent}>
+                        <ScrollView style={s.selectionScroll}
+                            horizontal={true}
+                        >
+                            <View style={s.selectionInner}>
+                                {
+                                    icons.map((icon) => {
+                                        let dynamic = {
+                                            borderWidth: (icon === project.icon ? 2 : 0),
+                                            borderColor: "white"
+                                        }
+                                        return (
+                                            <TouchableOpacity key={icon} onPress={() => changeProjectIcon(icon)} style={[s.logoWrapper, dynamic]}>
+                                                <ProjectIcons figure={icon} />
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                }
+                            </View>
+                        </ScrollView>
+                    </View>
+                    <View style={{ flex: 1 }}></View>
+                    <View style={s.buttonSection}>
+                        <TouchableOpacity style={s.button} onPress={() => saveChanges()}><Text style={[g.text, g.buttonText]}>Save</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.button} onPress={() => archiveProject()}><Text style={[g.text, g.buttonText]}>Archive</Text></TouchableOpacity>
+                        <TouchableOpacity style={s.button} onPress={() => setPopup(true)}><Text style={[g.text, g.buttonText]}>Delete</Text></TouchableOpacity>
+                    </View>
+                    <Spacer height={50} />
                 </View>
-                <View style={s.selectionParent}>
-                    <ScrollView style={s.selectionScroll}
-                        horizontal={true}
-                    >
-                        <View style={s.selectionInner}>
-                            {
-                                icons.map((icon) => {
-                                    let dynamic = {
-                                        borderWidth: (icon === project.icon ? 2 : 0),
-                                        borderColor: "white"
-                                    }
-                                    return (
-                                        <TouchableOpacity key={icon} onPress={() => changeProjectIcon(icon)} style={[s.logoWrapper, dynamic]}>
-                                            <ProjectIcons figure={icon} />
-                                        </TouchableOpacity>
-                                    )
-                                })
-                            }
-                        </View>
-                    </ScrollView>
-                </View>
-                <View style={{flex: 1}}></View>
-                <View style={s.buttonSection}>
-                    <TouchableOpacity style={s.button} onPress={()=>saveChanges()}><Text style={[g.text, g.buttonText]}>Save</Text></TouchableOpacity>
-                    <TouchableOpacity style={s.button} onPress={()=>archiveProject()}><Text style={[g.text, g.buttonText]}>Archive</Text></TouchableOpacity>
-                    <TouchableOpacity style={s.button} onPress={()=>setPopup(true)}><Text style={[g.text, g.buttonText]}>Delete</Text></TouchableOpacity>
-                </View>
-                <Spacer height={50}/>
             </View>
             {
                 popup &&
@@ -224,7 +226,7 @@ const s = StyleSheet.create({
         alignItems: "center",
         marginHorizontal: 5
     },
-    buttonSection:{
+    buttonSection: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",

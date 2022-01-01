@@ -89,117 +89,117 @@ export default function ProjectView({ navigation, screenProps }) {
 
 
     return (
-
-        <View style={g.body}>
-            <NavbarStack navigation={navigation} loc={projectName}>
-                <TouchableOpacity style={s.optionsButton} onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }}>
-                    <ProjectIcons figure={"dots"} />
-                </TouchableOpacity>
-            </NavbarStack>
-            <ScrollView>
-                <View style={g.navbarTopMargin}></View>
-
-                <View style={s.projectHeaderContainer}>
-                    <VictoryChart
-                    >
-                        <VictoryAxis
-                            tickLabelComponent={<VictoryLabel dy={0} dx={0} angle={0} />}
-                            style={{
-                                axis: {
-                                    stroke: p.bg2  //CHANGE COLOR OF X-AXIS
-                                },
-                                tickLabels: {
-                                    fill: p.text__dim //CHANGE COLOR OF X-AXIS LABELS
-                                }
-                            }}
-                        />
-                        <VictoryAxis
-                            dependentAxis
-                            tickFormat={(y) => y}
-                            style={{
-                                axis: {
-                                    stroke: p.bg2  //CHANGE COLOR OF Y-AXIS
-                                },
-                                tickLabels: {
-                                    fill: p.text__dim //CHANGE COLOR OF Y-AXIS LABELS
-                                }
-                            }}
-                        />
-
-                        <VictoryBar
-                            style={{
-                                data: { fill: projectData.color }
-                            }}
-                            data={
-                                getBarData()
-                            }
-                            animate={{
-                                duration: 2000,
-                                onLoad: { duration: 1000 }
-                            }}
-                            cornerRadius={{
-                                topLeft: 7,
-                                topRight: 7,
-                                bottomLeft: 7,
-                                bottomRight: 7,
-                            }}
-                        />
-                    </VictoryChart>
-
-
-
-                    <TouchableOpacity style={s.button} onPress={() => addLog()}>
-                        <Text style={s.buttonText}>Add Log</Text>
+        <View style={g.bodyWrapper}>
+            <View style={g.body}>
+                <NavbarStack navigation={navigation} loc={projectName}>
+                    <TouchableOpacity style={s.optionsButton} onPress={() => { navigation.navigate("EditProject", { edited_project: pid }) }}>
+                        <ProjectIcons figure={"dots"} />
                     </TouchableOpacity>
-                </View>
+                </NavbarStack>
+                <ScrollView>
+                    <View style={g.navbarTopMargin}></View>
 
+                    <View style={s.projectHeaderContainer}>
+                        <VictoryChart
+                        >
+                            <VictoryAxis
+                                tickLabelComponent={<VictoryLabel dy={0} dx={0} angle={0} />}
+                                style={{
+                                    axis: {
+                                        stroke: p.bg2  //CHANGE COLOR OF X-AXIS
+                                    },
+                                    tickLabels: {
+                                        fill: p.text__dim //CHANGE COLOR OF X-AXIS LABELS
+                                    }
+                                }}
+                            />
+                            <VictoryAxis
+                                dependentAxis
+                                tickFormat={(y) => y}
+                                style={{
+                                    axis: {
+                                        stroke: p.bg2  //CHANGE COLOR OF Y-AXIS
+                                    },
+                                    tickLabels: {
+                                        fill: p.text__dim //CHANGE COLOR OF Y-AXIS LABELS
+                                    }
+                                }}
+                            />
 
-                <View style={s.logs}>
-                    <View style={s.logsWrapper}>
-                        {
-                            projectData.logs.map((log) => {
-
-                                let logs = null
-                                let card = (
-
-                                    <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={s.projectCard}>
-                                        <Text style={s.totalTime}>{formatSeconds(log.start, "HH':'mm")} - {log.end ? formatSeconds(log.end, "HH':'mm") : "running"}</Text>
-                                        <Text style={s.totalTime}>{formatSeconds(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
-                                    </TouchableOpacity>
-
-
-                                )
-                                if (lastDay !== log.day) {
-                                    logs = (
-                                        <View key={"projectViewLog" + log.lid}>
-                                            <View style={s.dayTopMargin}></View>
-                                            <Text style={s.dayTitle}>{formatSeconds(log.start, "EEE, d MMM")}</Text>
-                                            {card}
-                                        </View>
-                                    )
-                                } else {
-                                    logs = (
-                                        <View key={"projectViewLog" + log.lid}>
-                                            {card}
-                                        </View>
-                                    )
-
+                            <VictoryBar
+                                style={{
+                                    data: { fill: projectData.color }
+                                }}
+                                data={
+                                    getBarData()
                                 }
+                                animate={{
+                                    duration: 2000,
+                                    onLoad: { duration: 1000 }
+                                }}
+                                cornerRadius={{
+                                    topLeft: 7,
+                                    topRight: 7,
+                                    bottomLeft: 7,
+                                    bottomRight: 7,
+                                }}
+                            />
+                        </VictoryChart>
 
-                                lastDay = log.day
-
-                                return (
-                                    logs
-                                )
 
 
-                            })
-                        }
+                        <TouchableOpacity style={s.button} onPress={() => addLog()}>
+                            <Text style={s.buttonText}>Add Log</Text>
+                        </TouchableOpacity>
                     </View>
-                </View>
-            </ScrollView>
-        </View >
 
+
+                    <View style={s.logs}>
+                        <View style={s.logsWrapper}>
+                            {
+                                projectData.logs.map((log) => {
+
+                                    let logs = null
+                                    let card = (
+
+                                        <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={s.projectCard}>
+                                            <Text style={s.totalTime}>{formatSeconds(log.start, "HH':'mm")} - {log.end ? formatSeconds(log.end, "HH':'mm") : "running"}</Text>
+                                            <Text style={s.totalTime}>{formatSeconds(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
+                                        </TouchableOpacity>
+
+
+                                    )
+                                    if (lastDay !== log.day) {
+                                        logs = (
+                                            <View key={"projectViewLog" + log.lid}>
+                                                <View style={s.dayTopMargin}></View>
+                                                <Text style={s.dayTitle}>{formatSeconds(log.start, "EEE, d MMM")}</Text>
+                                                {card}
+                                            </View>
+                                        )
+                                    } else {
+                                        logs = (
+                                            <View key={"projectViewLog" + log.lid}>
+                                                {card}
+                                            </View>
+                                        )
+
+                                    }
+
+                                    lastDay = log.day
+
+                                    return (
+                                        logs
+                                    )
+
+
+                                })
+                            }
+                        </View>
+                    </View>
+                </ScrollView>
+            </View>
+        </View>
     )
 }
 
@@ -264,7 +264,7 @@ const s = StyleSheet.create({
         justifyContent: "space-between",
         alignSelf: "center",
     },
-    dayTitle:{
+    dayTitle: {
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: p.br,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, Button, TouchableOpacity, Dimensions } from 'react-native'
 import g, { p } from "../styles/global"
 import { VictoryPie } from 'victory-native'
 import { formatSeconds } from '../js/timerfunctions'
@@ -37,15 +37,15 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
             let days = []
             let sum = 0
 
-            project.logs.forEach((log)=>{
-                if(days.filter((day)=> day === log.day).length === 0)
+            project.logs.forEach((log) => {
+                if (days.filter((day) => day === log.day).length === 0)
                     days.push(log.day)
                 sum += log.duration
             })
             let average = sum / days.length
-            average = average === 0? 1: average
-            let fracOfAverage = 100/average*total_duration
-            
+            average = average === 0 ? 1 : average
+            let fracOfAverage = 100 / average * total_duration
+
             if (!project.archived)
                 relevant.push({
                     name: project.name,
@@ -184,7 +184,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                     <View style={[s.projectCard, g.shadow]} key="Start Project">
 
                                         <View style={[g.logoWrapper, color.c]}>
-                                            <ProjectIcons figure={"add"}/> 
+                                            <ProjectIcons figure={"add"} />
                                         </View>
 
                                         <TouchableOpacity style={[s.startButton, color.c]} onPress={() => setProjectSelectionOpen(true)}>
@@ -211,7 +211,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                         >
                                             <View>
                                                 <View style={[g.logoWrapper]}>
-                                                <ProjectIcons figure={project.icon}/>
+                                                    <ProjectIcons figure={project.icon} />
                                                 </View>
                                                 <Text style={s.projectCardTextMain}>{project.name}</Text>
                                             </View>
@@ -229,7 +229,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                         >
                                             <View>
                                                 <View style={[g.logoWrapper, color.c]}>
-                                                    <ProjectIcons figure={project.icon}/>
+                                                    <ProjectIcons figure={project.icon} />
                                                 </View>
                                                 <View>
                                                     <Text style={s.projectCardTextMain}>{project.name}</Text>
@@ -266,7 +266,7 @@ const s = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         flexWrap: "wrap",
-        marginLeft: 30
+        marginHorizontal: Dimensions.get("window").width > 500  ? 500 * 0.1 : Dimensions.get("window").width * 0.1,
     },
     // project cards
     projectCard: {
@@ -294,7 +294,7 @@ const s = StyleSheet.create({
         padding: 10,
         borderRadius: p.br
     },
-    
+
     buttonText: {
         textAlign: "center",
         color: p.text__main

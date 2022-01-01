@@ -178,109 +178,111 @@ export default function EditLog({ navigation, screenProps }) {
 
 
     return (
-        <View style={g.body}>
-            <NavbarStack navigation={navigation} loc={"Edit Log"} saveable={true} changed={changed} saveChanges={saveChanges}></NavbarStack>
-            <Spacer height={150} />
+        <View syle={g.bodyWrapper}>
+            <View style={g.body}>
+                <NavbarStack navigation={navigation} loc={"Edit Log"} saveable={true} changed={changed} saveChanges={saveChanges}></NavbarStack>
+                <Spacer height={150} />
 
 
-            <View style={s.projectPreview}>
-                <View style={[g.logoWrapper, { backgroundColor: log.color }]}>
-                    <ProjectIcons figure={project.icon} />
+                <View style={s.projectPreview}>
+                    <View style={[g.logoWrapper, { backgroundColor: log.color }]}>
+                        <ProjectIcons figure={project.icon} />
+                    </View>
+                    <Text style={{ color: p.text__main, fontSize: 18, margin: 5 }}>{log.project}</Text>
+                    <View style={{ flex: 1 }}></View>
+                    <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{formatSeconds(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
                 </View>
-                <Text style={{ color: p.text__main, fontSize: 18, margin: 5 }}>{log.project}</Text>
+
+                <View>
+                    {dateTimeProps.open && (
+                        <RNDateTimePicker
+                            testID="dateTimePicker"
+                            mode={dateTimeProps.mode}
+                            is24Hour={true}
+                            display="default"
+                            value={new Date(dateTimeProps.value * 1000)}
+                            onChange={EditLog}
+                            timeZoneOffsetInMinutes={0}
+                        />
+                    )}
+                </View>
+
+                <TouchableOpacity style={s.datePickerButton} onPress={() => setDateTimeProps({
+                    target: "date",
+                    value: log.start,
+                    mode: "date",
+                    open: true
+                })}><Text style={{
+                    color: p.text__main,
+                    fontSize: 18
+                }}>{formatSeconds(log.start, "EEE, d MMM")}</Text></TouchableOpacity>
+                <View style={s.timeEditorWrapper}>
+                    <View style={s.timeEditorParent}>
+                        <View style={s.timeEditorButtonWrapper}>
+                            <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(3600)}><ProjectIcons figure={"up"} /></TouchableOpacity>
+                            <View style={{ flex: 1 }}></View>
+                            <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(300)}><ProjectIcons figure={"up"} /></TouchableOpacity>
+                        </View>
+                        <TouchableOpacity
+                            style={s.timeEditorViewWrapper}
+                            onPress={() => setDateTimeProps({
+                                target: "start",
+                                value: log.start,
+                                mode: "time",
+                                open: true
+                            })}
+                        >
+                            <Text style={s.timeEditorText}>{formatSeconds(log.start, "HH:mm").split(":")[0]}</Text>
+                            <Text style={s.timeEditorText}>:</Text>
+                            <Text style={s.timeEditorText}>{formatSeconds(log.start, "HH:mm").split(":")[1]}</Text>
+                        </TouchableOpacity>
+                        <View style={s.timeEditorButtonWrapper}>
+                            <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-3600)}><ProjectIcons figure={"down"} /></TouchableOpacity>
+                            <View style={{ flex: 1 }}></View>
+                            <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-300)}><ProjectIcons figure={"down"} /></TouchableOpacity>
+                        </View>
+                    </View>
+                    <Text style={g.text}>-</Text>
+                    <View style={s.timeEditorParent}>
+                        <View style={s.timeEditorButtonWrapper}>
+                            <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(3600)}><ProjectIcons figure={"up"} /></TouchableOpacity>
+                            <View style={{ flex: 1 }}></View>
+                            <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(300)}><ProjectIcons figure={"up"} /></TouchableOpacity>
+                        </View>
+                        <TouchableOpacity
+                            style={s.timeEditorViewWrapper}
+                            onPress={() => setDateTimeProps({
+                                target: "end",
+                                value: log.end,
+                                mode: "time",
+                                open: true
+                            })}
+                        >
+                            <Text style={s.timeEditorText}>{formatSeconds(log.end, "HH:mm").split(":")[0]}</Text>
+                            <Text style={s.timeEditorText}>:</Text>
+                            <Text style={s.timeEditorText}>{formatSeconds(log.end, "HH:mm").split(":")[1]}</Text>
+                        </TouchableOpacity>
+                        <View style={s.timeEditorButtonWrapper}>
+                            <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-3600)}><ProjectIcons figure={"down"} /></TouchableOpacity>
+                            <View style={{ flex: 1 }}></View>
+                            <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-300)}><ProjectIcons figure={"down"} /></TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+
+
                 <View style={{ flex: 1 }}></View>
-                <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{formatSeconds(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
-            </View>
-
-            <View>
-                {dateTimeProps.open && (
-                    <RNDateTimePicker
-                        testID="dateTimePicker"
-                        mode={dateTimeProps.mode}
-                        is24Hour={true}
-                        display="default"
-                        value={new Date(dateTimeProps.value * 1000)}
-                        onChange={EditLog}
-                        timeZoneOffsetInMinutes={0}
-                    />
-                )}
-            </View>
-
-            <TouchableOpacity style={s.datePickerButton} onPress={() => setDateTimeProps({
-                target: "date",
-                value: log.start,
-                mode: "date",
-                open: true
-            })}><Text style={{
-                color: p.text__main,
-                fontSize: 18
-            }}>{formatSeconds(log.start, "EEE, d MMM")}</Text></TouchableOpacity>
-            <View style={s.timeEditorWrapper}>
-                <View style={s.timeEditorParent}>
-                    <View style={s.timeEditorButtonWrapper}>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(3600)}><ProjectIcons figure={"up"}/></TouchableOpacity>
-                        <View style={{ flex: 1 }}></View>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(300)}><ProjectIcons figure={"up"}/></TouchableOpacity>
-                    </View>
-                    <TouchableOpacity
-                        style={s.timeEditorViewWrapper}
-                        onPress={() => setDateTimeProps({
-                            target: "start",
-                            value: log.start,
-                            mode: "time",
-                            open: true
-                        })}
-                    >
-                        <Text style={s.timeEditorText}>{formatSeconds(log.start, "HH:mm").split(":")[0]}</Text>
-                        <Text style={s.timeEditorText}>:</Text>
-                        <Text style={s.timeEditorText}>{formatSeconds(log.start, "HH:mm").split(":")[1]}</Text>
+                <View style={s.buttonSection}>
+                    <TouchableOpacity style={s.button} onPress={() => saveChanges()}>
+                        <Text style={g.text}>Save</Text>
                     </TouchableOpacity>
-                    <View style={s.timeEditorButtonWrapper}>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-3600)}><ProjectIcons figure={"down"}/></TouchableOpacity>
-                        <View style={{ flex: 1 }}></View>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveStartOfLog(-300)}><ProjectIcons figure={"down"}/></TouchableOpacity>
-                    </View>
-                </View>
-                <Text style={g.text}>-</Text>
-                <View style={s.timeEditorParent}>
-                    <View style={s.timeEditorButtonWrapper}>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(3600)}><ProjectIcons figure={"up"}/></TouchableOpacity>
-                        <View style={{ flex: 1 }}></View>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(300)}><ProjectIcons figure={"up"}/></TouchableOpacity>
-                    </View>
-                    <TouchableOpacity
-                        style={s.timeEditorViewWrapper}
-                        onPress={() => setDateTimeProps({
-                            target: "end",
-                            value: log.end,
-                            mode: "time",
-                            open: true
-                        })}
-                    >
-                        <Text style={s.timeEditorText}>{formatSeconds(log.end, "HH:mm").split(":")[0]}</Text>
-                        <Text style={s.timeEditorText}>:</Text>
-                        <Text style={s.timeEditorText}>{formatSeconds(log.end, "HH:mm").split(":")[1]}</Text>
+
+                    <TouchableOpacity style={s.button} onPress={() => deleteLog()}>
+                        <Text style={g.text}>Delete</Text>
                     </TouchableOpacity>
-                    <View style={s.timeEditorButtonWrapper}>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-3600)}><ProjectIcons figure={"down"}/></TouchableOpacity>
-                        <View style={{ flex: 1 }}></View>
-                        <TouchableOpacity style={s.timeEditorButton} onPress={() => moveEndOfLog(-300)}><ProjectIcons figure={"down"}/></TouchableOpacity>
-                    </View>
                 </View>
+                <Spacer height={50} />
             </View>
-
-
-            <View style={{ flex: 1 }}></View>
-            <View style={s.buttonSection}>
-                <TouchableOpacity style={s.button} onPress={() => saveChanges()}>
-                    <Text style={g.text}>Save</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={s.button} onPress={() => deleteLog()}>
-                    <Text style={g.text}>Delete</Text>
-                </TouchableOpacity>
-            </View>
-            <Spacer height={50} />
         </View>
     );
 }
@@ -294,7 +296,7 @@ const s = StyleSheet.create({
         margin: 10,
     },
     timeCorrectorButton: {
-        padding:10,
+        padding: 10,
         backgroundColor: p.bg2,
         borderRadius: p.br
     },
@@ -330,7 +332,7 @@ const s = StyleSheet.create({
         borderRadius: p.br
     },
     timeEditorButton: {
-        paddingHorizontal:2,
+        paddingHorizontal: 2,
         paddingVertical: 30
     },
     timeEditorParent: {
@@ -352,7 +354,7 @@ const s = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center"
     },
-    timeEditorText:{
+    timeEditorText: {
         color: p.text__main,
         fontSize: 18,
         fontWeight: "bold"

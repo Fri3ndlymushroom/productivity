@@ -28,12 +28,17 @@ export const shadow = {
 }
 
 const styles = StyleSheet.create({
+    bodyWrapper:{
+        backgroundColor: p.bg1
+    },
     body: {
         backgroundColor: p.bg1,
         color: p.text__main,
         height: "100%",
         display: "flex",
         alignItems: 'center',
+        maxWidth: 500,
+        alignSelf: "center"
     },
     projectCard: {
         backgroundColor: p.bg2,

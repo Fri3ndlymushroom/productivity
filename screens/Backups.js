@@ -45,40 +45,42 @@ export default function Backups({ navigation, screenProps }) {
 
     return (
         <>
-            <View style={g.body}>
-                <NavbarStack navigation={navigation} loc={"Backups"} ></NavbarStack>
-                <Spacer height={0} />
+            <View syle={g.bodyWrapper}>
+                <View style={g.body}>
+                    <NavbarStack navigation={navigation} loc={"Backups"} ></NavbarStack>
+                    <Spacer height={0} />
 
-                <ScrollView
-                    style={s.backups}
-                >
-                    <Spacer height={100} />
-                    {
+                    <ScrollView
+                        style={s.backups}
+                    >
+                        <Spacer height={100} />
+                        {
 
-                        backups.reverse().map((backup) => {
-                            return (
-                                <TouchableOpacity style={s.backupCard} key={backup} onPress={() => setPopup({ open: true, backup: backup })}>
-                                    <Text style={g.textDim}>Backup from </Text>
-                                    <Text style={g.text} >{formatSeconds(backup, "EEE, d MMM HH:mm")}</Text>
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
+                            backups.reverse().map((backup) => {
+                                return (
+                                    <TouchableOpacity style={s.backupCard} key={backup} onPress={() => setPopup({ open: true, backup: backup })}>
+                                        <Text style={g.textDim}>Backup from </Text>
+                                        <Text style={g.text} >{formatSeconds(backup, "EEE, d MMM HH:mm")}</Text>
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
 
 
-                </ScrollView>
-                <Spacer height={30} />
-                <TouchableOpacity onPress={() => doBackup(Math.round(new Date().getTime() / 1000), screenProps.data)} style={s.button}>
-                    <Text style={g.text}>Start Manual Backup</Text>
-                </TouchableOpacity>
-                <Spacer height={10} />
-                <Text style={[g.text, {marginHorizontal: "10%", textAlign: "center"}]}>Theta makes one backup automatically every day!</Text>
-                <Spacer height={30} />
-            </View>
+                    </ScrollView>
+                    <Spacer height={30} />
+                    <TouchableOpacity onPress={() => doBackup(Math.round(new Date().getTime() / 1000), screenProps.data)} style={s.button}>
+                        <Text style={g.text}>Start Manual Backup</Text>
+                    </TouchableOpacity>
+                    <Spacer height={10} />
+                    <Text style={[g.text, { marginHorizontal: "10%", textAlign: "center" }]}>Theta makes one backup automatically every day!</Text>
+                    <Spacer height={30} />
+                </View>
+                </View>
             {
                 popup.open &&
                 <TouchableOpacity onPress={() => setPopup({ open: false })} style={s.popup}>
-                    <Text style={[g.text, {textAlign: "center"}]}>Do you really want to download the backup from the {formatSeconds(popup.backup, 'dd, MM, yy')}?</Text>
+                    <Text style={[g.text, { textAlign: "center" }]}>Do you really want to download the backup from the {formatSeconds(popup.backup, 'dd, MM, yy')}?</Text>
                     <Spacer height={10} />
                     <TouchableOpacity onPress={() => { downloadBackup(popup.backup); setPopup({ open: false }) }} style={s.button}>
                         <Text style={g.text}>Download Backup</Text>

@@ -53,7 +53,7 @@ const s = StyleSheet.create({
         position: "absolute",
         top: 0,
         height: 100,
-        width: Dimensions.get("window").width,
+        width: "100%",
         alignItems: "center",
         justifyContent: "center"
     },
