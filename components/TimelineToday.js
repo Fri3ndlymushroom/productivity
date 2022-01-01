@@ -8,22 +8,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ProjectIcons from './ProjectIcons'
 
 export default function TimelineToday({ setProjectSelectionOpen, goal, stopProject, projects, startProject, navigation }) {
+
     const [relevantData, setRelevantData] = useState([])
 
     let day = Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24)
 
     useEffect(() => {
-
-
-
-
-
-
-
-
-
-
-
 
         let relevant = []
         projects.forEach((project) => {
@@ -266,7 +256,7 @@ const s = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         flexWrap: "wrap",
-        marginHorizontal: Dimensions.get("window").width > 500  ? 500 * 0.1 : Dimensions.get("window").width * 0.1,
+        marginLeft: 30
     },
     // project cards
     projectCard: {
@@ -300,13 +290,14 @@ const s = StyleSheet.create({
         color: p.text__main
     },
     projectCardTextMain: {
+        fontSize: 16,
         color: p.text__main,
         marginTop: 10
     },
     projectCardTextSec: {
         color: p.text__dim,
         marginTop: 2,
-        fontSize: 12
+        fontSize: 13
     },
     // info cards
     infoCards: {
@@ -326,7 +317,7 @@ const s = StyleSheet.create({
     },
     InfoCardGoalTextSec: {
         color: p.text__dim,
-        fontSize: 11,
+        fontSize: 12,
         textAlign: "center"
     },
     InfoCardGoalTextPerc: {

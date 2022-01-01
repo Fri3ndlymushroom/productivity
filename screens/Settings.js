@@ -9,7 +9,7 @@ import Navbar from '../components/NavbarDrawer';
 import auth from "@react-native-firebase/auth"
 import { Spacer } from '../components/Components';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { G } from 'react-native-svg';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default function Settings({ navigation, screenProps }) {
 
@@ -55,7 +55,14 @@ export default function Settings({ navigation, screenProps }) {
 
     return (
         <View style={g.bodyWrapper}>
-            <View style={g.body} >
+            <GestureRecognizer
+                onSwipe={(direction, state) => { direction === "SWIPE_RIGHT" ? navigation.navigate("Analytics") : null }}
+                config={{
+                    velocityThreshold: 0.1,
+                    directionalOffsetThreshold: 100
+                }}
+                style={g.body}
+            >
                 <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={changed} saveChanges={saveChanges} />
                 <Spacer height={150} />
                 <View>
@@ -148,8 +155,9 @@ export default function Settings({ navigation, screenProps }) {
                 <View style={{ flex: 1 }}></View>
                 <TouchableOpacity onPress={saveChanges} style={g.button}><Text style={[g.text, g.buttonText]}>Save Changes</Text></TouchableOpacity>
                 <Spacer height={50} />
-            </View>
+            </GestureRecognizer>
         </View>
+
     )
 }
 

@@ -10,23 +10,10 @@ import TimePeriodAnalysis from '../components/TimePeriodAnalysis';
 import BestDayOfWeek from '../components/BestDayOfWeek';
 import WeekComparison from '../components/WeekComparison';
 import { formatSeconds } from "../js/timerfunctions"
-let config = {
+import { Spacer } from '../components/Components'
+import GestureRecognizer from 'react-native-swipe-gestures';
 
-    backgroundColor: "white",
-    backgroundGradientFrom: "white",
-    backgroundGradientTo: "white",
-    decimalPlaces: 2, // optional, defaults to 2dp
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    style: {
-        borderRadius: 16
-    },
-    propsForDots: {
-        r: "6",
-        strokeWidth: "2",
-        stroke: "#ffa726"
-    }
-}
+
 
 
 export default function Analytics({ navigation, screenProps }) {
@@ -40,7 +27,14 @@ export default function Analytics({ navigation, screenProps }) {
 
     return (
         <View style={g.bodyWrapper}>
-            <View style={g.body}>
+            <GestureRecognizer
+                onSwipe={(direction, state) => { direction === "SWIPE_LEFT" ? navigation.navigate("Settings") : (direction === "SWIPE_RIGHT" ? navigation.navigate("Timeline") : null) }}
+                config={{
+                    velocityThreshold: 0.1,
+                    directionalOffsetThreshold: 100
+                }}
+                style={g.body}
+            >
                 <Navbar {...{ navigation }} location={"Analytics"} />
                 <ScrollView>
                     <View style={g.navbarTopMargin}></View>
@@ -79,9 +73,9 @@ export default function Analytics({ navigation, screenProps }) {
                     {/* general chart */}
                     <GeneralCharts dailyAverage={dailyAverage} data={screenProps.data} />
 
-
+                    <Spacer height={30} />
                 </ScrollView>
-            </View>
+            </GestureRecognizer>
         </View>
     );
 }

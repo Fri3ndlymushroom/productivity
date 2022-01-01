@@ -265,10 +265,11 @@ const s = StyleSheet.create({
         alignSelf: "center",
     },
     dayTitle: {
+        color: p.text__main,
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: p.br,
-        fontSize: 18,
+        fontSize: 16,
     }
 
 })

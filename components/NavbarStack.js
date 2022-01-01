@@ -27,12 +27,12 @@ export default function Navbar({ navigation, loc, children, saveable, changed, s
                         <ProjectIcons figure={"back"} />
                     </TouchableOpacity>
                     <Text style={s.navbarTitle}>{loc}</Text>
-                    {children ? children : <View></View>}
+                    {children ? children : <View style={{ width: 34 }}></View>}
                 </View>
             </View>
             {
                 popupOpen &&
-                <SaveChangesPopup setPopupOpen={setPopupOpen} saveChanges={saveChanges} navigation={navigation}  />
+                <SaveChangesPopup setPopupOpen={setPopupOpen} saveChanges={saveChanges} navigation={navigation} />
             }
         </>
     )
@@ -70,8 +70,9 @@ const s = StyleSheet.create({
         padding: 10
     },
     navbarText: {
+        textAlign: "center",
         color: p.text__main,
-        fontSize: 16
+        fontSize: 16,
     },
     current: {
         fontSize: 18,
@@ -79,7 +80,7 @@ const s = StyleSheet.create({
         bottom: 3,
         color: p.text__main
     },
-    backButton:{
+    backButton: {
         padding: 10
     }
 })

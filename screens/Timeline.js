@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { copyObject } from '../js/functions';
 import TimelineToday from "../components/TimelineToday"
 import Navbar from '../components/NavbarDrawer';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default function Timeline({ navigation, screenProps }) {
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
@@ -94,9 +95,18 @@ export default function Timeline({ navigation, screenProps }) {
         screenProps.setData(dataCopy)
 
     }
+
+
     return (
         <View style={g.bodyWrapper}>
-            <View style={g.body}>
+            <GestureRecognizer
+                onSwipe={(direction, state) => { direction === "SWIPE_LEFT" ? navigation.navigate("Analytics") : null }}
+                config={{
+                    velocityThreshold: 0.1,
+                    directionalOffsetThreshold: 100
+                }}
+                style={g.body}
+            >
                 <Navbar {...{ navigation }} location={"Timeline"} />
                 {
                     projectSelectionOpen && <ProjectSelection data={screenProps.data} {...{ navigation, setProjectSelectionOpen, startProject }} />
@@ -120,7 +130,7 @@ export default function Timeline({ navigation, screenProps }) {
                         }
                     </ScrollView>
                 </View>
-            </View>
+            </GestureRecognizer>
         </View>
     );
 }

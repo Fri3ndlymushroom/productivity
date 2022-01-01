@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, Button, Text, View, ScrollView } from "react-native"
-import g, { p } from '../styles/global'
+import g, { p, colorPalette, iconNames } from '../styles/global'
 import { DefaultText, Spacer } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
 import ColorPalette from 'react-native-color-palette'
@@ -41,8 +41,6 @@ export default function Home({ navigation, screenProps }) {
     }
 
 
-    let icons = ["cube", "add"]
-    let colors = ['#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9']
 
     return (
         <View syle={g.bodyWrapper}>

@@ -1,30 +1,42 @@
 import { StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export const p = {
-    bg1: "#151724",
-    bg2: "#181c2e",
 
-    hl: "#5755D3",
 
-    text__main: "#c9c9c9",
-    text__dim: "#383d57",
-
-    br: 10
+const getStyle = async () => {
+   dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
+   console.log(dbSettings)
+   return dbSettings.mode
 }
 
 
+
+export const p = {
+   bg1: "#151724",
+   bg2: "#181c2e",
+
+   hl: "#5755D3",
+
+   text__main: "#c9c9c9",
+   text__dim: "#383d57",
+
+   br: 10
+}
+
+export const iconNames = ["cube", "triangle", "book", "tube", "square", "sixedge"]
+export const colorPalette = ["#6845f5", "#8645f5", "#a045f5", "#bd45f5", "#ef45f5", "#f545c3", "#f54591", "#f54571", "#f54545", "#f55c45", "#f57745", "#f5a945", "#f5c945", "#f5ef45", "#b7f545", "#8bf545", "#5cf545", "#45f565", "#45f5c0", "#45c9f5", "#45aff5", "#4586f5", "#455ff5", "#4545f5"]
 
 export const headerStyle = {
 
-    backgroundColor: p.bg2,
+   backgroundColor: p.bg2,
 }
 
 export const shadow = {
-    shadowColor: '#171717',
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 2
+   shadowColor: '#171717',
+   shadowOffset: { width: -2, height: 4 },
+   shadowOpacity: 0.2,
+   shadowRadius: 3,
+   elevation: 2
 }
 
 const styles = StyleSheet.create({
@@ -45,6 +57,7 @@ const styles = StyleSheet.create({
         width: "100%",
         margin: 5,
         padding: 10,
+        paddingVertical: 13,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",

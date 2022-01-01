@@ -4,7 +4,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { VictoryBar, VictoryStack, VictoryChart, VictoryLine, VictoryArea, VictoryAxis, VictoryLabel, VictoryLegend } from 'victory-native';
 import g, { p } from '../styles/global';
 import { eachMonthOfInterval, eachDayOfInterval, eachYearOfInterval, sub, add, format, fromUnixTime } from "date-fns"
-import { formatSeconds } from "../js/timerfunctions"
 
 
 export default function GeneralCharts({ dailyAverage, data }) {
@@ -19,7 +18,6 @@ export default function GeneralCharts({ dailyAverage, data }) {
 
 
     let chartsData = getChartsData(data, selectedTime)
-
 
     return (
         <View style={s.generalChartsContainer}>
@@ -119,7 +117,8 @@ export default function GeneralCharts({ dailyAverage, data }) {
                         }}
                     />
                     {
-                        selectedChart === "bar" &&
+
+                        (selectedChart === "bar") &&
                         <VictoryStack
                             colorScale={chartsData.bar.colors}
                         >
@@ -150,18 +149,21 @@ export default function GeneralCharts({ dailyAverage, data }) {
                         chartsData.line.data.map((data, i) => {
                             let colors = ["gray", "white", p.hl]
 
+                            if (data.length > 2) {
+                                return (
+                                    <VictoryLine
+                                        key={"general_chart-line" + i}
+                                        data={data}
+                                        interpolation="natural"
+                                        animate={{
+                                            duration: 2000,
+                                            onLoad: { duration: 1000 }
+                                        }}
+                                        style={{ data: { stroke: colors[i] } }}
+                                    />
+                                )
+                            }
 
-                            return (
-                                <VictoryLine
-                                    key={"general_chart-line" + i}
-                                    data={data}
-                                    interpolation="natural"
-                                    animate={{
-                                        duration: 2000,
-                                        onLoad: { duration: 1000 }
-                                    }}
-                                    style={{ data: { stroke: colors[i] } }}
-                                />)
                         })
                     }
                     {
@@ -190,9 +192,11 @@ export default function GeneralCharts({ dailyAverage, data }) {
                 <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedChart("bar")}>
                     <Text style={[g.textDim, selectedChart === "bar" ? s.selectedButtonText : {}]}>Bar</Text>
                 </TouchableOpacity>
+                <View style={s.divider}></View>
                 <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedChart("line")}>
                     <Text style={[g.textDim, selectedChart === "line" ? s.selectedButtonText : {}]}>Line</Text>
                 </TouchableOpacity>
+                <View style={s.divider}></View>
                 <TouchableOpacity style={s.generalChartsButton} onPress={() => setSelectedChart("area")}>
                     <Text style={[g.textDim, selectedChart === "area" ? s.selectedButtonText : {}]}>Area</Text>
                 </TouchableOpacity>
@@ -204,18 +208,21 @@ export default function GeneralCharts({ dailyAverage, data }) {
                 >
                     <Text style={[g.textDim, selectedTimeButton === "w" ? s.selectedButtonText : {}]}>Week</Text>
                 </TouchableOpacity>
+                <View style={s.divider}></View>
                 <TouchableOpacity
                     style={s.generalChartsButton}
                     onPress={() => { setSelectedTime({ end: new Date(), start: add(sub(new Date(), { months: 1 }), { days: 2 }) }); setSelectedTimeButton("m") }}
                 >
                     <Text style={[g.textDim, selectedTimeButton === "m" ? s.selectedButtonText : {}]}>Month</Text>
                 </TouchableOpacity>
+                <View style={s.divider}></View>
                 <TouchableOpacity
                     style={s.generalChartsButton}
                     onPress={() => { setSelectedTime({ end: new Date(), start: sub(new Date(), { months: 10 }) }); setSelectedTimeButton("y") }}
                 >
                     <Text style={[g.textDim, selectedTimeButton === "y" ? s.selectedButtonText : {}]}>Year</Text>
                 </TouchableOpacity>
+                <View style={s.divider}></View>
                 <TouchableOpacity
                     style={s.generalChartsButton}
                     onPress={() => { setSelectedTime({ end: new Date(), start: fromUnixTime(data.all_logs[data.all_logs.length - 1].start) }); setSelectedTimeButton("l") }}
@@ -233,13 +240,18 @@ const s = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-evenly",
-        width: "100%",
+        alignItems: "center",
+        width: "90%",
+        backgroundColor: p.bg2,
+        borderRadius: p.br,
+        marginTop: 10
     },
     generalChartsButton: {
         backgroundColor: p.bg2,
         borderRadius: p.br,
-        width: 80,
-        marginVertical: 5,
+        width: 60,
+
+        marginVertical: 2,
         paddingVertical: 5,
         display: "flex",
         justifyContent: "center",
@@ -247,7 +259,7 @@ const s = StyleSheet.create({
     },
     generalChartsView: {
         backgroundColor: p.bg2,
-        width: "80%",
+        width: "90%",
         borderRadius: p.br
     },
     generalChartsContainer: {
@@ -269,6 +281,11 @@ const s = StyleSheet.create({
     },
     selectedButtonText: {
         color: p.text__main
+    },
+    divider: {
+        height: "80%",
+        width: 1,
+        backgroundColor: p.bg1 + "50"
     }
 })
 
