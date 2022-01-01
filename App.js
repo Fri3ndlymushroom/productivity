@@ -9,9 +9,12 @@ import { p } from './styles/global';
 import { checkForBackup } from './js/backupsystem';
 import Purchases from "react-native-purchases"
 
+
+
 export default function App() {
 
    const [isPro, setIsPro] = useState(true)
+
 
 
    useEffect(() => {
@@ -46,6 +49,8 @@ export default function App() {
 
    const [settings, setSavedSettings] = useState(defaultSettings)
 
+
+
    const setSettings = async (newSettings) => {
       await AsyncStorage.setItem('@settings', JSON.stringify(newSettings))
       setSavedSettings(newSettings)
@@ -53,6 +58,9 @@ export default function App() {
 
    useEffect(() => {
       const getDB = async () => {
+         //await AsyncStorage.setItem('@settings', JSON.stringify(defaultSettings)) // reset
+
+
          let dbSettings = null
          dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
          if (dbSettings !== null) {
@@ -187,8 +195,12 @@ export default function App() {
 
 
 
-   return (
 
+   const navigateOnSwipe = (direction)=>{
+
+   }
+
+   return (
       <View style={s.root}>
          <RootNavigator screenProps={{ ...{ data, setData, settings, setSettings, isPro, setIsPro } }} />
       </View>

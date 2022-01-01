@@ -5,12 +5,10 @@ import AnalyticsStack from "./AnalyticsStack";
 import TimelineStack from "./HomeStack";
 import SettingsStack from "./SettingsStack";
 
-
 const RootDrawNavigator = createDrawerNavigator(
    {
       Timeline: {
          screen: TimelineStack,
-
       },
       Analytics: {
          screen: AnalyticsStack,
@@ -19,7 +17,6 @@ const RootDrawNavigator = createDrawerNavigator(
       Settings: {
          screen: SettingsStack,
       },
-
    },
    {
       edgeWidth: 0
