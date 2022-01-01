@@ -209,6 +209,7 @@ const s = StyleSheet.create({
         fontSize: 14,
     },
     logs: {
+        width: Dimensions.get("window").width > 500 ? 500 : Dimensions.get("window").width,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -235,13 +236,14 @@ const s = StyleSheet.create({
         fontSize: 16
     },
     projectHeaderContainer: {
+        width: Dimensions.get("window").width > 500 ? 500 : Dimensions.get("window").width,
         alignItems: "center"
     },
     projectHeader: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        width: Dimensions.get("window").width,
+        width: Dimensions.get("window").width > 500 ? 500 : Dimensions.get("window").width,
         paddingHorizontal: 60,
         alignItems: "center"
     },
@@ -249,7 +251,7 @@ const s = StyleSheet.create({
         height: 20
     },
     logsWrapper: {
-        width: Dimensions.get("window").width / 100 * 80
+        width: Dimensions.get("window").width > 500 ? 500 * 0.8 : Dimensions.get("window").width * 0.8
     },
     projectCard: {
         width: "100%",
