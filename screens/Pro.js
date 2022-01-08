@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Linking } from 'react-native'
 import NavbarStack from '../components/NavbarStack'
 import { Spacer } from '../components/Components'
 import g, { p } from "../styles/global"
@@ -63,7 +63,7 @@ export default function Pro({ navigation, screenProps }) {
             <View style={g.body}>
                 <NavbarStack navigation={navigation} loc={"Theta Pro"}></NavbarStack>
                 <Spacer height={150} />
-                <Text style={g.text}>Terms and services</Text>
+                <TouchableOpacity onPress={()=>{Linking.openURL("https://moritzhuesser.com/thetaproductivity/terms_and_services").catch(err => console.error("Couldn't load page", err));}}><Text style={g.text}>Terms and services</Text></TouchableOpacity>
 
                 <ScrollView>
                     {
@@ -77,6 +77,7 @@ export default function Pro({ navigation, screenProps }) {
                     }
                 </ScrollView>
                 <TouchableOpacity onPress={() => restorePurchases} style={g.button}><Text style={g.text}>Restore purchses</Text></TouchableOpacity>
+                <Spacer height={50} />
             </View>
         </View>
     )

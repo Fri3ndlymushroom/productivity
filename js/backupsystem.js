@@ -27,7 +27,6 @@ export const checkForBackup = async (data, last) => {
 }
 
 export const doBackup = async (time, data) =>{
-
     data = simplifyData(data)
 
     let uid = auth().currentUser ? auth().currentUser.uid : undefined
@@ -45,7 +44,6 @@ export const doBackup = async (time, data) =>{
     await firestore().collection("backups").doc(uid).set({
         backupTimestamps: backupTimestamps
     }, { merge: true })
-
 
     await firestore().collection("backups").doc(uid).collection("user_backups").doc(time.toString(10)).set({
         data: data

@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: 'center',
         maxWidth: 500,
-        alignSelf: "center"
+        width: "100%",
+        alignSelf: "center",
     },
     projectCard: {
         backgroundColor: p.bg2,

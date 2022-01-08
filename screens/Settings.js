@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import g, { p, shadow, gestureRecognizerConfig } from "../styles/global"
@@ -12,6 +12,21 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default function Settings({ navigation, screenProps }) {
+
+    const [user, setUser] = useState("not logged in")
+
+
+    useEffect(() => {
+
+        auth().onAuthStateChanged(newUser=>{
+            if(newUser){
+                setUser(newUser.email)
+            }else{
+                setUser("not logged in")
+            }
+        })
+    }, [])
+
 
     const [changed, setChanged] = useState(false)
 
@@ -97,7 +112,7 @@ export default function Settings({ navigation, screenProps }) {
                     >
                         <Icon name={'user'} size={30} color={'white'} />
                     </View>
-                    <Text style={g.text}>{auth().currentUser ? auth().currentUser.email : "not logged in"}</Text>
+                    <Text style={g.text}>{user}</Text>
                 </TouchableOpacity>
 
                 {/* Pro */}
@@ -106,7 +121,7 @@ export default function Settings({ navigation, screenProps }) {
                     <TouchableOpacity onPress={() => navigation.navigate("Pro")} style={s.proButton}>
                         <Text style={s.backupsHeader}>Theta Pro</Text>
                         <Text style={s.backupsInfo}>Backups</Text>
-                        <Text style={s.backupsInfo}>Friend List</Text>
+                        <Text style={s.backupsInfo}>Exports</Text>
                     </TouchableOpacity>
                 }
 
