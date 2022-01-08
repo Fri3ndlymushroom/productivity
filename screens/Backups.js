@@ -97,8 +97,8 @@ const s = StyleSheet.create({
         marginTop: 30,
         height: 200,
         borderRadius: p.br,
-        width: "100%",
-        display: "flex"
+        minWidth: "100%",
+        display: "flex",
     },
     popup: {
         zIndex: 10,
@@ -115,11 +115,11 @@ const s = StyleSheet.create({
         justifyContent: 'center',
     },
     backupCard: {
-        marginHorizontal: "10%",
+        marginHorizontal: "15%",
         marginVertical: 5,
         padding: 10,
         borderRadius: p.br,
-        width: "80%",
+        width: "70%",
         backgroundColor: p.bg2,
 
     },
