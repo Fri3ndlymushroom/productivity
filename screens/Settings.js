@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import g, { p, shadow } from "../styles/global"
+import g, { p, shadow, gestureRecognizerConfig } from "../styles/global"
 import { copyObject } from '../js/functions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { formatSeconds } from '../js/timerfunctions';
@@ -57,10 +57,7 @@ export default function Settings({ navigation, screenProps }) {
         <View style={g.bodyWrapper}>
             <GestureRecognizer
                 onSwipe={(direction, state) => { direction === "SWIPE_RIGHT" ? navigation.navigate("Analytics") : null }}
-                config={{
-                    velocityThreshold: 0.1,
-                    directionalOffsetThreshold: 100
-                }}
+                config={gestureRecognizerConfig}
                 style={g.body}
             >
                 <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={changed} saveChanges={saveChanges} />

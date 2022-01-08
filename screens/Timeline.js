@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, Button, Text, View, StyleSheet } from "react-native"
-import g from '../styles/global'
+import g, {gestureRecognizerConfig} from '../styles/global'
 import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
 import TimelineDay from '../components/TimelineDay';
@@ -101,10 +101,7 @@ export default function Timeline({ navigation, screenProps }) {
         <View style={g.bodyWrapper}>
             <GestureRecognizer
                 onSwipe={(direction, state) => { direction === "SWIPE_LEFT" ? navigation.navigate("Analytics") : null }}
-                config={{
-                    velocityThreshold: 0.1,
-                    directionalOffsetThreshold: 100
-                }}
+                config={gestureRecognizerConfig}
                 style={g.body}
             >
                 <Navbar {...{ navigation }} location={"Timeline"} />

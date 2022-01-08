@@ -4,23 +4,23 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 const getStyle = async () => {
-   dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
-   console.log(dbSettings)
-   return dbSettings.mode
+    dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
+    console.log(dbSettings)
+    return dbSettings.mode
 }
 
 
 
 export const p = {
-   bg1: "#151724",
-   bg2: "#181c2e",
+    bg1: "#151724",
+    bg2: "#181c2e",
 
-   hl: "#5755D3",
+    hl: "#5755D3",
 
-   text__main: "#c9c9c9",
-   text__dim: "#383d57",
+    text__main: "#c9c9c9",
+    text__dim: "#383d57",
 
-   br: 10
+    br: 10
 }
 
 export const iconNames = ["cube", "triangle", "book", "tube", "square", "sixedge"]
@@ -28,19 +28,19 @@ export const colorPalette = ["#6845f5", "#8645f5", "#a045f5", "#bd45f5", "#ef45f
 
 export const headerStyle = {
 
-   backgroundColor: p.bg2,
+    backgroundColor: p.bg2,
 }
 
 export const shadow = {
-   shadowColor: '#171717',
-   shadowOffset: { width: -2, height: 4 },
-   shadowOpacity: 0.2,
-   shadowRadius: 3,
-   elevation: 2
+    shadowColor: '#171717',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 2
 }
 
 const styles = StyleSheet.create({
-    bodyWrapper:{
+    bodyWrapper: {
         backgroundColor: p.bg1
     },
     body: {
@@ -112,5 +112,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+export const gestureRecognizerConfig = {
+    velocityThreshold: 0.5,
+    directionalOffsetThreshold: 80
+}
 
 export default styles

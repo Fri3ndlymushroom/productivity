@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Text, View, Dimensions, ScrollView, StyleSheet } from 'react-native';
-import g, { p } from '../styles/global'
+import g, { p, gestureRecognizerConfig } from '../styles/global'
 import { DefaultText } from '../components/Components'
 import { VictoryPie } from 'victory-native';
 import GeneralCharts from "../components/GeneralCharts"
@@ -29,10 +29,7 @@ export default function Analytics({ navigation, screenProps }) {
         <View style={g.bodyWrapper}>
             <GestureRecognizer
                 onSwipe={(direction, state) => { direction === "SWIPE_LEFT" ? navigation.navigate("Settings") : (direction === "SWIPE_RIGHT" ? navigation.navigate("Timeline") : null) }}
-                config={{
-                    velocityThreshold: 0.1,
-                    directionalOffsetThreshold: 100
-                }}
+                config={gestureRecognizerConfig}
                 style={g.body}
             >
                 <Navbar {...{ navigation }} location={"Analytics"} />
