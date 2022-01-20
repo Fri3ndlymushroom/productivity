@@ -16,7 +16,7 @@ export default function Pro({ navigation, screenProps }) {
         const getPackages = async () => {
             try {
                 const offerings = await Purchases.getOfferings();
-                if (offerings.current !== null) {
+                if (offerings.current !== null && offerings.current.availablePackages.length !== 0) {
                     setPackages(offerings.current.availablePackages)
                 }
             } catch (e) {
@@ -63,16 +63,31 @@ export default function Pro({ navigation, screenProps }) {
             <View style={g.body}>
                 <NavbarStack navigation={navigation} loc={"Theta Pro"}></NavbarStack>
                 <Spacer height={150} />
-                <TouchableOpacity onPress={()=>{Linking.openURL("https://moritzhuesser.com/thetaproductivity/terms_and_services").catch(err => console.error("Couldn't load page", err));}}><Text style={g.text}>Terms and services</Text></TouchableOpacity>
-
-                <ScrollView>
+                <TouchableOpacity onPress={() => { Linking.openURL("https://moritzhuesser.com/thetaproductivity/terms_and_services").catch(err => console.error("Couldn't load page", err)); }}><Text style={g.text}>Terms and services</Text></TouchableOpacity>
+                <ScrollView
+                    style={{
+                        width: "80%",
+                    }}
+                >
                     {
-                        packages.map((product) => {
-                            <TouchableOpacity onPress={() => purchase(product)}>
-                                <Text>{product.title}</Text>
-                                <Text>{product.description}</Text>
-                                <Text>{product.price_string}</Text>
-                            </TouchableOpacity>
+                        packages.map((product, i) => {
+                            return (
+                                <TouchableOpacity
+                                    key={product.identifier}
+                                    style={{
+                                        width: "100%",
+                                        backgroundColor: p.bg2,
+                                        borderRadius: p.br,
+                                        marginVertical: 10,
+                                        padding: 15
+                                    }}
+                                    onPress={() => purchase(product)}
+                                >
+                                    <Text>{product.product.title}</Text>
+                                    <Text>{product.product.description}</Text>
+                                    <Text>{product.product.price_string}</Text>
+                                </TouchableOpacity>
+                            )
                         })
                     }
                 </ScrollView>
@@ -82,3 +97,6 @@ export default function Pro({ navigation, screenProps }) {
         </View>
     )
 }
+
+
+

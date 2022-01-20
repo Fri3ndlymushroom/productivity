@@ -224,3 +224,7 @@ const s = StyleSheet.create({
 // react-navigation-drawer
 // icons: https://oblador.github.io/react-native-vector-icons/
 // bundle id: com.thetaproductivity
+
+
+// npx react-native run-android --variant=release
+// ./gradlew bundleRelease
