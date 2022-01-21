@@ -3,7 +3,7 @@ import { View } from "react-native"
 import RootNavigator from './routes/Draw'
 import AsyncStorage from '@react-native-community/async-storage';
 import { StyleSheet } from 'react-native';
-import { dummyData, defaultSettings } from './data';
+import { dummyData, defaultSettings, productionData } from './data';
 import { copyObject } from './js/functions';
 import { p } from './styles/global';
 import { checkForBackup } from './js/backupsystem';
@@ -160,7 +160,7 @@ export default function App() {
                 let dbData = null
                 dbData = JSON.parse(await AsyncStorage.getItem('@data'))
                 if (dbData === null) {
-                    dbData = dummyData
+                    dbData = productionData
                 }
                 setData(dbData)
             } catch (err) {

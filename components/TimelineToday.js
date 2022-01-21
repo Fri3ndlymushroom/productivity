@@ -253,6 +253,7 @@ const s = StyleSheet.create({
         flexDirection: "row",
     },
     projectCardColumnContainer: {
+        backgroundColor:"red",
         display: "flex",
         flexDirection: "column",
         flexWrap: "wrap",
