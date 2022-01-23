@@ -15,7 +15,7 @@ export const p = {
     bg1: "#151724",
     bg2: "#181c2e",
 
-    hl: "#5755D3",
+    hl: "#EC2964",
 
     text__main: "#c9c9c9",
     text__dim: "#383d57",

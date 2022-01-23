@@ -76,16 +76,33 @@ export default function Pro({ navigation, screenProps }) {
                                     key={product.identifier}
                                     style={{
                                         width: "100%",
-                                        backgroundColor: p.bg2,
-                                        borderRadius: p.br,
-                                        marginVertical: 10,
-                                        padding: 15
+                                        height: 200,
                                     }}
                                     onPress={() => purchase(product)}
                                 >
-                                    <Text>{product.product.title}</Text>
-                                    <Text>{product.product.description}</Text>
-                                    <Text>{product.product.price_string}</Text>
+                                    <View style={{
+                                        backgroundColor: p.bg2,
+                                        borderRadius: p.br,
+                                        marginVertical: 10,
+                                        padding: 15,
+                                        paddingBottom: 50
+                                    }}>
+                                        <Text style={{color: p.text__main, fontSize: 20}}>{/*product.product.title*/"Theta Pro (Subscription)"}</Text>
+                                        <Text style={{marginHorizontal: 20, marginTop: 20}}>{product.product.description}</Text>
+                                    </View>
+                                    <View style={{
+                                        backgroundColor: p.hl,
+                                        width: "35%",
+                                        paddingHorizontal: 10,
+                                        paddingVertical: 15,
+                                        borderRadius: p.br,
+                                        position: "absolute",
+                                        left: "30%",
+                                        top: 140,
+                                    }}>
+                                        <Text style={{textAlign: "center", fontSize: 18}}>{product.product.price_string}</Text>
+                                    </View>
+
                                 </TouchableOpacity>
                             )
                         })
