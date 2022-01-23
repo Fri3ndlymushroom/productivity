@@ -261,7 +261,7 @@ const s = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         flexWrap: "wrap",
-        marginHorizontal: Dimensions.get("window").width > 500 ? 500 * 0.1 : Dimensions.get("window").width*0.1,
+        marginHorizontal: Dimensions.get("window").width > 500 ? 500 * 0.1 : Dimensions.get("window").width*0.1 - 10,
     },
     // project cards
     projectCard: {
