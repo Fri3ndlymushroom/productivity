@@ -7,6 +7,7 @@ import Svg, { Path } from "react-native-svg"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ProjectIcons from './ProjectIcons'
 
+
 export default function TimelineToday({ setProjectSelectionOpen, goal, stopProject, projects, startProject, navigation }) {
 
     const [relevantData, setRelevantData] = useState([])
@@ -83,6 +84,10 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
             <Text key={"dayLabel"} style={[g.dayTitle, s.dayTitle]}>{formatSeconds(day * 24 * 60 * 60, "EEE, d MMM")}</Text>
             <ScrollView
                 horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                style={{
+                    minWidth: "100%",
+                }}
             >
                 <View
                     style={s.projectCardColumnContainer}
@@ -253,7 +258,6 @@ const s = StyleSheet.create({
         flexDirection: "row",
     },
     projectCardColumnContainer: {
-        backgroundColor:"red",
         display: "flex",
         flexDirection: "column",
         flexWrap: "wrap",

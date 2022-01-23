@@ -8,10 +8,10 @@ export default function projectSelection({ data, navigation, setProjectSelection
     return (
         <TouchableOpacity style={s.projectSelectionWrapper} onPress={() => setProjectSelectionOpen(false)}>
             <View style={s.projectSelectionWindow}>
-                <ScrollView>
+                <ScrollView style={{width: "100%"}}>
                     {data.projects.map((project, i) => {
                         return (
-                            <TouchableOpacity style={g.projectCard} key={"projectSelection" + i} onPress={() => { startProject(project.pid); setProjectSelectionOpen(false) }} >
+                            <TouchableOpacity  style={g.projectCard} key={"projectSelection" + i} onPress={() => { startProject(project.pid); setProjectSelectionOpen(false) }} >
                                 <Text style={g.text}>{project.name}</Text>
                                 <TouchableOpacity onPress={() => { navigation.navigate("ProjectView", { projectViewPid: project.pid }) }}>
                                     <Text style={g.textDim}>Edit</Text>

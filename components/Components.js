@@ -30,3 +30,17 @@ export const Spacer =({height}) => {
         </View>
     );
 }
+
+export const SpacerHor =({width}) => {
+
+    let style = {
+        width: width,
+        height: "100%"
+    }
+
+    return (
+        <View style={style}>
+
+        </View>
+    );
+}

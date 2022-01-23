@@ -9,6 +9,9 @@ import { copyObject } from '../js/functions';
 import TimelineToday from "../components/TimelineToday"
 import Navbar from '../components/NavbarDrawer';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { Spacer } from '../components/Components';
+import ProjectIcons from '../components/ProjectIcons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Timeline({ navigation, screenProps }) {
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
@@ -112,9 +115,18 @@ export default function Timeline({ navigation, screenProps }) {
                     <ScrollView
                         ref={ref => { this.timelineScrollView = ref }}
                         onContentSizeChange={() => this.timelineScrollView.scrollToEnd({ animated: true })}
-
                     >
-                        <View key="timelineTopMargin" style={g.navbarTopMargin}></View>
+                        <Spacer height={200}/>
+                        <TouchableOpacity style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems:"center"
+                        }}
+                        onPress={()=>navigation.navigate("AddProject")}>
+                            <ProjectIcons figure={"projectplaceholder"}/>
+                        </TouchableOpacity>
+                        <Spacer height={50}/>
                         {
                             screenProps.data.reversed_daily_logs.map((dayData, i) => {
                                 if (dayData.day !== Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24))

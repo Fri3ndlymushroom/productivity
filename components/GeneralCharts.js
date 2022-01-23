@@ -70,6 +70,8 @@ export default function GeneralCharts({ dailyAverage, data }) {
 
                             let relevant = selectedChart === "line" ? chartsData.line.data : chartsData.bar.data
 
+                            if(!relevant[0])return("")
+
                             let dataLength = relevant[0].length
 
 
@@ -225,7 +227,7 @@ export default function GeneralCharts({ dailyAverage, data }) {
                 <View style={s.divider}></View>
                 <TouchableOpacity
                     style={s.generalChartsButton}
-                    onPress={() => { setSelectedTime({ end: new Date(), start: fromUnixTime(data.all_logs[data.all_logs.length - 1].start) }); setSelectedTimeButton("l") }}
+                    onPress={() => { setSelectedTime({ end: new Date(), start: fromUnixTime(data.all_logs.length > 0 ? data.all_logs[data.all_logs.length - 1].day : Math.floor((Math.round(new Date().getTime() / 1000)) / 60 / 60 / 24)) }); setSelectedTimeButton("l") }}
                 >
                     <Text style={[g.textDim, selectedTimeButton === "l" ? s.selectedButtonText : {}]}>Lifetime</Text>
                 </TouchableOpacity>
@@ -316,6 +318,12 @@ const getLineData = (data, start, end) => {
     let lastStart = sub(start, { seconds: distance })
     let lastEnd = sub(end, { seconds: distance })
     let lastInfo = getTimeFrame(lastStart, lastEnd)
+    
+    if(data.all_logs.length === 0){
+        return {
+            data: [[],[],[]]
+        }
+    }
 
     let averageStart = fromUnixTime(data.all_logs[data.all_logs.length - 1].start)
     let averageEnd = new Date()

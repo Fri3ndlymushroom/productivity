@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, Button, Text, View, ScrollView } from "react-native"
+import { StyleSheet, TextInput, Button, Text, View, ScrollView, Dimensions } from "react-native"
 import g, { p, colorPalette, iconNames } from '../styles/global'
 import { DefaultText, Spacer } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
@@ -9,10 +9,11 @@ import { v4 as uuidv4 } from 'uuid';
 import NavbarStack from '../components/NavbarStack'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ProjectIcons from '../components/ProjectIcons';
+import { SpacerHor } from '../components/Components';
 
 export default function Home({ navigation, screenProps }) {
 
-    const [newProjectName, setNewProjectName] = useState("new Project");
+    const [newProjectName, setNewProjectName] = useState("New Project");
     const [selectedColor, setSelectedColor] = useState("#C0392B");
     const [selectedIcon, setSelectedIcon] = useState("cube")
 
@@ -62,8 +63,9 @@ export default function Home({ navigation, screenProps }) {
                         horizontal={true}
                     >
                         <View style={s.selectionInner}>
+                        <SpacerHor width={Dimensions.get("window").width*0.1}/>
                             {
-                                colors.map(color => {
+                                colorPalette.map(color => {
                                     let dynamic = {
                                         backgroundColor: color,
                                         borderWidth: (color === selectedColor ? 2 : 0),
@@ -78,6 +80,7 @@ export default function Home({ navigation, screenProps }) {
                                     )
                                 })
                             }
+                            <SpacerHor width={Dimensions.get("window").width*0.1}/>
                         </View>
                     </ScrollView>
                 </View>
@@ -87,8 +90,9 @@ export default function Home({ navigation, screenProps }) {
                         horizontal={true}
                     >
                         <View style={s.selectionInner}>
+                        <SpacerHor width={Dimensions.get("window").width*0.1}/>
                             {
-                                icons.map((icon) => {
+                                iconNames.map((icon) => {
                                     let dynamic = {
                                         borderWidth: (icon === selectedIcon ? 2 : 0),
                                         borderColor: "white"
@@ -100,6 +104,7 @@ export default function Home({ navigation, screenProps }) {
                                     )
                                 })
                             }
+                            <SpacerHor width={Dimensions.get("window").width*0.1}/>
                         </View>
                     </ScrollView>
                 </View>

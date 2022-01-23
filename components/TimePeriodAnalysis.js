@@ -40,7 +40,7 @@ export default function TimePeriodAnalysis({ data, settings }) {
             card: "All Time",
             list: [],
             start: now,
-            end: data.all_logs[data.all_logs.length - 1].day
+            end: data.all_logs.length > 0 ? data.all_logs[data.all_logs.length - 1].day : now
          }
       ]
 

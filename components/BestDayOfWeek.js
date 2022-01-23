@@ -24,6 +24,7 @@ export default function BestDayOfWeek({ data }) {
 
         days.forEach((day) => {
             day.distribution = Math.round(100 * day.duration / tot) === 100 ? 99 : Math.round(100 * day.duration / tot)
+            if(isNaN(day.distribution)) day.distribution = 0
         })
 
         let stylesObj = {}

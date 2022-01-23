@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     projectCard: {
         backgroundColor: p.bg2,
         width: "100%",
-        margin: 5,
+        margin: 10,
         padding: 10,
         paddingVertical: 13,
         display: "flex",
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
 });
 
 export const gestureRecognizerConfig = {
-    velocityThreshold: 0.5,
+    velocityThreshold: 10,
     directionalOffsetThreshold: 80
 }
 
