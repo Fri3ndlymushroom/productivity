@@ -6,6 +6,7 @@ import { formatSeconds } from '../js/timerfunctions'
 import Svg, { Path } from "react-native-svg"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ProjectIcons from './ProjectIcons'
+import { Spacer } from './Components'
 
 
 export default function TimelineToday({ setProjectSelectionOpen, goal, stopProject, projects, startProject, navigation }) {
@@ -80,7 +81,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
 
 
     return (
-        <View>
+        <View style={{marginBottom: 10}}>
             <Text key={"dayLabel"} style={[g.dayTitle, s.dayTitle]}>{formatSeconds(day * 24 * 60 * 60, "EEE, d MMM")}</Text>
             <ScrollView
                 horizontal={true}
@@ -228,7 +229,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                                 </View>
                                                 <View>
                                                     <Text style={s.projectCardTextMain}>{project.name}</Text>
-                                                    <Text style={s.projectCardTextSec}>{Math.round(project.frac_of_acerage)}% of daily average</Text>
+                                                    <Text style={s.projectCardTextSec}>{isNaN(Math.round(project.frac_of_acerage)) ? 0 : Math.round(project.frac_of_acerage)}% of daily average</Text>
                                                 </View>
                                             </View>
                                             <TouchableOpacity style={[s.startButton, color.c]} onPress={() => startProject(project.pid)}>

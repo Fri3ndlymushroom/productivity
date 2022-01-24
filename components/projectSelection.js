@@ -8,10 +8,13 @@ export default function projectSelection({ data, navigation, setProjectSelection
     return (
         <TouchableOpacity style={s.projectSelectionWrapper} onPress={() => setProjectSelectionOpen(false)}>
             <View style={s.projectSelectionWindow}>
-                <ScrollView style={{width: "100%"}}>
+                <ScrollView
+                    style={{ width: "100%" }}
+                    showsVerticalScrollIndicator={false}
+                >
                     {data.projects.map((project, i) => {
                         return (
-                            <TouchableOpacity  style={g.projectCard} key={"projectSelection" + i} onPress={() => { startProject(project.pid); setProjectSelectionOpen(false) }} >
+                            <TouchableOpacity style={[g.projectCard, {marginVertical: 4}]} key={"projectSelection" + i} onPress={() => { startProject(project.pid); setProjectSelectionOpen(false) }} >
                                 <Text style={g.text}>{project.name}</Text>
                                 <TouchableOpacity onPress={() => { navigation.navigate("ProjectView", { projectViewPid: project.pid }) }}>
                                     <Text style={g.textDim}>Edit</Text>
@@ -21,8 +24,8 @@ export default function projectSelection({ data, navigation, setProjectSelection
                     })}
 
                 </ScrollView>
-                    <TouchableOpacity style={s.actionButton} onPress={() => { navigation.navigate("AddProject") }}><Text style={g.text}>Add Project</Text></TouchableOpacity>
-                    <TouchableOpacity style={s.actionButton} onPress={() => { navigation.navigate("Archive") }}><Text style={g.text}>Archived projects</Text></TouchableOpacity>
+                <TouchableOpacity style={s.actionButton} onPress={() => { navigation.navigate("AddProject") }}><Text style={g.text}>Add Project</Text></TouchableOpacity>
+                <TouchableOpacity style={s.actionButton} onPress={() => { navigation.navigate("Archive") }}><Text style={g.text}>Archived projects</Text></TouchableOpacity>
             </View>
         </TouchableOpacity>
     )
@@ -50,10 +53,11 @@ const s = StyleSheet.create({
         borderTopLeftRadius: p.br,
         borderTopRightRadius: p.br,
         alignItems: 'center',
-        padding: 30
+        padding: 30,
+        paddingBottom: 10
 
     },
-    actionButton:{
+    actionButton: {
         padding: 5
     }
 })

@@ -227,7 +227,7 @@ export default function GeneralCharts({ dailyAverage, data }) {
                 <View style={s.divider}></View>
                 <TouchableOpacity
                     style={s.generalChartsButton}
-                    onPress={() => { setSelectedTime({ end: new Date(), start: fromUnixTime(data.all_logs.length > 0 ? data.all_logs[data.all_logs.length - 1].day : Math.floor((Math.round(new Date().getTime() / 1000)) / 60 / 60 / 24)) }); setSelectedTimeButton("l") }}
+                    onPress={() => { setSelectedTime({ end: new Date(), start: data.all_logs.length > 0 ? fromUnixTime(data.all_logs[data.all_logs.length - 1].start) : new Date() }); setSelectedTimeButton("l") }}
                 >
                     <Text style={[g.textDim, selectedTimeButton === "l" ? s.selectedButtonText : {}]}>Lifetime</Text>
                 </TouchableOpacity>

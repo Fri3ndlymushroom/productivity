@@ -36,7 +36,9 @@ export default function Analytics({ navigation, screenProps }) {
                 style={g.body}
             >
                 <Navbar {...{ navigation }} location={"Analytics"} />
-                <ScrollView>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                >
                     <View style={g.navbarTopMargin}></View>
                     {/* info grid */}
                     <View style={s.infoGrid}>
