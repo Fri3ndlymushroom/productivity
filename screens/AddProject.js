@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, Button, Text, View, ScrollView, Dimensions } from "react-native"
 import g, { p, colorPalette, iconNames } from '../styles/global'
 import { DefaultText, Spacer } from '../components/Components'
-import ProjectSelection from "../components/ProjectSelection"
-import ColorPalette from 'react-native-color-palette'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { v4 as uuidv4 } from 'uuid';
 import NavbarStack from '../components/NavbarStack'
@@ -14,8 +12,9 @@ import { SpacerHor } from '../components/Components';
 export default function Home({ navigation, screenProps }) {
 
     const [newProjectName, setNewProjectName] = useState("New Project");
-    const [selectedColor, setSelectedColor] = useState("#C0392B");
+    const [selectedColor, setSelectedColor] = useState("#6845f5");
     const [selectedIcon, setSelectedIcon] = useState("cube")
+    const [projectNameState, setProjectNameState] = useState({ok: true, message: ""})
 
     let colorStyle = StyleSheet.create({
         style: {
@@ -55,12 +54,20 @@ export default function Home({ navigation, screenProps }) {
                     </View>
                     <TextInput
                         style={[g.input, s.projectTitle]}
-                        onChangeText={setNewProjectName}
+                        onChangeText={(name)=>{
+                            setNewProjectName(name);
+                            if(name.length > 20)
+                                setProjectNameState({ok: false, message: "The name of the project is too long " + name.length + "/20"})
+                            else
+                                setProjectNameState({ok: true, message: ""})
+                        
+                        }}
                         value={newProjectName} />
                 </View>
                 <View style={s.selectionParent}>
                     <ScrollView style={s.selectionScroll}
                         horizontal={true}
+                        showsHorizontalScrollIndicator={false}
                     >
                         <View style={s.selectionInner}>
                         <SpacerHor width={Dimensions.get("window").width*0.1}/>
@@ -88,6 +95,7 @@ export default function Home({ navigation, screenProps }) {
                 <View style={s.selectionParent}>
                     <ScrollView style={s.selectionScroll}
                         horizontal={true}
+                        showsHorizontalScrollIndicator={false}
                     >
                         <View style={s.selectionInner}>
                         <SpacerHor width={Dimensions.get("window").width*0.1}/>
@@ -108,8 +116,10 @@ export default function Home({ navigation, screenProps }) {
                         </View>
                     </ScrollView>
                 </View>
+                <Spacer height={50}/>
+                <Text style={{textAlign: "center"}}>{projectNameState.message}</Text>
                 <View style={{ flex: 1 }}></View>
-                <TouchableOpacity style={s.button} onPress={() => addProject()} ><Text style={g.text}>Add Project</Text></TouchableOpacity>
+                <TouchableOpacity style={s.button} onPress={() =>{ if(projectNameState.ok)addProject()}} ><Text style={g.text}>Add Project</Text></TouchableOpacity>
                 <Spacer height={50} />
             </View>
         </View>
@@ -124,6 +134,8 @@ const s = StyleSheet.create({
     },
     projectTitle: {
         fontSize: 16,
+        width: "80%"
+
     },
     button: {
         paddingHorizontal: 15,

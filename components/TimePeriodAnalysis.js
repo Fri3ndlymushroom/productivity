@@ -3,12 +3,6 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import g, { p } from "../styles/global"
 import { formatSeconds, secondsToDuration } from "../js/timerfunctions"
 export default function TimePeriodAnalysis({ data, settings }) {
-
-
-
-
-
-
     const getPeriodData = () => {
         let now = Math.floor((Math.round(new Date().getTime() / 1000) - settings.start_of_day) / 60 / 60 / 24)
         let period = [
@@ -84,8 +78,8 @@ export default function TimePeriodAnalysis({ data, settings }) {
                                     {
                                         period.list.map((project, y) => {
                                             return (
-                                                <View key={`dot-${i}-${y}`} style={s.cardColumn} key={period.card + project.project}>
-                                                    <Text style={[s.cardProjectTitle, project.style]}>{project.project}</Text>
+                                                <View key={`dot-${i}-${y}`} style={s.cardColumn} key={period.card + project.project + y}>
+                                                    <Text style={[s.cardProjectTitle, project.style]}>{chopName(project.project)}</Text>
                                                     <Text style={s.cardProjectDuration}>{secondsToDuration(project.duration, { h: true, m: true, b: ["hrs ", "min "] })}</Text>
                                                 </View>
                                             )
@@ -139,6 +133,12 @@ function DotList({ tot, current }) {
             }
         </View>
     )
+}
+
+
+const chopName = (name) =>{
+
+    return name.substring(0, 10);
 }
 
 

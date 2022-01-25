@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { ScrollView, Button, Text, View, StyleSheet } from "react-native"
-import g, {gestureRecognizerConfig} from '../styles/global'
+import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
 import TimelineDay from '../components/TimelineDay';
 import { v4 as uuidv4 } from 'uuid';
-import { copyObject } from '../js/functions';
 import TimelineToday from "../components/TimelineToday"
 import Navbar from '../components/NavbarDrawer';
-import GestureRecognizer from 'react-native-swipe-gestures';
 import { Spacer } from '../components/Components';
 import ProjectIcons from '../components/ProjectIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -54,7 +52,7 @@ export default function Timeline({ navigation, screenProps }) {
         let project = dataCopy.all_logs[runningIndex].project
         let pid = dataCopy.all_logs[runningIndex].pid
 
-
+        // if not same day
         if (Math.floor((start - screenProps.settings.start_of_day) / 60 / 60 / 24) !== Math.floor((end - screenProps.settings.start_of_day) / 60 / 60 / 24)) {
 
             let current = start
@@ -63,7 +61,10 @@ export default function Timeline({ navigation, screenProps }) {
 
 
             while (current < end) {
-                all.push({ start: current, end: day * 60 * 60 * 24 + 86399 })
+                if(end-current >= 86400)
+                    all.push({ start: current, end: day * 60 * 60 * 24 + 86399 })
+                else
+                    all.push({ start: current, end: end })
                 current += 86400
                 day++
             }
@@ -71,22 +72,22 @@ export default function Timeline({ navigation, screenProps }) {
                 all.push({ start: current, end: end, day: day })
             }
 
+
+            dataCopy.splice(runningIndex, 1)
+
+
             all.forEach((log, i) => {
-                if (i === 0) {
-                    dataCopy.all_logs[runningIndex].running = false
-                    dataCopy.all_logs[runningIndex].end = log.end
-                    dataCopy.all_logs[runningIndex].duration = log.end - start
-                } else {
-                    dataCopy.all_logs.push({
-                        project: project,
-                        pid: pid,
-                        lid: "L_" + uuidv4(),
-                        day: log.day,
-                        start: log.start,
-                        duration: log.end - log.start,
-                        running: false
-                    })
-                }
+
+                dataCopy.all_logs.push({
+                    project: project,
+                    pid: pid,
+                    lid: "L_" + uuidv4(),
+                    day: log.day,
+                    start: log.start,
+                    duration: log.end - log.start,
+                    running: false
+                })
+
             })
 
         } else {
@@ -102,9 +103,7 @@ export default function Timeline({ navigation, screenProps }) {
 
     return (
         <View style={g.bodyWrapper}>
-            <GestureRecognizer
-                onSwipe={(direction, state) => { direction === "SWIPE_LEFT" ? navigation.navigate("Analytics") : null }}
-                config={gestureRecognizerConfig}
+            <View
                 style={g.body}
             >
                 <Navbar {...{ navigation }} location={"Timeline"} />
@@ -116,17 +115,17 @@ export default function Timeline({ navigation, screenProps }) {
                         ref={ref => { this.timelineScrollView = ref }}
                         onContentSizeChange={() => this.timelineScrollView.scrollToEnd({ animated: true })}
                     >
-                        <Spacer height={200}/>
+                        <Spacer height={200} />
                         <TouchableOpacity style={{
                             width: "100%",
                             display: "flex",
                             justifyContent: "center",
-                            alignItems:"center"
+                            alignItems: "center"
                         }}
-                        onPress={()=>navigation.navigate("AddProject")}>
-                            <ProjectIcons figure={"projectplaceholder"}/>
+                            onPress={() => navigation.navigate("AddProject")}>
+                            <ProjectIcons figure={"projectplaceholder"} />
                         </TouchableOpacity>
-                        <Spacer height={50}/>
+                        <Spacer height={50} />
                         {
                             screenProps.data.reversed_daily_logs.map((dayData, i) => {
                                 if (dayData.day !== Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24))
@@ -139,7 +138,7 @@ export default function Timeline({ navigation, screenProps }) {
                         }
                     </ScrollView>
                 </View>
-            </GestureRecognizer>
+            </View>
         </View>
     );
 }

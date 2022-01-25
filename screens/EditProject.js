@@ -1,11 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Text, Button, TextInput, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import g, { p, iconNames, colorPalette } from '../styles/global'
-import ColorPalette from 'react-native-color-palette'
-import { DefaultText, Spacer } from '../components/Components'
+import { Spacer } from '../components/Components'
 import { copyObject } from '../js/functions';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import NavbarStack from '../components/NavbarStack'
 import ProjectIcons from '../components/ProjectIcons';
 
@@ -19,9 +16,14 @@ export default function EditProject({ navigation, screenProps }) {
 
     const [popup, setPopup] = useState(false)
     const [changed, setChanged] = useState(false)
-
+    const [projectNameState, setProjectNameState] = useState({ ok: true, message: "" })
 
     const changeProjectName = (newName) => {
+        if (newName.length > 20)
+            setProjectNameState({ ok: false, message: "The name of the project is too long " + newName.length + "/20" })
+        else
+            setProjectNameState({ ok: true, message: "" })
+        
         let copy = copyObject(project)
         copy.name = newName
         setProject(copy)
@@ -102,6 +104,7 @@ export default function EditProject({ navigation, screenProps }) {
                 <View style={s.selectionParent}>
                     <ScrollView style={s.selectionScroll}
                         horizontal={true}
+                        showsHorizontalScrollIndicator={false}
                     >
                         <View style={s.selectionInner}>
                             {
@@ -126,6 +129,7 @@ export default function EditProject({ navigation, screenProps }) {
                 <View style={s.selectionParent}>
                     <ScrollView style={s.selectionScroll}
                         horizontal={true}
+                        showsHorizontalScrollIndicator={false}
                     >
                         <View style={s.selectionInner}>
                             {
@@ -144,9 +148,11 @@ export default function EditProject({ navigation, screenProps }) {
                         </View>
                     </ScrollView>
                 </View>
+                <Spacer height={50}/>
+                <Text style={{textAlign: "center"}}>{projectNameState.message}</Text>
                 <View style={{ flex: 1 }}></View>
                 <View style={s.buttonSection}>
-                    <TouchableOpacity style={s.button} onPress={() => saveChanges()}><Text style={[g.text, g.buttonText]}>Save</Text></TouchableOpacity>
+                    <TouchableOpacity style={s.button} onPress={() =>{ if(projectNameState.ok) saveChanges()}}><Text style={[g.text, g.buttonText]}>Save</Text></TouchableOpacity>
                     <TouchableOpacity style={s.button} onPress={() => archiveProject()}><Text style={[g.text, g.buttonText]}>Archive</Text></TouchableOpacity>
                     <TouchableOpacity style={s.button} onPress={() => setPopup(true)}><Text style={[g.text, g.buttonText]}>Delete</Text></TouchableOpacity>
                 </View>
@@ -192,6 +198,7 @@ const s = StyleSheet.create({
         padding: 8
     },
     projectTitle: {
+        width: "80%",
         fontSize: 16,
     },
     colorTile: {

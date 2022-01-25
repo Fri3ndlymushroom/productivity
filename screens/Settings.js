@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import g, { p, shadow, gestureRecognizerConfig } from "../styles/global"
+import g, { p } from "../styles/global"
 import { copyObject } from '../js/functions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { formatSeconds } from '../js/timerfunctions';
@@ -9,7 +9,7 @@ import Navbar from '../components/NavbarDrawer';
 import auth from "@react-native-firebase/auth"
 import { Spacer } from '../components/Components';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import GestureRecognizer from 'react-native-swipe-gestures';
+
 
 export default function Settings({ navigation, screenProps }) {
 
@@ -70,9 +70,7 @@ export default function Settings({ navigation, screenProps }) {
 
     return (
         <View style={g.bodyWrapper}>
-            <GestureRecognizer
-                onSwipe={(direction, state) => { direction === "SWIPE_RIGHT" ? navigation.navigate("Analytics") : null }}
-                config={gestureRecognizerConfig}
+            <View
                 style={g.body}
             >
                 <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={changed} saveChanges={saveChanges} />
@@ -167,7 +165,7 @@ export default function Settings({ navigation, screenProps }) {
                 <View style={{ flex: 1 }}></View>
                 <TouchableOpacity onPress={saveChanges} style={g.button}><Text style={[g.text, g.buttonText]}>Save Changes</Text></TouchableOpacity>
                 <Spacer height={50} />
-            </GestureRecognizer>
+            </View>
         </View>
 
     )

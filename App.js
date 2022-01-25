@@ -184,8 +184,6 @@ export default function App() {
 
                 copy.all_logs[index].duration = now - copy.all_logs[index].start
 
-
-
                 setData(copy)
             }
 
@@ -193,12 +191,6 @@ export default function App() {
         return () => clearInterval(interval)
     }, [data])
 
-
-
-
-    const navigateOnSwipe = (direction) => {
-
-    }
 
     return (
         <View style={s.root}>

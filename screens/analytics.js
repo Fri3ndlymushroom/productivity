@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Text, View, Dimensions, ScrollView, StyleSheet } from 'react-native';
-import g, { p, gestureRecognizerConfig } from '../styles/global'
-import { DefaultText } from '../components/Components'
+import g, { p } from '../styles/global'
 import { VictoryPie } from 'victory-native';
 import GeneralCharts from "../components/GeneralCharts"
 import Navbar from '../components/NavbarDrawer';
@@ -11,8 +10,7 @@ import BestDayOfWeek from '../components/BestDayOfWeek';
 import WeekComparison from '../components/WeekComparison';
 import { formatSeconds } from "../js/timerfunctions"
 import { Spacer } from '../components/Components'
-import GestureRecognizer from 'react-native-swipe-gestures';
-
+ 
 
 
 
@@ -30,9 +28,7 @@ export default function Analytics({ navigation, screenProps }) {
 
     return (
         <View style={g.bodyWrapper}>
-            <GestureRecognizer
-                onSwipe={(direction, state) => { direction === "SWIPE_LEFT" ? navigation.navigate("Settings") : (direction === "SWIPE_RIGHT" ? navigation.navigate("Timeline") : null) }}
-                config={gestureRecognizerConfig}
+            <View
                 style={g.body}
             >
                 <Navbar {...{ navigation }} location={"Analytics"} />
@@ -77,7 +73,7 @@ export default function Analytics({ navigation, screenProps }) {
 
                     <Spacer height={30} />
                 </ScrollView>
-            </GestureRecognizer>
+            </View>
         </View>
     );
 }

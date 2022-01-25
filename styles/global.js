@@ -114,9 +114,5 @@ const styles = StyleSheet.create({
     },
 });
 
-export const gestureRecognizerConfig = {
-    velocityThreshold: 10,
-    directionalOffsetThreshold: 80
-}
 
 export default styles

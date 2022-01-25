@@ -6,6 +6,7 @@ import { formatSeconds } from "../js/timerfunctions"
 export default function BestDayOfWeek({ data }) {
 
     const getBestDayOfWeek = () => {
+        
         let days = [
             { day: "Mon", duration: 0, distribution: 0 },
             { day: "Tue", duration: 0, distribution: 0 },
@@ -15,6 +16,7 @@ export default function BestDayOfWeek({ data }) {
             { day: "Sat", duration: 0, distribution: 0 },
             { day: "Sun", duration: 0, distribution: 0 },
         ]
+
         data.all_logs.forEach((log) => {
             let index = days.findIndex((day) => day.day === formatSeconds(log.start, "EEE"))
             days[index].duration += log.duration
@@ -58,10 +60,8 @@ export default function BestDayOfWeek({ data }) {
                 }
             </View>
         </View>
-
     )
 }
-
 
 const s = StyleSheet.create({
     container:{

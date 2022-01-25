@@ -20,8 +20,12 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
         let relevant = []
         projects.forEach((project) => {
             let relevantLogs = project.logs.filter((log) => log.day === day)
+            let running = project.logs.filter((log) => log.running).length > 0
+            let runningToday = relevantLogs.filter((log) => log.running).length > 0
+
             let total_duration = relevantLogs.reduce((sum, log) => sum + log.duration, 0)
-            let running = relevantLogs.filter((log) => log.running).length > 0
+
+            if(running && !runningToday) total_duration += project.logs.filter((log) => log.running)[0].duration
 
             let inLastDays = project.logs.filter((log) => day - log.day > -7).reduce((sum, log) => sum + log.duration, 0)
 
