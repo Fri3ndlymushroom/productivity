@@ -107,7 +107,9 @@ export default function GeneralCharts({ dailyAverage, data }) {
                     />
                     <VictoryAxis
                         dependentAxis
-                        tickFormat={(y) => y}
+                        tickFormat={(y) => {
+                            return Math.round(y.valueOf() / 60 / 60 * 10) / 10
+                        }}
                         style={{
                             axis: {
                                 stroke: p.bg2  //CHANGE COLOR OF Y-AXIS
