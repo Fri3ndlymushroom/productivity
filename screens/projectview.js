@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View, Button, TouchableOpacity, Dimensions } from 'react-native'
 import g, { p } from "../styles/global"
-import { formatSeconds } from '../js/timerfunctions';
+import { formatSeconds, formatSecondsWithOffset } from '../js/timerfunctions';
 import { v4 as uuidv4 } from 'uuid';
 import { VictoryBar, VictoryLabel, VictoryChart, VictoryAxis } from 'victory-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -164,7 +164,7 @@ export default function ProjectView({ navigation, screenProps }) {
 
                                         <TouchableOpacity onPress={() => { if (log.end) navigation.navigate("EditLog", { edited_log: log }) }} style={s.projectCard}>
                                             <Text style={s.totalTime}>{formatSeconds(log.start, "HH':'mm")} - {log.end ? formatSeconds(log.end, "HH':'mm") : "running"}</Text>
-                                            <Text style={s.totalTime}>{formatSeconds(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
+                                            <Text style={s.totalTime}>{formatSecondsWithOffset(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
                                         </TouchableOpacity>
 
 

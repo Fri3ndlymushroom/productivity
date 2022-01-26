@@ -10,7 +10,7 @@ import { checkForBackup } from './js/backupsystem';
 import Purchases from "react-native-purchases"
 
 
-const resetData = true
+const resetData = false
 
 
 export default function App() {

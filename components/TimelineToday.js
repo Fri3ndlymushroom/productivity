@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ScrollView, View, Text, StyleSheet, Button, TouchableOpacity, Dimensions } from 'react-native'
 import g, { p } from "../styles/global"
 import { VictoryPie } from 'victory-native'
-import { formatSeconds } from '../js/timerfunctions'
+import { formatSeconds, formatSecondsWithOffset } from '../js/timerfunctions'
 import Svg, { Path } from "react-native-svg"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ProjectIcons from './ProjectIcons'
@@ -160,15 +160,15 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                             <View style={[s.infoCardIndicator, indicator.color]}></View>
 
                                             <View style={s.infoCardCounterColumn}>
-                                                <Text style={s.infoCardCounterTimer}>{formatSeconds(running[0].total_duration, "HH")}</Text>
+                                                <Text style={s.infoCardCounterTimer}>{formatSecondsWithOffset(running[0].total_duration, "HH")}</Text>
                                                 <Text style={s.infoCardCounterUnit}>hrs</Text>
                                             </View>
                                             <View style={s.infoCardCounterColumn}>
-                                                <Text style={s.infoCardCounterTimer}>{formatSeconds(running[0].total_duration, "mm")}</Text>
+                                                <Text style={s.infoCardCounterTimer}>{formatSecondsWithOffset(running[0].total_duration, "mm")}</Text>
                                                 <Text style={s.infoCardCounterUnit}>mins</Text>
                                             </View>
                                             <View style={s.infoCardCounterColumn}>
-                                                <Text style={s.infoCardCounterTimer}>{formatSeconds(running[0].total_duration, "ss")}</Text>
+                                                <Text style={s.infoCardCounterTimer}>{formatSecondsWithOffset(running[0].total_duration, "ss")}</Text>
                                                 <Text style={s.infoCardCounterUnit}>secs</Text>
                                             </View>
                                         </View>
@@ -238,7 +238,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                             </View>
                                             <TouchableOpacity style={[s.startButton, color.c]} onPress={() => startProject(project.pid)}>
                                                 <Icon name={'play'} size={12} color={'white'} />
-                                                <Text style={s.buttonText}>{formatSeconds(project.total_duration, "HH'h' mm'min'")} </Text>
+                                                <Text style={s.buttonText}>{formatSecondsWithOffset(project.total_duration, "HH'h' mm'min'")} </Text>
                                             </TouchableOpacity>
                                         </TouchableOpacity>)
                             })

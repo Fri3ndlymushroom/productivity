@@ -8,7 +8,7 @@ import Navbar from '../components/NavbarDrawer';
 import TimePeriodAnalysis from '../components/TimePeriodAnalysis';
 import BestDayOfWeek from '../components/BestDayOfWeek';
 import WeekComparison from '../components/WeekComparison';
-import { formatSeconds } from "../js/timerfunctions"
+import { formatSeconds, formatSecondsWithOffset } from "../js/timerfunctions"
 import { Spacer } from '../components/Components'
  
 
@@ -19,8 +19,8 @@ export default function Analytics({ navigation, screenProps }) {
     let allTime = Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration / 60 / 60, 0))
     let dailyAverage = "0h 0min"
     try{
-        let days = Math.floor(new Date().getTime() / 1000 / 60 / 60 / 24 - screenProps.data.all_logs[screenProps.data.all_logs.length - 1].day)
-        dailyAverage = formatSeconds(Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration, 0) / days), "HH'h' mm'min'")
+        let days = Math.floor(new Date().getTime() / 1000 / 60 / 60 / 24 - screenProps.data.all_logs[screenProps.data.all_logs.length - 1].day) + 1
+        dailyAverage = formatSecondsWithOffset(Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration, 0) / days), "HH'h' mm'min'")
     }catch{}
 
 

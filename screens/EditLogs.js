@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native"
 import g, { p } from '../styles/global'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { formatSeconds } from '../js/timerfunctions';
+import { formatSeconds, formatSecondsWithOffset } from '../js/timerfunctions';
 import { copyObject } from "../js/functions"
 import NavbarStack from '../components/NavbarStack'
 import { Spacer } from '../components/Components';
@@ -190,7 +190,7 @@ export default function EditLog({ navigation, screenProps }) {
                     </View>
                     <Text style={{ color: p.text__main, fontSize: 18, margin: 5 }}>{log.project}</Text>
                     <View style={{ flex: 1 }}></View>
-                    <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{formatSeconds(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
+                    <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{formatSecondsWithOffset(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
                 </View>
 
                 <View>
