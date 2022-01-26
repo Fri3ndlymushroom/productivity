@@ -139,7 +139,7 @@ function DotList({ tot, current }) {
 
 const chopName = (name) =>{
 
-    return name.substring(0, 10);
+    return name.substring(0, 7)+"...";
 }
 
 
@@ -167,6 +167,6 @@ const s = StyleSheet.create({
     cardProjectDuration: {
         color: p.text__dim,
         fontSize: 12,
-        marginTop: 5,
+        marginTop: 2,
     }
 })
