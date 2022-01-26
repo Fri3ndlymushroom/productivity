@@ -40,7 +40,7 @@ export default function Pro({ navigation, screenProps }) {
 
             }
         } catch (e) {
-            console.error(e)
+            console.log(e)
         }
     }
 
@@ -63,7 +63,7 @@ export default function Pro({ navigation, screenProps }) {
             <View style={g.body}>
                 <NavbarStack navigation={navigation} loc={"Theta Pro"}></NavbarStack>
                 <Spacer height={150} />
-                <TouchableOpacity onPress={() => { Linking.openURL("https://moritzhuesser.com/thetaproductivity/terms_and_services").catch(err => console.error("Couldn't load page", err)); }}><Text style={g.text}>Terms and services</Text></TouchableOpacity>
+
                 <ScrollView
                     style={{
                         width: "80%",
@@ -87,20 +87,20 @@ export default function Pro({ navigation, screenProps }) {
                                         padding: 15,
                                         paddingBottom: 50
                                     }}>
-                                        <Text style={{color: p.text__main, fontSize: 20}}>{/*product.product.title*/"Theta Pro (Subscription)"}</Text>
-                                        <Text style={{marginHorizontal: 20, marginTop: 20}}>{product.product.description}</Text>
+                                        <Text style={{ color: p.text__main, fontSize: 20 }}>{/*product.product.title*/"Theta Pro (Subscription)"}</Text>
+                                        <Text style={{ marginHorizontal: 20, marginTop: 20 }}>{product.product.description}</Text>
                                     </View>
                                     <View style={{
                                         backgroundColor: p.hl,
                                         width: "35%",
                                         paddingHorizontal: 10,
                                         paddingVertical: 15,
-                                        borderRadius: p.br,
+                                        borderRadius: 20,
                                         position: "absolute",
                                         left: "30%",
                                         top: 140,
                                     }}>
-                                        <Text style={{textAlign: "center", fontSize: 18}}>{product.product.price_string}</Text>
+                                        <Text style={{ textAlign: "center", fontSize: 18 }}>{product.product.price_string}</Text>
                                     </View>
 
                                 </TouchableOpacity>
@@ -109,7 +109,14 @@ export default function Pro({ navigation, screenProps }) {
                     }
                 </ScrollView>
                 <TouchableOpacity onPress={() => restorePurchases} style={g.button}><Text style={g.text}>Restore purchses</Text></TouchableOpacity>
-                <Spacer height={50} />
+                <Spacer height={30} />
+
+                <TouchableOpacity
+                    style={{ width: "80%"}}
+                    onPress={() => { Linking.openURL("https://moritzhuesser.com/thetaproductivity/terms_and_services").catch(err => console.error("Couldn't load page", err)); }}
+                >
+                    <Text style={[g.text, {color: p.text__dim, textAlign: "center"}]}>By continuing, you agree to our Terms and Services</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
