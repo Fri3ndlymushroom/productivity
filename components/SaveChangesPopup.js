@@ -16,13 +16,13 @@ export default function SaveChangesPopup({ newLoc, setPopupOpen, saveChanges, na
 
     return (
         <TouchableOpacity onPress={() => setPopupOpen(false)} style={s.popup}>
-            <Text style={g.text}>Do you want to save the changes you have made</Text>
+            <Text style={[g.text, {textAlign:"center"}]}>Do you want to save the changes you have made?</Text>
             <View style={s.buttonWrapper}>
                 <TouchableOpacity onPress={() => { navigate() }} style={s.button}>
-                    <Text style={g.text}>Discard Changes</Text>
+                    <Text style={g.text}>Discard</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { saveChanges(); navigate() }} style={s.button}>
-                    <Text style={g.text}>Save Changes</Text>
+                <TouchableOpacity onPress={() => { saveChanges(); navigate() }} style={[s.button, {backgroundColor: p.hl}]}>
+                    <Text style={g.text}>Save</Text>
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>
@@ -60,6 +60,7 @@ const s = StyleSheet.create({
         display:"flex",
         flexDirection:"row",
         width: "100%",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
+        marginTop: 10
     }
 })
