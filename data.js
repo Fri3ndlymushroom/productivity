@@ -6,8 +6,27 @@ export let productionData = {
         project: "",
         duration: 0
     },
-    projects: [],
-    all_logs: [],
+    projects: [
+        {
+            name: "Programming",
+            pid: "P_399966c6-ba0d-48ae-be0f-700e4157fbb0",
+            logs: [],
+            color: "#EC2964",
+            icon: "cube"
+        },
+    ],
+    all_logs: [
+        {
+            project: "Programming",
+            pid: "P_399966c6-ba0d-48ae-be0f-700e4157fbb0",
+            lid: "L_663c4868-b5fe-4199-8ba8-a10f1909f999",
+            day: 1918,
+            start: 1643146388,
+            duration: 25200,
+            color: "#EC2964",
+            running: true
+        },
+    ],
     daily_logs: []
 }
 

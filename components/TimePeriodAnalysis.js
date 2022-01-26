@@ -5,6 +5,7 @@ import { formatSeconds, secondsToDuration } from "../js/timerfunctions"
 export default function TimePeriodAnalysis({ data, settings }) {
     const getPeriodData = () => {
         let now = Math.floor((Math.round(new Date().getTime() / 1000) - settings.start_of_day) / 60 / 60 / 24)
+        
         let period = [
             {
                 card: "Day",

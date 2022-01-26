@@ -24,9 +24,13 @@ export function secondsToFormatedString(seconds) {
 
 
 export const  formatSeconds = (seconds, formatstr) => {
-    let d = new Date(seconds * 1000)
+    if(isNaN(seconds))return "invalid"
 
-    const dc = new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000)
+    let dc = new Date(seconds * 1000)
+
+
+    //const dc = new Date(d.valueOf() - d.getTimezoneOffset() * 60 * 1000)
+
     
     let f = format(dc, formatstr)
 

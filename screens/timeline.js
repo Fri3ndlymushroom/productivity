@@ -10,6 +10,7 @@ import Navbar from '../components/NavbarDrawer';
 import { Spacer } from '../components/Components';
 import ProjectIcons from '../components/ProjectIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { logPlugin } from '@babel/preset-env/lib/debug';
 
 export default function Timeline({ navigation, screenProps }) {
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
@@ -59,21 +60,19 @@ export default function Timeline({ navigation, screenProps }) {
             let day = Math.floor((start - screenProps.settings.start_of_day) / 60 / 60 / 24)
             let all = []
 
-
             while (current < end) {
-                if(end-current >= 86400)
-                    all.push({ start: current, end: day * 60 * 60 * 24 + 86399 })
-                else
-                    all.push({ start: current, end: end })
-                current += 86400
+
+                let timezoneOffset = new Date().getTimezoneOffset()
+
+                let endOfDay = day * 60 * 60 * 24 + 86399 + timezoneOffset * 60
+
+                all.push({ start: current, end: endOfDay > end ? end : endOfDay, day: day })
+
+                current = endOfDay + 1
                 day++
             }
-            if (duration > 0) {
-                all.push({ start: current, end: end, day: day })
-            }
 
-
-            dataCopy.splice(runningIndex, 1)
+            dataCopy.all_logs.splice(runningIndex, 1)
 
 
             all.forEach((log, i) => {
@@ -84,6 +83,7 @@ export default function Timeline({ navigation, screenProps }) {
                     lid: "L_" + uuidv4(),
                     day: log.day,
                     start: log.start,
+                    end: log.end,
                     duration: log.end - log.start,
                     running: false
                 })
@@ -97,7 +97,6 @@ export default function Timeline({ navigation, screenProps }) {
         }
 
         screenProps.setData(dataCopy)
-
     }
 
 

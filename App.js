@@ -10,6 +10,8 @@ import { checkForBackup } from './js/backupsystem';
 import Purchases from "react-native-purchases"
 
 
+const resetData = true
+
 
 export default function App() {
 
@@ -58,7 +60,8 @@ export default function App() {
 
     useEffect(() => {
         const getDB = async () => {
-            //await AsyncStorage.setItem('@settings', JSON.stringify(defaultSettings)) // reset
+            if(resetData)
+                await AsyncStorage.setItem('@settings', JSON.stringify(defaultSettings)) // reset
 
 
             let dbSettings = null
@@ -159,7 +162,7 @@ export default function App() {
             try {
                 let dbData = null
                 dbData = JSON.parse(await AsyncStorage.getItem('@data'))
-                if (dbData === null) {
+                if (dbData === null || resetData) {
                     dbData = productionData
                 }
                 setData(dbData)
