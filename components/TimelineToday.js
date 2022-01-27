@@ -181,7 +181,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                 })
 
                                 anotherCard =
-                                    <View style={[s.projectCard, g.shadow]} key="Start Project">
+                                    <TouchableOpacity onPress={() => setProjectSelectionOpen(true)} style={[s.projectCard, g.shadow]} key="Start Project">
 
                                         <View style={[g.logoWrapper, color.c]}>
                                             <ProjectIcons figure={"add"} />
@@ -191,7 +191,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                             <Icon name={'play'} size={12} color={'white'} />
                                             <Text style={s.buttonText}>Start Project</Text>
                                         </TouchableOpacity>
-                                    </View>
+                                    </TouchableOpacity>
                             }
 
                             let projectCards = half.map((project) => {

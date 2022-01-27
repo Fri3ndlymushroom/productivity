@@ -139,7 +139,9 @@ function DotList({ tot, current }) {
 
 const chopName = (name) =>{
 
-    return name.substring(0, 7)+"...";
+    let short = name.length > 7 ? name.substring(0, 7)+"..."  : name
+
+    return short;
 }
 
 
