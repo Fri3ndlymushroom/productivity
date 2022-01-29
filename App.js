@@ -60,7 +60,7 @@ export default function App() {
 
     useEffect(() => {
         const getDB = async () => {
-            if(resetData)
+            if (resetData)
                 await AsyncStorage.setItem('@settings', JSON.stringify(defaultSettings)) // reset
 
 
@@ -177,6 +177,9 @@ export default function App() {
 
     }, [])
 
+
+
+
     useEffect(() => {
         const interval = setInterval(() => {
             if (data.all_logs.filter((log) => log.running === true).length > 0) {
@@ -184,15 +187,17 @@ export default function App() {
                 let copy = { ...data }
                 let now = Math.round(new Date().getTime() / 1000)
 
-
+                console.log("ok")
                 copy.all_logs[index].duration = now - copy.all_logs[index].start
 
                 setData(copy)
+
             }
 
         }, 100)
         return () => clearInterval(interval)
     }, [data])
+
 
 
     return (
