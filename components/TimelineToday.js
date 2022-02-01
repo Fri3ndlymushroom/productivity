@@ -5,8 +5,10 @@ import { VictoryPie } from 'victory-native'
 import { formatSeconds, formatSecondsWithOffset } from '../js/timerfunctions'
 import Svg, { Path } from "react-native-svg"
 import Icon from 'react-native-vector-icons/FontAwesome';
+Icon.loadFont();
 import ProjectIcons from './ProjectIcons'
 import { Spacer } from './Components'
+
 
 
 export default function TimelineToday({ setProjectSelectionOpen, goal, stopProject, projects, startProject, navigation }) {
@@ -80,6 +82,8 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
         setRelevantData(halfed)
     }, [projects])
 
+
+    console.log(projects)
 
 
 

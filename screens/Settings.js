@@ -9,6 +9,7 @@ import Navbar from '../components/NavbarDrawer';
 import auth from "@react-native-firebase/auth"
 import { Spacer } from '../components/Components';
 import Icon from 'react-native-vector-icons/FontAwesome';
+Icon.loadFont();
 import Pro from './Pro';
 import ResetPopup from '../components/ResetPopup';
 

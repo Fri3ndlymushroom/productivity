@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import g, { p } from "../styles/global"
 import Icon from 'react-native-vector-icons/FontAwesome';
+Icon.loadFont();
 
 export default function WeekComparison({ data, settings }) {
 

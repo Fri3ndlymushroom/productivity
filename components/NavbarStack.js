@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import ProjectIcons from './ProjectIcons';
 import g, { p } from "../styles/global"
 import SaveChangesPopup from './SaveChangesPopup';
