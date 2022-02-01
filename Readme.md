@@ -4,3 +4,13 @@
 
 
 >Theta Productivity is an app to keep track of how much time you spend on your projects, so you can plan better and stay motivated.
+
+
+████████╗██╗░░██╗███████╗████████╗░█████╗░
+╚══██╔══╝██║░░██║██╔════╝╚══██╔══╝██╔══██╗
+░░░██║░░░███████║█████╗░░░░░██║░░░███████║
+░░░██║░░░██╔══██║██╔══╝░░░░░██║░░░██╔══██║
+░░░██║░░░██║░░██║███████╗░░░██║░░░██║░░██║
+░░░╚═╝░░░╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚═╝░░╚═╝
+
+by Fri3ndlymushroom

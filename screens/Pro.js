@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ScrollView, TouchableOpacity,  } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, } from 'react-native'
 import NavbarStack from '../components/NavbarStack'
 import { Spacer } from '../components/Components'
 import g, { p, shadow } from "../styles/global"
@@ -59,7 +59,7 @@ export default function Pro({ navigation, screenProps }) {
     }
 
     return (
-        <View style={{width: "80%"}}>
+        <View style={{ width: "80%" }}>
             {
                 packages.map((product, i) => {
                     return (
@@ -77,12 +77,13 @@ export default function Pro({ navigation, screenProps }) {
                                 marginVertical: 10,
                                 padding: 15,
                                 paddingBottom: 50,
-                                ...shadow
+                                ...shadow,
+                                height: 160
                             }}>
                                 <Text style={{ color: p.text__main, fontSize: 18 }}>{/*product.product.title*/"Theta Pro (Subscription)"}</Text>
                                 <Text style={{ marginHorizontal: 20, marginTop: 20 }}>{product.product.description}</Text>
+                                <TouchableOpacity onPress={() => restorePurchases} style={{ position: "absolute", top: 140, right: 12 }}><Text style={[g.text, { fontSize: 11, color: p.text__dim }]}>Restore purchses</Text></TouchableOpacity>
                             </View>
-                            <TouchableOpacity onPress={() => restorePurchases} style={{position: "absolute", top: 152, right:12}}><Text style={[g.text, {fontSize: 11, color: p.text__dim}]}>Restore purchses</Text></TouchableOpacity>
                             <View style={{
                                 backgroundColor: p.hl,
                                 width: "35%",
