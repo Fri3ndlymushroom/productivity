@@ -11,19 +11,31 @@ export default function Signin({ navigation }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [signType, setSignType] = useState("Log In")
+    const [errorMessage, setErrorMessage] = useState("")
 
 
     const handleSignUp = () => {
-        auth().createUserWithEmailAndPassword(email, password).then(userCredentials => {
-            const user = userCredentials.user
+        auth().createUserWithEmailAndPassword(email === "" ? "a" : email, password === "" ? "a" : password).then(userCredentials => {
             navigation.goBack()
-        }).catch(error => alert(error.message))
+        }).catch(error => setErrorMessage(error.message))
     }
+
+
     const handleLogIn = () => {
-        auth().signInWithEmailAndPassword(email, password).then(userCredentials => {
-            const user = userCredentials.user
+        auth().signInWithEmailAndPassword(email === "" ? "a" : email, password === "" ? "a" : password).then(userCredentials => {
             navigation.goBack()
-        }).catch(error => alert(error.message))
+        }).catch(error => setErrorMessage(error.message))
+    }
+
+
+    const resetPassowrd = () => {
+        auth().sendPasswordResetEmail(email)
+            .then(() => {
+                setErrorMessage("Password reset email sent!")
+            })
+            .catch((error) => {
+                setErrorMessage(error.message)
+            });
     }
 
 
@@ -32,6 +44,7 @@ export default function Signin({ navigation }) {
         <>
             {
                 !auth().currentUser &&
+
                 <View style={g.bodyWrapper}>
                     <View style={g.body}>
                         <NavbarStack navigation={navigation} loc={"Sign Up"}></NavbarStack>
@@ -71,6 +84,13 @@ export default function Signin({ navigation }) {
                                     <Text style={[g.text, g.buttonText]}>Submit</Text>
                                 </TouchableOpacity>
                             </View>
+                            <TouchableOpacity
+                                onPress={resetPassowrd}
+                            >
+                                <Text style={{ color: p.text__dim }}>Forgot Password?</Text>
+                            </TouchableOpacity>
+                            <Text style={{ textAlign: "center", marginTop: 10, color: "#eb4034", maxWidth: "80%" }}>{errorMessage}</Text>
+
                             <Spacer height={200} />
 
 
@@ -92,6 +112,7 @@ export default function Signin({ navigation }) {
                     </View >
                 </View>
             }
+
         </>
     )
 }

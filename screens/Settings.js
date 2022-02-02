@@ -79,7 +79,7 @@ export default function Settings({ navigation, screenProps }) {
             >
 
                 <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={changed} saveChanges={saveChanges} />
-                <Spacer height={100} />
+                <Spacer height={130} />
 
                 <View>
                     {dateTimeProps.open && (
@@ -170,6 +170,7 @@ export default function Settings({ navigation, screenProps }) {
                     <Text style={g.text}>{formatSeconds(newSettings.start_of_day, "HH:mm")}</Text>
                 </TouchableOpacity>
 
+
                 {/* Reset */}
                 <TouchableOpacity style={s.settingsCard}
                     onPress={() =>setResetOpen(true)}
@@ -177,6 +178,8 @@ export default function Settings({ navigation, screenProps }) {
                     <Text style={[g.text]}>Reset progress</Text>
                     <Text style={[g.text, {color: "#eb4034"}]}>[Danger Zone]</Text>
                 </TouchableOpacity>
+
+                
 
                 {resetOpen && <ResetPopup setResetOpen={setResetOpen} setData={screenProps.setData}/>}
                 
