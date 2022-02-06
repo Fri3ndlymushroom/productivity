@@ -12,7 +12,7 @@ import Purchases from "react-native-purchases"
 const resetData = true
 
 
-export default function App() {
+export default function Theta() {
 
     const [isPro, setIsPro] = useState(false)
 
@@ -186,7 +186,6 @@ export default function App() {
                 let copy = { ...data }
                 let now = Math.round(new Date().getTime() / 1000)
 
-                console.log("ok")
                 copy.all_logs[index].duration = now - copy.all_logs[index].start
 
                 setData(copy)

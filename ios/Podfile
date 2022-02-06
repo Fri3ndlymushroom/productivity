@@ -12,7 +12,7 @@ target 'theta' do
     :hermes_enabled => false
   )
 
-  target 'thetaTests' do
+  target 'theta' do
     inherit! :complete
     # Pods for testing
   end
