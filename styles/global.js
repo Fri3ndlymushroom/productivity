@@ -3,14 +3,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 
-const getStyle = async () => {
-    dbSettings = JSON.parse(await AsyncStorage.getItem('@settings'))
-    console.log(dbSettings)
-    return dbSettings.mode
-}
-
-
-
 export const p = {
     bg1: "#151724",
     bg2: "#181c2e",

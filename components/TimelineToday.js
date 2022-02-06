@@ -83,9 +83,6 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
     }, [projects])
 
 
-    console.log(projects)
-
-
 
 
     return (
