@@ -5,7 +5,6 @@ import { formatSeconds, formatSecondsWithOffset } from '../js/timerfunctions';
 import { v4 as uuidv4 } from 'uuid';
 import { VictoryBar, VictoryLabel, VictoryChart, VictoryAxis } from 'victory-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-Icon.loadFont();
 import NavbarStack from '../components/NavbarStack'
 import ProjectIcons from '../components/ProjectIcons';
 
