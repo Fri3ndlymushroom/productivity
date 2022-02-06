@@ -28,7 +28,7 @@ const screens = {
     Backups: {
         screen: Backups,
         navigationOptions: navigationOptions
-    }
+    },
 }
 
 const SettingsStack = createStackNavigator(screens);
