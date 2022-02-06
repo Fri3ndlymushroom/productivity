@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, Button, Text, View, ScrollView, Dimensions } from "react-native"
 import g, { p, colorPalette, iconNames } from '../styles/global'
 import { DefaultText, Spacer } from '../components/Components'
-import Icon from 'react-native-vector-icons/FontAwesome';
-Icon.loadFont();
 import { v4 as uuidv4 } from 'uuid';
 import NavbarStack from '../components/NavbarStack'
 import { TouchableOpacity } from 'react-native-gesture-handler';
