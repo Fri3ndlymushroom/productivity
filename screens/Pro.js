@@ -37,7 +37,7 @@ export default function Pro({ navigation, screenProps }) {
 
             if (typeof purchaserInfo.entitlements.active["pro"] !== 'undefined') {
                 console.log("user is Pro")
-
+                screenProps.setIsPro(true)
             }
         } catch (e) {
             console.log(e)

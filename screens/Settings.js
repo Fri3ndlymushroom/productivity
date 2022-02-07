@@ -191,7 +191,7 @@ export default function Settings({ navigation, screenProps }) {
                 <Spacer height={20} />
                 <TouchableOpacity
                     style={{ width: "80%" }}
-                    onPress={() => { Linking.openURL("https://moritzhuesser.com/thetaproductivity/terms_and_services").catch(err => console.error("Couldn't load page", err)); }}
+                    onPress={() => { Linking.openURL("https://www.websitepolicies.com/policies/view/gzMUVoCo").catch(err => console.error("Couldn't load page", err)); }}
                 >
                     <Text style={[g.text, {fontSize:13, marginBottom: 5, color: p.text__dim, textAlign: "center" }]}>By purchasing, you agree to our Terms and Services</Text>
                 </TouchableOpacity>
