@@ -69,6 +69,7 @@ export default function TimePeriodAnalysis({ data, settings }) {
                 snapToAlignment={"center"}
                 showsHorizontalScrollIndicator={false}
                 disableIntervalMomentum={true}
+                nestedScrollEnabled = {true}
             >
                 {
                     getPeriodData().map((period, i) => {
@@ -76,7 +77,10 @@ export default function TimePeriodAnalysis({ data, settings }) {
                             <View key={period.card} style={s.scrollCard}>
                                 <Text style={s.cardTitle}>{period.card}</Text>
 
-                                <ScrollView>
+                                <ScrollView
+                                    nestedScrollEnabled = {true}
+                                    showsVerticalScrollIndicator={false}
+                                >
                                     {
                                         period.list.map((project, y) => {
                                             return (
