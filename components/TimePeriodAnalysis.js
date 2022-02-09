@@ -34,11 +34,10 @@ export default function TimePeriodAnalysis({ data, settings }) {
             {
                 card: "All Time",
                 list: [],
-                start: now,
-                end: data.all_logs.length > 0 ? data.all_logs[data.all_logs.length - 1].day : now
+                start: data.all_logs.length > 0 ? data.all_logs[data.all_logs.length - 1].day : now,
+                end: now,
             }
         ]
-
 
         period.forEach((element) => {
             data.projects.forEach((project) => {
@@ -51,7 +50,9 @@ export default function TimePeriodAnalysis({ data, settings }) {
                     }
                 })
                 element.list.push({ project: project.name, duration: sum, style: style.style })
-
+                element.list.sort(function (a, b) {
+                    return b.duration - a.duration;
+                });
             })
         })
         return period
@@ -137,9 +138,9 @@ function DotList({ tot, current }) {
 }
 
 
-const chopName = (name) =>{
+const chopName = (name) => {
 
-    let short = name.length > 7 ? name.substring(0, 7)+"..."  : name
+    let short = name.length > 7 ? name.substring(0, 7) + "..." : name
 
     return short;
 }

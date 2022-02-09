@@ -1,4 +1,11 @@
-export let productionData = {
+import { copyObject, randomIntBetween } from "./js/functions"
+import { iconNames, colorPalette } from "./styles/global"
+import { v4 as uuidv4 } from 'uuid';
+
+let shouldGenerateDummyData = true
+
+
+let emptyData = {
     lastbackup: 0,
     timer: {
         running: false,
@@ -6,14 +13,60 @@ export let productionData = {
         project: "",
         duration: 0
     },
-    projects: [
-    ],
-    all_logs: [
-    ],
+    projects: [],
+    all_logs: [],
     daily_logs: []
 }
 
+const generateDummyData = () => {
+    // create object
+    let generated = copyObject(emptyData)
+    let start = 1612873008
+    let end = 1644412630
 
+    // generate projects
+    let projects = ["School", "Reading", "Sports", "Programming", "Studying"]
+
+    projects.forEach((projectName)=>{
+        let newProject = {
+            name: projectName,
+            pid: "P_" + uuidv4(),
+            logs: [],
+            color: colorPalette[Math.floor(Math.random()*colorPalette.length)],
+            icon: iconNames[Math.floor(Math.random()*iconNames.length)]
+        }
+        let now = start
+        let weight = randomIntBetween(1, 100) / 100
+
+        while (now < end){
+            let duration = randomIntBetween(900, 14400)
+            let gapToNext = randomIntBetween(14400, 200000)
+
+
+            let newLog = {
+                project: projectName,
+                pid: newProject.pid,
+                lid: "L_" + uuidv4(),
+                day: Math.floor(now / 60 / 60 / 24),
+                start: now,
+                end: now + duration * weight,
+                duration: duration * weight,
+                color: newProject.color,
+            }
+
+            newProject.logs.push(newLog)
+            generated.all_logs.push(newLog)
+
+            now += duration + gapToNext
+        }
+        generated.projects.push(newProject)
+    })
+
+
+    return (generated)
+}
+
+export let productionData = ( !shouldGenerateDummyData ? emptyData : generateDummyData())
 
 export let dummyData = {
     lastbackup: 0,
