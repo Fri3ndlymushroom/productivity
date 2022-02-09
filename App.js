@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View } from "react-native"
+import { View  } from "react-native"
 import RootNavigator from './routes/Draw'
 import AsyncStorage from '@react-native-community/async-storage';
 import { StyleSheet } from 'react-native';
@@ -13,6 +13,7 @@ const resetData = false
 
 
 export default function Theta() {
+
 
     const [isPro, setIsPro] = useState(false)
 
