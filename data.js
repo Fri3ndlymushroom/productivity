@@ -22,17 +22,18 @@ const generateDummyData = () => {
     // create object
     let generated = copyObject(emptyData)
     let start = 1612873008
-    let end = 1644412630
+    let end = Math.round(new Date().getTime() / 1000) 
 
     // generate projects
     let projects = ["School", "Reading", "Sports", "Programming", "Studying"]
+    let colors = ["#6441C8", "#3DD6BA", "#EC2964", "#D6C63D", "#518DD4"]
 
-    projects.forEach((projectName)=>{
+    projects.forEach((projectName, i)=>{
         let newProject = {
             name: projectName,
             pid: "P_" + uuidv4(),
             logs: [],
-            color: colorPalette[Math.floor(Math.random()*colorPalette.length)],
+            color: colors[i],
             icon: iconNames[Math.floor(Math.random()*iconNames.length)]
         }
         let now = start

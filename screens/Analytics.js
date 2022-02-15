@@ -23,7 +23,7 @@ export default function Analytics({ navigation, screenProps }) {
         dailyAverage = formatSecondsWithOffset(Math.round(screenProps.data.all_logs.reduce((sum, log) => sum += log.duration, 0) / days), "HH'h' mm'min'")
     }catch{}
 
-
+    
     let pieChartData = getPieChartData(screenProps.data)
 
     return (

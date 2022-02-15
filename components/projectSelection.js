@@ -25,7 +25,7 @@ export default function projectSelection({ data, navigation, setProjectSelection
 
                 </ScrollView>
                 <TouchableOpacity style={s.actionButton} onPress={() => { navigation.navigate("AddProject") }}><Text style={g.text}>Add Project</Text></TouchableOpacity>
-                <TouchableOpacity style={s.actionButton} onPress={() => { navigation.navigate("Archive") }}><Text style={g.text}>Archived projects</Text></TouchableOpacity>
+                <TouchableOpacity style={s.actionButton} onPress={() => { navigation.navigate("Archive") }}><Text style={g.text}>Archived Projects</Text></TouchableOpacity>
             </View>
         </TouchableOpacity>
     )
@@ -54,6 +54,7 @@ const s = StyleSheet.create({
         borderTopRightRadius: p.br,
         alignItems: 'center',
         padding: 30,
+        paddingTop: 0,
         paddingBottom: 10
 
     },

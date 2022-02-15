@@ -142,7 +142,7 @@ export default function TimelineToday({ setProjectSelectionOpen, goal, stopProje
                                             }}
 
                                         />
-                                        <Text style={s.InfoCardGoalTextMain}>{formatSeconds(diff, "HH'h' mm'min'")}</Text>
+                                        <Text style={s.InfoCardGoalTextMain}>{formatSecondsWithOffset(diff, "HH'h' mm'min'")}</Text>
                                         <Text style={s.InfoCardGoalTextSec}>Remaining to reach your daily goal</Text>
                                         <Text style={s.InfoCardGoalTextPerc}>{perc}%</Text>
                                     </View>

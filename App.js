@@ -9,7 +9,7 @@ import { p } from './styles/global';
 import { checkForBackup } from './js/backupsystem';
 import Purchases from "react-native-purchases"
 
-const resetData = false
+const resetData = true
 
 
 export default function Theta() {
