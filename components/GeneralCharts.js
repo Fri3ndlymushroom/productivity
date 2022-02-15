@@ -365,15 +365,22 @@ const getLineData = (data, start, end) => {
         }
     })
 
+    
+
     let i = currentInfo.frames.length - 1
     grouped.reverse().forEach((frame) => {
-        averageLine[i].y += frame.y / averageInfo.frames.length
+        averageLine[i].y += frame.y / averageInfo.frames.length * currentLine.length * (distance >= 31536000 ? 30 : 1)
         if (i === 0) i = currentInfo.frames.length - 1
         else i--
     })
 
     data = [averageLine, lastLine, currentLine]
 
+
+
+    if(data[1].reduce((sum, point) => sum += point.y, 0) <= 0){
+        data[1] = []
+    }
     return {
         data: data
     }
