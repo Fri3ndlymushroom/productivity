@@ -2,8 +2,9 @@ import React from 'react'
 import { StyleSheet, Text, Touchable, View, TouchableOpacity } from 'react-native'
 import g, { p } from "../styles/global"
 import { formatSeconds, formatSecondsWithOffset } from '../js/timerfunctions'
-
+let i = 0
 export default function TimelineDay({ startProject, dayData, navigation }) {
+
 
 
 
@@ -27,7 +28,7 @@ export default function TimelineDay({ startProject, dayData, navigation }) {
                             <TouchableOpacity
                                 onPress={() => navigation.navigate("ProjectView", { projectViewPid: project.pid })}
                                 key={"day" + dayData.day + "project" + project.name}
-                                style={[g.projectCard, {marginVertical: 5}]}
+                                style={[g.projectCard, { marginVertical: 5 }]}
                             >
                                 <View style={s.projectNameWrapper}>
                                     <View style={[s.indicatior, color.c]}></View>

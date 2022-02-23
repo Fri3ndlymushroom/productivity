@@ -10,7 +10,6 @@ import ProjectIcons from './ProjectIcons'
 import { Spacer } from './Components'
 
 
-
 export default function TimelineToday({ setProjectSelectionOpen, goal, stopProject, projects, startProject, navigation }) {
 
     const [relevantData, setRelevantData] = useState([])

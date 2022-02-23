@@ -11,7 +11,9 @@ import { Spacer } from '../components/Components';
 import ProjectIcons from '../components/ProjectIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { logPlugin } from '@babel/preset-env/lib/debug';
+import { copyObject } from '../js/functions';
 
+let contentsizeChanged = false
 export default function Timeline({ navigation, screenProps }) {
     const [projectSelectionOpen, setProjectSelectionOpen] = useState(false)
 
@@ -20,7 +22,7 @@ export default function Timeline({ navigation, screenProps }) {
         let alreadyRunning = screenProps.data.all_logs.filter((log) => log.running).length > 0
 
         if (!alreadyRunning) {
-            let copy = { ...screenProps.data }
+            let copy = copyObject(screenProps.data)
 
             let start = Math.round(new Date().getTime() / 1000)
             let name = copy.projects.filter((projectRef) => projectRef.pid === pid)[0].name
@@ -100,6 +102,9 @@ export default function Timeline({ navigation, screenProps }) {
     }
 
 
+    const [renderedAmount, setRenderedAmount] = useState(50)
+
+
     return (
         <View style={g.bodyWrapper}>
             <View
@@ -112,21 +117,54 @@ export default function Timeline({ navigation, screenProps }) {
                 <View>
                     <ScrollView
                         ref={ref => { this.timelineScrollView = ref }}
-                        onContentSizeChange={() => this.timelineScrollView.scrollToEnd({ animated: true })}
-                    >
-                        <Spacer height={200} />
-                        <TouchableOpacity style={{
-                            width: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center"
+                        onContentSizeChange={() => {
+                            if (!contentsizeChanged) {
+                                this.timelineScrollView.scrollToEnd({ animated: true })
+                                contentsizeChanged = true
+                            }
                         }}
-                            onPress={() => navigation.navigate("AddProject")}>
-                            <ProjectIcons figure={"projectplaceholder"} />
-                        </TouchableOpacity>
+                    >
+                        {
+                            screenProps.data.projects.length === 0 &&
+                        <>
+                            <Spacer height={200} />
+                            <TouchableOpacity style={{
+                                width: "100%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}
+                                onPress={() => navigation.navigate("AddProject")}>
+                                <ProjectIcons figure={"projectplaceholder"} />
+                            </TouchableOpacity>
+                        </>
+                        }
+                        {
+                            screenProps.data.projects.length > 0 &&
+                            <Spacer height={70} />
+                        }
                         <Spacer height={50} />
                         {
-                            screenProps.data.reversed_daily_logs.map((dayData, i) => {
+                            screenProps.data.reversed_daily_logs.length > renderedAmount &&
+                            <TouchableOpacity
+                                style={{
+                                    width: "100%",
+                                    margin: 10,
+                                    padding: 10,
+                                    paddingVertical: 10,
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-around",
+                                    alignSelf: "center",
+                                }}
+                                onPress={() => { setRenderedAmount(renderedAmount + 50) }}
+                            >
+                                <Text style={{ fontSize: 16 }}>Show older logs</Text>
+                            </TouchableOpacity>
+                        }
+                        {
+                            screenProps.data.reversed_daily_logs.slice(screenProps.data.reversed_daily_logs.length - 1 - renderedAmount, screenProps.data.reversed_daily_logs.length - 1).map((dayData, i) => {
                                 if (dayData.day !== Math.floor(Math.round(new Date().getTime() / 1000) / 60 / 60 / 24))
                                     return <TimelineDay key={"dayContainer" + dayData.day} startProject={startProject} {...{ navigation, dayData }} />
                                 else return

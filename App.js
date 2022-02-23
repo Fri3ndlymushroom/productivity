@@ -9,7 +9,7 @@ import { p } from './styles/global';
 import { checkForBackup } from './js/backupsystem';
 import Purchases from "react-native-purchases"
 
-const resetData = false
+const resetData = true
 
 
 export default function Theta() {
@@ -37,12 +37,6 @@ export default function Theta() {
     }, [])
 
     const [data, setRefactoredData] = useState({
-        timer: {
-            running: false,
-            start: 0,
-            project: "",
-            duration: 0
-        },
         projects: [],
         all_logs: [],
         daily_logs: [],
@@ -193,7 +187,7 @@ export default function Theta() {
 
             }
 
-        }, 100)
+        }, 200)
         return () => clearInterval(interval)
     }, [data])
 

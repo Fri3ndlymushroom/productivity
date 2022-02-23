@@ -2,17 +2,11 @@ import { copyObject, randomIntBetween } from "./js/functions"
 import { iconNames, colorPalette } from "./styles/global"
 import { v4 as uuidv4 } from 'uuid';
 
-let shouldGenerateDummyData = false
+let shouldGenerateDummyData = true
 
 
 let emptyData = {
     lastbackup: 0,
-    timer: {
-        running: false,
-        start: 0,
-        project: "",
-        duration: 0
-    },
     projects: [],
     all_logs: [],
     daily_logs: []
@@ -40,8 +34,8 @@ const generateDummyData = () => {
         let weight = randomIntBetween(1, 100) / 100
 
         while (now < end){
-            let duration = randomIntBetween(900, 14400)
-            let gapToNext = randomIntBetween(14400, 200000)
+            let duration = randomIntBetween(9000, 14400)
+            let gapToNext = randomIntBetween(28000, 200000)
 
 
             let newLog = {
@@ -71,12 +65,6 @@ export let productionData = ( !shouldGenerateDummyData ? emptyData : generateDum
 
 export let dummyData = {
     lastbackup: 0,
-    timer: {
-        running: false,
-        start: 0,
-        project: "",
-        duration: 0
-    },
     projects: [
         {
             name: "MMonitor",
