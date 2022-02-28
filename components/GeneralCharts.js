@@ -29,7 +29,8 @@ export default function GeneralCharts({ dailyAverage, data }) {
                 </View>
                 <VictoryChart
                     height={250}
-                    width={300}
+                    width={315}
+                    padding={30}
                 >
                     {
                         selectedChart === "line" &&
@@ -38,7 +39,7 @@ export default function GeneralCharts({ dailyAverage, data }) {
                             symbolSpacer={5}
                             gutter={20}
                             color={"white"}
-
+                           
                             data={[
                                 {
                                     name: "Current",
@@ -104,6 +105,7 @@ export default function GeneralCharts({ dailyAverage, data }) {
                                 fontSize: 10
                             }
                         }}
+
                     />
                     <VictoryAxis
                         dependentAxis
@@ -247,7 +249,7 @@ const s = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
-        width: "90%",
+        width: 310,
         backgroundColor: p.bg2,
         borderRadius: p.br,
         marginTop: 10
@@ -255,7 +257,7 @@ const s = StyleSheet.create({
     generalChartsButton: {
         backgroundColor: p.bg2,
         borderRadius: p.br,
-        width: 60,
+        width: 70,
 
         marginVertical: 2,
         paddingVertical: 5,
@@ -271,7 +273,7 @@ const s = StyleSheet.create({
     generalChartsContainer: {
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     dailyAverageContainer: {
         marginTop: 20,
