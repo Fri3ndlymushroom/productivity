@@ -77,7 +77,7 @@ const s = StyleSheet.create({
         flexDirection: "row",
         width: "100%",
         justifyContent: "space-around",
-        alignItems: "center"
+        alignItems: "center",
     },
     dayCard: {
         height: 30,
@@ -85,6 +85,9 @@ const s = StyleSheet.create({
         borderRadius: 1000,
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        textAlign: "center",
+        position: "relative",
+        left: -2
     }
 })

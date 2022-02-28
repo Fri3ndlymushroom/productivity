@@ -70,7 +70,7 @@ export default function GeneralCharts({ dailyAverage, data }) {
 
                             let relevant = selectedChart === "line" ? chartsData.line.data : chartsData.bar.data
 
-                            if(!relevant[0])return("")
+                            if (!relevant[0]) return ("")
 
                             let dataLength = relevant[0].length
 
@@ -128,7 +128,7 @@ export default function GeneralCharts({ dailyAverage, data }) {
                         >
                             {
                                 chartsData.bar.data.map((data, i) => {
-
+                                    
                                     return <VictoryBar
                                         key={"general_chart-bar" + i}
                                         data={data}
@@ -177,15 +177,17 @@ export default function GeneralCharts({ dailyAverage, data }) {
                         >
                             {
                                 chartsData.bar.data.map((data, i) => {
-                                    return <VictoryArea
-                                        key={"general_chart-bar" + i}
-                                        data={data}
-                                        animate={{
-                                            duration: 2000,
-                                            onLoad: { duration: 1000 }
-                                        }}
-                                        interpolation="natural"
-                                    />
+                                    if (data.length > 2) {
+                                        return <VictoryArea
+                                            key={"general_chart-bar" + i}
+                                            data={data}
+                                            animate={{
+                                                duration: 2000,
+                                                onLoad: { duration: 1000 }
+                                            }}
+                                            interpolation="natural"
+                                        />
+                                    }
                                 })
                             }
                         </VictoryStack>
@@ -320,10 +322,10 @@ const getLineData = (data, start, end) => {
     let lastStart = sub(start, { seconds: distance })
     let lastEnd = sub(end, { seconds: distance })
     let lastInfo = getTimeFrame(lastStart, lastEnd)
-    
-    if(data.all_logs.length === 0){
+
+    if (data.all_logs.length === 0) {
         return {
-            data: [[],[],[]]
+            data: [[], [], []]
         }
     }
 
@@ -365,7 +367,7 @@ const getLineData = (data, start, end) => {
         }
     })
 
-    
+
 
     let i = currentInfo.frames.length - 1
     grouped.reverse().forEach((frame) => {
@@ -378,7 +380,7 @@ const getLineData = (data, start, end) => {
 
 
 
-    if(data[1].reduce((sum, point) => sum += point.y, 0) <= 0){
+    if (data[1].reduce((sum, point) => sum += point.y, 0) <= 0) {
         data[1] = []
     }
     return {
