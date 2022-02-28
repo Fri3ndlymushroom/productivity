@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, Button, Text, View, StyleSheet } from "react-native"
-import g from '../styles/global'
+import g, { p } from '../styles/global'
 import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
 import TimelineDay from '../components/TimelineDay';
@@ -160,7 +160,7 @@ export default function Timeline({ navigation, screenProps }) {
                                 }}
                                 onPress={() => { setRenderedAmount(renderedAmount + 50) }}
                             >
-                                <Text style={{ fontSize: 16 }}>Show older logs</Text>
+                                <Text style={{ fontSize: 16, color: p.text__main }}>Show older logs</Text>
                             </TouchableOpacity>
                         }
                         {

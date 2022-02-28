@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ScrollView, TouchableOpacity, } from 'react-native'
-import NavbarStack from '../components/NavbarStack'
-import { Spacer } from '../components/Components'
+import { View, Text, TouchableOpacity, } from 'react-native'
 import g, { p, shadow } from "../styles/global"
 import Purchases from 'react-native-purchases'
 
 
-export default function Pro({ navigation, screenProps }) {
+export default function Pro({ screenProps }) {
 
 
     const [packages, setPackages] = useState([])
@@ -20,9 +18,7 @@ export default function Pro({ navigation, screenProps }) {
                     setPackages(offerings.current.availablePackages)
                 }
             } catch (e) {
-                screenProps.setIsPro(true)
                 console.error(e)
-                navigation.goBack()
             }
         }
 

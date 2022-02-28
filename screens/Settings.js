@@ -124,7 +124,7 @@ export default function Settings({ navigation, screenProps }) {
                 </TouchableOpacity>
 
                 {/* Pro */}
-                {!screenProps.isPro && <Pro />}
+                {!screenProps.isPro && <Pro screenProps={screenProps}/>}
 
                 
 
