@@ -55,7 +55,7 @@ export default function Pro({ screenProps }) {
     }
 
     return (
-        <View style={{ width: "80%" }}>
+        <View style={{ width: 300 }}>
             {
                 packages.map((product, i) => {
                     return (
@@ -63,7 +63,7 @@ export default function Pro({ screenProps }) {
                             key={product.identifier}
                             style={{
                                 width: "100%",
-                                height: 200,
+                                height: 140,
                             }}
                             onPress={() => purchase(product)}
                         >
@@ -74,11 +74,11 @@ export default function Pro({ screenProps }) {
                                 padding: 15,
                                 paddingBottom: 50,
                                 ...shadow,
-                                height: 160
+                                height: 100
                             }}>
                                 <Text style={{ color: p.text__main, fontSize: 18 }}>{/*product.product.title*/"Theta Pro (Subscription)"}</Text>
-                                <Text style={{ marginHorizontal: 20, marginTop: 20 }}>{product.product.description}</Text>
-                                <TouchableOpacity onPress={() => restorePurchases} style={{ position: "absolute", top: 140, right: 12 }}><Text style={[g.text, { fontSize: 11, color: p.text__dim }]}>Restore purchses</Text></TouchableOpacity>
+                                <Text style={{ marginHorizontal: 10, marginTop: 10, color: p.text__dim }}>{product.product.description}</Text>
+                                <TouchableOpacity onPress={() => restorePurchases} style={{ position: "absolute", top: 80, right: 12 }}><Text style={[g.text, { fontSize: 11, color: p.text__dim }]}>Restore purchses</Text></TouchableOpacity>
                             </View>
                             <View style={{
                                 backgroundColor: p.hl,
@@ -88,7 +88,7 @@ export default function Pro({ screenProps }) {
                                 borderRadius: 20,
                                 position: "absolute",
                                 left: "30%",
-                                top: 150,
+                                top: 90,
                                 ...shadow
                             }}>
                                 <Text style={{ textAlign: "center", fontSize: 18 }}>{product.product.price_string}</Text>
