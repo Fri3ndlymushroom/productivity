@@ -69,7 +69,8 @@ export default function Analytics({ navigation, screenProps }) {
                     </View>
 
                     {/* general chart */}
-                    <GeneralCharts dailyAverage={dailyAverage} data={screenProps.data} />
+                    
+                    <GeneralCharts dailyAverage={dailyAverage} data={screenProps.data} /> 
 
                     <Spacer height={30} />
                 </ScrollView>
