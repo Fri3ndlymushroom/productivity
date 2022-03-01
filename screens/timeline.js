@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, Text, View, Platform } from "react-native"
 import g from '../styles/global'
-import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
 import TimelineDay from '../components/TimelineDay';
 import { v4 as uuidv4 } from 'uuid';
