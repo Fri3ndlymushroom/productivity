@@ -26,6 +26,10 @@ export default function EditProject({ navigation, screenProps }) {
         
         let copy = copyObject(project)
         copy.name = newName
+        
+        copy.logs.forEach((log, i)=>{
+            log.project = newName
+        })
         setProject(copy)
         setChanged(true)
     }
@@ -47,6 +51,13 @@ export default function EditProject({ navigation, screenProps }) {
     const saveChanges = () => {
         let copy = copyObject(screenProps.data)
         copy.projects[index] = project
+
+        copy.all_logs.forEach((log, i)=>{
+            if(log.pid === pid){
+                log.project = project.name
+            }
+        })
+
         screenProps.setData(copy)
         navigation.pop()
         setChanged(false)
