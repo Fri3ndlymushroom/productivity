@@ -91,7 +91,7 @@ export default function Pro({ screenProps }) {
                                 top: 90,
                                 ...shadow
                             }}>
-                                <Text style={{ textAlign: "center", fontSize: 18 }}>{product.product.price_string}</Text>
+                                <Text style={{ textAlign: "center", fontSize: 18, color: p.text__main }}>{product.product.price_string}</Text>
                             </View>
 
                         </TouchableOpacity>
