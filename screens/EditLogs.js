@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native"
+import { Text, View, TouchableOpacity, StyleSheet, Platform } from "react-native"
 import g, { p } from '../styles/global'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { formatSeconds, formatSecondsWithOffset } from '../js/timerfunctions';
@@ -193,7 +193,8 @@ export default function EditLog({ navigation, screenProps }) {
                     <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{formatSecondsWithOffset(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
                 </View>
 
-                <View>
+                <View
+                >
                     {dateTimeProps.open && (
                         <RNDateTimePicker
                             testID="dateTimePicker"
@@ -203,6 +204,8 @@ export default function EditLog({ navigation, screenProps }) {
                             value={new Date(dateTimeProps.value * 1000)}
                             onChange={EditLog}
                             timeZoneOffsetInMinutes={0}
+                            style={{height: 40, width: 90}}
+                            themeVariant={"dark"}
                         />
                     )}
                 </View>
@@ -215,7 +218,7 @@ export default function EditLog({ navigation, screenProps }) {
                 })}><Text style={{
                     color: p.text__main,
                     fontSize: 18
-                }}>{formatSeconds(log.start, "EEE, d MMM")}</Text></TouchableOpacity>
+                }}>{Platform.OS === "ios" ? "Show Date Picker" : formatSeconds(log.start, "EEE, d MMM")}</Text></TouchableOpacity>
                 <View style={s.timeEditorWrapper}>
                     <View style={s.timeEditorParent}>
                         <View style={s.timeEditorButtonWrapper}>

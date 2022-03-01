@@ -90,7 +90,8 @@ export default function Settings({ navigation, screenProps }) {
                             display="default"
                             value={new Date(dateTimeProps.value * 1000)}
                             onChange={dateTimePickerOnChange}
-                            timeZoneOffsetInMinutes={0}
+                            timeZoneOffsetInMinutes={60}
+                            style={{height: 40, width: 90}}
                         />
                     )}
                 </View>
