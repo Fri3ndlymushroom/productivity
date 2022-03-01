@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, View, Platform } from "react-native"
+import { ScrollView, Button, Text, View, StyleSheet } from "react-native"
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
@@ -172,6 +172,10 @@ export default function Timeline({ navigation, screenProps }) {
                         }
                         {
                             <TimelineToday setProjectSelectionOpen={setProjectSelectionOpen} goal={screenProps.settings.daily_goal} stopProject={stopProject} startProject={startProject} projects={screenProps.data.projects} {...{ navigation }} />
+                        }
+                        {
+                            Platform.OS === 'ios' &&
+                            <Spacer height={20} />
                         }
                     </ScrollView>
                 </View>
