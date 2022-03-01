@@ -81,20 +81,7 @@ export default function Settings({ navigation, screenProps }) {
                 <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={changed} saveChanges={saveChanges} />
                 <Spacer height={100} />
 
-                <View>
-                    {dateTimeProps.open && (
-                        <RNDateTimePicker
-                            testID="dateTimePicker"
-                            mode={dateTimeProps.mode}
-                            is24Hour={true}
-                            display="default"
-                            value={new Date(dateTimeProps.value * 1000)}
-                            onChange={dateTimePickerOnChange}
-                            timeZoneOffsetInMinutes={60}
-                            style={{height: 40, width: 90}}
-                        />
-                    )}
-                </View>
+                
 
                 <TouchableOpacity
                     style={{
@@ -136,6 +123,23 @@ export default function Settings({ navigation, screenProps }) {
                     <Text style={s.backupsInfo}>Pro Feature</Text>
                     <Text style={{ color: p.text__dim, fontSize: 11 }}>{buyPro}</Text>
                 </TouchableOpacity>
+                
+
+
+                <View>
+                    {dateTimeProps.open && (
+                        <RNDateTimePicker
+                            testID="dateTimePicker"
+                            mode={dateTimeProps.mode}
+                            is24Hour={true}
+                            display="default"
+                            value={new Date(dateTimeProps.value * 1000)}
+                            onChange={dateTimePickerOnChange}
+                            timeZoneOffsetInMinutes={60}
+                            style={dateTimeProps.mode === "countdown" ? {height: 40, width: 310} : {height: 40, width: 90}}
+                        />
+                    )}
+                </View>
 
                 {/* daily goal */}
                 <TouchableOpacity style={s.settingsCard}
@@ -144,7 +148,7 @@ export default function Settings({ navigation, screenProps }) {
                             {
                                 target: "daily_goal",
                                 value: newSettings.daily_goal,
-                                mode: "time",
+                                mode: Platform.OS === "ios" ? "countdown" : "time",
                                 open: true
                             }
                         )
