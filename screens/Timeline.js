@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Button, Text, View, StyleSheet } from "react-native"
+import { ScrollView, Text, View, Platform } from "react-native"
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
