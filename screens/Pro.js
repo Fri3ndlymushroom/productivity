@@ -70,7 +70,7 @@ export default function Pro({ screenProps }) {
                             <View style={{
                                 backgroundColor: p.bg2,
                                 borderRadius: p.br,
-                                marginVertical: 10,
+                                marginVertical: 5,
                                 padding: 15,
                                 paddingBottom: 50,
                                 ...shadow,

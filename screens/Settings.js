@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button, StyleSheet, Linking } from 'react-native'
+import { View, Text, StyleSheet, Linking, Platform } from 'react-native'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import g, { p } from "../styles/global"
 import { copyObject } from '../js/functions';
@@ -195,6 +195,10 @@ export default function Settings({ navigation, screenProps }) {
                 >
                     <Text style={[g.text, {fontSize:13, marginBottom: 5, color: p.text__dim, textAlign: "center" }]}>By purchasing, you agree to our Terms and Services</Text>
                 </TouchableOpacity>
+                {
+                    Platform.OS === 'ios' &&
+                    <Spacer height={25} />
+                }
             </View>
         </View>
 

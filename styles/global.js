@@ -1,6 +1,4 @@
-import { StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-
+import { StyleSheet, Platform } from 'react-native';
 
 
 export const p = {
@@ -44,6 +42,7 @@ const styles = StyleSheet.create({
         maxWidth: 500,
         width: "100%",
         alignSelf: "center",
+        marginTop: Platform.OS === 'ios' ? 10 : 0
     },
     projectCard: {
         backgroundColor: p.bg2,

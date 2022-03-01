@@ -2,7 +2,7 @@ import { copyObject, randomIntBetween } from "./js/functions"
 import { iconNames, colorPalette } from "./styles/global"
 import { v4 as uuidv4 } from 'uuid';
 
-let shouldGenerateDummyData = false
+let shouldGenerateDummyData = true
 
 
 let emptyData = {
