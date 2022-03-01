@@ -219,8 +219,8 @@ const s = StyleSheet.create({
         fontSize: 20
     },
     optionsButton: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingHorizontal: 20,
+        paddingVertical: 20,
         borderRadius: p.br,
         //alignSelf: "center",
     },

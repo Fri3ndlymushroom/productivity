@@ -67,7 +67,8 @@ const s = StyleSheet.create({
         flexDirection: "row"
     },
     navbarButton: {
-        padding: 10
+        padding: 10,
+        paddingVertical: 15
     },
     navbarText: {
         color: p.text__dim,
