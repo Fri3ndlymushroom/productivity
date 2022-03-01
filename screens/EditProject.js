@@ -19,8 +19,8 @@ export default function EditProject({ navigation, screenProps }) {
     const [projectNameState, setProjectNameState] = useState({ ok: true, message: "" })
 
     const changeProjectName = (newName) => {
-        if (newName.length > 20)
-            setProjectNameState({ ok: false, message: "The name of the project is too long " + newName.length + "/20" })
+        if (newName.length > 15)
+            setProjectNameState({ ok: false, message: "The name of the project is too long " + newName.length + "/15" })
         else
             setProjectNameState({ ok: true, message: "" })
         
@@ -160,7 +160,7 @@ export default function EditProject({ navigation, screenProps }) {
                     </ScrollView>
                 </View>
                 <Spacer height={50}/>
-                <Text style={{textAlign: "center"}}>{projectNameState.message}</Text>
+                <Text style={{textAlign: "center", color: p.text__main}}>{projectNameState.message}</Text>
                 <View style={{ flex: 1 }}></View>
                 <View style={s.buttonSection}>
                     <TouchableOpacity style={s.button} onPress={() =>{ if(projectNameState.ok) saveChanges()}}><Text style={[g.text, g.buttonText]}>Save</Text></TouchableOpacity>

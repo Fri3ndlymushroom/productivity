@@ -79,7 +79,7 @@ export default function Settings({ navigation, screenProps }) {
             >
 
                 <Navbar {...{ navigation }} location={"Settings"} saveable={true} changed={changed} saveChanges={saveChanges} />
-                <Spacer height={130} />
+                <Spacer height={100} />
 
                 <View>
                     {dateTimeProps.open && (

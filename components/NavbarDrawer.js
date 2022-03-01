@@ -15,10 +15,13 @@ export default function Navbar({ navigation, location, saveable, changed, saveCh
 
     return (
         <>
-            <View style={s.navbarContainer}>
+            <View style={s.navbarContainer}
+               
+            >
 
 
                 <LinearGradient
+                 pointerEvents="none" 
                     colors={[p.bg1, "#00000000"]}
                     style={s.gradient}
                     start={{ x: 0.5, y: 0.5 }}
@@ -26,7 +29,8 @@ export default function Navbar({ navigation, location, saveable, changed, saveCh
                 </LinearGradient>
 
 
-                <View style={s.navbarWrapper}>
+                <View style={s.navbarWrapper}
+                >
                     {
                         navOptions.map((navOption) => {
                             let style = [s.navbarText]

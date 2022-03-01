@@ -188,7 +188,7 @@ export default function EditLog({ navigation, screenProps }) {
                     <View style={[g.logoWrapper, { backgroundColor: log.color }]}>
                         <ProjectIcons figure={project.icon} />
                     </View>
-                    <Text style={{ color: p.text__main, fontSize: 18, margin: 5 }}>{log.project}</Text>
+                    <Text style={{ color: p.text__main, fontSize: 18, margin: 5 }}>{chopName(log.project)}</Text>
                     <View style={{ flex: 1 }}></View>
                     <Text style={{ color: p.text__dim, fontSize: 16, margin: 5 }}>{formatSecondsWithOffset(log.duration, "HH'h' mm'min' ss'sek'")}</Text>
                 </View>
@@ -360,3 +360,11 @@ const s = StyleSheet.create({
         fontWeight: "bold"
     }
 });
+
+
+const chopName = (name) => {
+
+    let short = name.length > 7 ? name.substring(0, 7) + "..." : name
+
+    return short;
+}
