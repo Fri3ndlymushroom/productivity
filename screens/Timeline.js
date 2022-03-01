@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Button, Text, View, StyleSheet } from "react-native"
+import { ScrollView, Text, View, Platform } from "react-native"
 import g from '../styles/global'
 import { DefaultText } from '../components/Components'
 import ProjectSelection from "../components/ProjectSelection"
@@ -10,7 +10,6 @@ import Navbar from '../components/NavbarDrawer';
 import { Spacer } from '../components/Components';
 import ProjectIcons from '../components/ProjectIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { logPlugin } from '@babel/preset-env/lib/debug';
 import { copyObject } from '../js/functions';
 
 let contentsizeChanged = false

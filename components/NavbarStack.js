@@ -81,6 +81,6 @@ const s = StyleSheet.create({
         color: p.text__main
     },
     backButton: {
-        padding: 10
+        padding: 20
     }
 })
